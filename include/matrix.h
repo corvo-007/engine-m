@@ -1,5 +1,7 @@
 #pragma once
 
+#include "vector3d.h"
+
 namespace MathEngine {
 
     class Matrix {
@@ -36,6 +38,8 @@ namespace MathEngine {
 
         Matrix operator*(const Matrix &) const;
         Matrix& operator*=(const Matrix &);
+
+        Vector3d operator*(const Vector3d &) const;
 
         bool getInverse(Matrix &) const;
         bool inverse();

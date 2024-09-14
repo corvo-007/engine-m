@@ -152,6 +152,10 @@ namespace MathEngine {
         return true;
     }
 
+    Vector3d Matrix::operator*(const Vector3d &vec) const {
+	    return Vector3d(matrix[0][0] * vec.x + matrix[0][1] * vec.y + matrix[0][2] * vec.z, matrix[1][0] * vec.x + matrix[1][1] * vec.y + matrix[1][2] * vec.z, matrix[2][0] * vec.x + matrix[2][1] * vec.y + matrix[2][2] * vec.z);
+    }
+
     bool Matrix::inverse() {
         Matrix mat;
         bool i = getInverse(mat);
