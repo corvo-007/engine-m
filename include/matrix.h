@@ -49,6 +49,6 @@ namespace MathEngine {
 
         static Matrix identity();
 
-        ~Matrix();
+        ~Matrix() = default;
     };
 }

@@ -107,8 +107,4 @@ namespace MathEngine {
         y /= mag;
         z /= mag;
     }
-
-    Vector3d::~Vector3d() {
-        
-    }
 }

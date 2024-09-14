@@ -36,6 +36,6 @@ namespace MathEngine {
         Quaternion conjugate() const;
         Quaternion inverse() const;
 
-        ~Quaternion();
+        ~Quaternion() = default;
     };
 }

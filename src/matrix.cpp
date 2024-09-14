@@ -182,8 +182,4 @@ namespace MathEngine {
     Matrix Matrix::identity() {
         return Matrix(1, 0, 0, 0, 1, 0, 0, 0, 1);
     }
-
-    Matrix::~Matrix() {
-
-    }
 }

@@ -39,6 +39,6 @@ namespace MathEngine {
 
         virtual void normalise() override;
 
-        ~Vector2d();
+        ~Vector2d() = default;
     };
 }

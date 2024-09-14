@@ -95,8 +95,4 @@ namespace MathEngine {
         conj /= (n * n);
         return conj;
     }
-
-    Quaternion::~Quaternion() {
-        
-    }
 }

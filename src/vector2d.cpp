@@ -91,8 +91,4 @@ namespace MathEngine {
         x /= mag;
         y /= mag;
     }
-
-    Vector2d::~Vector2d() {
-        
-    }
 }
