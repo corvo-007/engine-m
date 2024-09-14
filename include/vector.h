@@ -31,5 +31,7 @@ namespace MathEngine {
         virtual float operator+() const = 0;
 
         virtual void normalise() = 0;
+
+        virtual ~Vector() = default;
     };
 }
