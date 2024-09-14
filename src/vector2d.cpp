@@ -1,5 +1,6 @@
 #include <cmath>
 #include "vector2d.h"
+#include "constants.h"
 
 namespace MathEngine {
 
@@ -90,5 +91,13 @@ namespace MathEngine {
 
         x /= mag;
         y /= mag;
+    }
+
+    Vector2d Vector2d::rotate(const float angle) const {
+        return rotateRad(angle * PI / 180);
+    }
+
+    Vector2d Vector2d::rotateRad(const float radians) const {
+        return Vector2d(cosf(radians) * x - sinf(radians) * y, sinf(radians) * x + cosf(radians) * y);
     }
 }

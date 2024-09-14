@@ -1,5 +1,7 @@
 #include <cmath>
 #include "vector3d.h"
+#include "quaternion.h"
+#include "constants.h"
 
 namespace MathEngine {
 
@@ -106,5 +108,28 @@ namespace MathEngine {
         x /= mag;
         y /= mag;
         z /= mag;
+    }
+
+    Vector3d Vector3d::rotate(const float angle, const Vector3d &axis) const {
+        return rotateRad(angle * PI / 180, axis);
+    }
+
+    Vector3d Vector3d::rotateRad(float radians, const Vector3d &axis) const {
+        Vector3d n_axis = axis;
+        n_axis.normalise();
+
+        radians /= 2;
+
+        Quaternion q(cosf(radians), n_axis * sinf(radians));
+        return rotate(q);
+    }
+
+    Vector3d Vector3d::rotate(const Quaternion &q) const {
+        Quaternion p(0, *this);
+        Quaternion q_inv = q.inverse();
+
+        Quaternion rotation = q * p * q_inv;
+
+        return rotation.v;
     }
 }

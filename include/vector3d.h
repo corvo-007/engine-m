@@ -4,6 +4,8 @@
 
 namespace MathEngine {
 
+    class Quaternion;
+
     class Vector3d : public Vector<Vector3d> {
     public:
         float x;
@@ -40,6 +42,10 @@ namespace MathEngine {
         virtual float operator+() const override;
 
         virtual void normalise() override;
+
+        Vector3d rotate(const float, const Vector3d &) const;
+        Vector3d rotateRad(const float, const Vector3d &) const;
+        Vector3d rotate(const Quaternion &) const;
 
         ~Vector3d() = default;
     };

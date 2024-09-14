@@ -39,6 +39,9 @@ namespace MathEngine {
 
         virtual void normalise() override;
 
+        Vector2d rotate(const float) const;
+        Vector2d rotateRad(const float) const;
+
         ~Vector2d() = default;
     };
 }
