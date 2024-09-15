@@ -130,6 +130,21 @@ namespace MathEngine {
         return *this;
     }
 
+    Vector3d Matrix::operator*(const Vector3d &vec) const {
+	    return Vector3d(matrix[0][0] * vec.x + matrix[0][1] * vec.y + matrix[0][2] * vec.z, matrix[1][0] * vec.x + matrix[1][1] * vec.y + matrix[1][2] * vec.z, matrix[2][0] * vec.x + matrix[2][1] * vec.y + matrix[2][2] * vec.z);
+    }
+
+    bool Matrix::operator==(const Matrix &mat) const {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (matrix[i][j] != mat[i][j]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     bool Matrix::getInverse(Matrix &mat) const {
         float det = determinant();
 
@@ -150,10 +165,6 @@ namespace MathEngine {
         mat[2][2] = oneOverDet * (matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]);
 
         return true;
-    }
-
-    Vector3d Matrix::operator*(const Vector3d &vec) const {
-	    return Vector3d(matrix[0][0] * vec.x + matrix[0][1] * vec.y + matrix[0][2] * vec.z, matrix[1][0] * vec.x + matrix[1][1] * vec.y + matrix[1][2] * vec.z, matrix[2][0] * vec.x + matrix[2][1] * vec.y + matrix[2][2] * vec.z);
     }
 
     bool Matrix::inverse() {

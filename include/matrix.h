@@ -41,6 +41,8 @@ namespace MathEngine {
 
         Vector3d operator*(const Vector3d &) const;
 
+        bool operator==(const Matrix &) const;
+
         bool getInverse(Matrix &) const;
         bool inverse();
 

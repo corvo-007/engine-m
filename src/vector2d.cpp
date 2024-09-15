@@ -78,6 +78,10 @@ namespace MathEngine {
         return cross(v);
     }
 
+    bool Vector2d::operator==(const Vector2d &v) const {
+        return x == v.x && y == v.y;
+    }
+
     float Vector2d::magnitude() const {
         return sqrt(x * x + y * y);
     }

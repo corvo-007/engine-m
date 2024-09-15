@@ -94,6 +94,10 @@ namespace MathEngine {
         return *this;
     }
 
+    bool Vector3d::operator==(const Vector3d &v) const {
+        return x == v.x && y == v.y && z == v.z;
+    }
+
     float Vector3d::magnitude() const {
         return sqrt(x * x + y * y + z * z);
     }
