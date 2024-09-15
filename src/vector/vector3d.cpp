@@ -96,7 +96,11 @@ namespace MathEngine {
     }
 
     bool Vector3d::operator==(const Vector3d &v) const {
-        return x == v.x && y == v.y && z == v.z;
+        return equals(x, v.x) && equals(y, v.y) && equals(z, v.z);
+    }
+
+    bool Vector3d::operator!=(const Vector3d &v) const {
+        return !((*this) == v);
     }
 
     float Vector3d::magnitude() const {

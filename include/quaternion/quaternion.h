@@ -31,6 +31,7 @@ namespace MathEngine {
         Quaternion& operator/=(const float);
 
         bool operator==(const Quaternion &) const;
+        bool operator!=(const Quaternion &) const;
 
         float norm() const;
         void normalise();

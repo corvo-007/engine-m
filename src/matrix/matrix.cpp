@@ -1,4 +1,5 @@
 #include "matrix/matrix.h"
+#include "utils.h"
 
 namespace MathEngine {
 
@@ -137,12 +138,16 @@ namespace MathEngine {
     bool Matrix::operator==(const Matrix &mat) const {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                if (matrix[i][j] != mat[i][j]) {
+                if (!equals(matrix[i][j], mat[i][j])) {
                     return false;
                 }
             }
         }
         return true;
+    }
+
+    bool Matrix::operator!=(const Matrix &mat) const {
+        return !((*this) == mat);
     }
 
     bool Matrix::getInverse(Matrix &mat) const {

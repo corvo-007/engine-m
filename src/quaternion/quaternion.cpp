@@ -1,5 +1,6 @@
 #include <cmath>
 #include "quaternion/quaternion.h"
+#include "utils.h"
 
 namespace MathEngine {
 
@@ -73,7 +74,11 @@ namespace MathEngine {
     }
 
     bool Quaternion::operator==(const Quaternion &q) const {
-        return a == q.a && v == q.v;
+        return equals(a, q.a) && v == q.v;
+    }
+
+    bool Quaternion::operator!=(const Quaternion &q) const {
+        return !((*this) == q);
     }
 
     float Quaternion::norm() const {

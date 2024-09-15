@@ -80,7 +80,11 @@ namespace MathEngine {
     }
 
     bool Vector2d::operator==(const Vector2d &v) const {
-        return x == v.x && y == v.y;
+        return equals(x, v.x) && equals(y, v.y);
+    }
+
+    bool Vector2d::operator!=(const Vector2d &v) const {
+        return !((*this) == v);
     }
 
     float Vector2d::magnitude() const {

@@ -39,6 +39,7 @@ namespace MathEngine {
         Vector3d& operator^=(const Vector3d &);
 
         virtual bool operator==(const Vector3d &) const override;
+        virtual bool operator!=(const Vector3d &) const override;
 
         virtual float magnitude() const override;
         virtual float operator+() const override;
