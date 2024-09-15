@@ -1,5 +1,5 @@
 #include <cmath>
-#include "quaternion.h"
+#include "quaternion/quaternion.h"
 
 namespace MathEngine {
 

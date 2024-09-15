@@ -1,6 +1,6 @@
 #include <cmath>
-#include "vector3d.h"
-#include "quaternion.h"
+#include "vector/vector3d.h"
+#include "quaternion/quaternion.h"
 #include "constants.h"
 
 namespace MathEngine {

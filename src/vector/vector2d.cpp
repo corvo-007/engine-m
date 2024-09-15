@@ -1,5 +1,5 @@
 #include <cmath>
-#include "vector2d.h"
+#include "vector/vector2d.h"
 #include "constants.h"
 
 namespace MathEngine {
