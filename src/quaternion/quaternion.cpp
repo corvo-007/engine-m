@@ -72,6 +72,10 @@ namespace MathEngine {
         return *this;
     }
 
+    bool Quaternion::operator==(const Quaternion &q) const {
+        return a == q.a && v == q.v;
+    }
+
     float Quaternion::norm() const {
         return sqrt(a * a + v * v);
     }
