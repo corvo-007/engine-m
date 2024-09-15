@@ -1,6 +1,7 @@
 #include <cmath>
 #include "vector/vector2d.h"
 #include "constants.h"
+#include "utils.h"
 
 namespace MathEngine {
 
@@ -98,7 +99,7 @@ namespace MathEngine {
     }
 
     Vector2d Vector2d::rotate(const float angle) const {
-        return rotateRad(angle * PI / 180);
+        return rotateRad(degreesToRadians(angle));
     }
 
     Vector2d Vector2d::rotateRad(const float radians) const {

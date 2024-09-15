@@ -2,6 +2,7 @@
 #include "vector/vector3d.h"
 #include "quaternion/quaternion.h"
 #include "constants.h"
+#include "utils.h"
 
 namespace MathEngine {
 
@@ -115,7 +116,7 @@ namespace MathEngine {
     }
 
     Vector3d Vector3d::rotate(const float angle, const Vector3d &axis) const {
-        return rotateRad(angle * PI / 180, axis);
+        return rotateRad(degreesToRadians(angle), axis);
     }
 
     Vector3d Vector3d::rotateRad(float radians, const Vector3d &axis) const {
