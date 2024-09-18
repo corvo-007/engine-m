@@ -1,10 +1,11 @@
 #pragma once
 
+#include "core.h"
 #include "vector/vector3d.h"
 
 namespace MathEngine {
 
-    class Matrix {
+    class MATH_ENGINE_API Matrix {
     private:
         float matrix[3][3];
 

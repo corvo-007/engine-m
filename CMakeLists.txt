@@ -8,6 +8,8 @@ include_directories(include)
 
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 
-add_library(MathEngine STATIC ${SOURCES})
+add_library(MathEngine SHARED ${SOURCES})
 
-target_include_directories(MathEngine PUBLIC ${CMAKE_SOURCE_DIR}/include)
+target_include_directories(MathEngine PRIVATE ${CMAKE_SOURCE_DIR}/include)
+
+target_compile_definitions(MathEngine PRIVATE BUILD_DLL)

@@ -1,11 +1,13 @@
 #pragma once
 
+#include "core.h"
+
 namespace MathEngine {
 
     class Vector3d;
 
     template <typename T>
-    class Vector {
+    class MATH_ENGINE_API Vector {
     public:
         virtual T& operator=(const T &) = 0;
 
