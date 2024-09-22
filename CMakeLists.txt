@@ -8,8 +8,12 @@ include_directories(include)
 
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 
-add_library(MathEngine SHARED ${SOURCES})
+option(BUILD_SHARED_LIBS "Build shared libraries" ON)
+
+add_library(MathEngine ${SOURCES})
+
+if (BUILD_SHARED_LIBS)
+    target_compile_definitions(MathEngine PRIVATE DYNAMIC_LINK BUILD_DLL)
+endif()
 
 target_include_directories(MathEngine PRIVATE ${CMAKE_SOURCE_DIR}/include)
-
-target_compile_definitions(MathEngine PRIVATE BUILD_DLL)
