@@ -21,4 +21,16 @@ namespace MathEngine {
     float radiansToDegrees(const float radians) {
         return radians * 180 / PI;
     }
+
+    float lerp(const float p1, const float p2, const float t) {
+        return (1 - t) * p1 + t * p2;
+    }
+
+    Vector2d lerp(const Vector2d &p1, const Vector2d &p2, const float t) {
+        return p1 * (1 - t) + p2 * t;
+    }
+
+    Vector3d lerp(const Vector3d &p1, const Vector3d &p2, const float t) {
+        return p1 * (1 - t) + p2 * t;
+    }
 }
