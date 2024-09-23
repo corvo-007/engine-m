@@ -33,7 +33,6 @@ namespace MathEngine {
         virtual bool operator!=(const T &) const = 0;
 
         virtual float magnitude() const = 0;
-        virtual float operator+() const = 0;
 
         virtual void normalise() = 0;
 

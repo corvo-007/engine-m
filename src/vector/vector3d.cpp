@@ -107,12 +107,8 @@ namespace MathEngine {
         return sqrt(x * x + y * y + z * z);
     }
 
-    float Vector3d::operator+() const {
-        return magnitude();
-    }
-
     void Vector3d::normalise() {
-        float mag = +(*this);
+        float mag = magnitude();
 
         x /= mag;
         y /= mag;

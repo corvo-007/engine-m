@@ -91,12 +91,8 @@ namespace MathEngine {
         return sqrt(x * x + y * y);
     }
 
-    float Vector2d::operator+() const {
-        return magnitude();
-    }
-
     void Vector2d::normalise() {
-        float mag = +(*this);
+        float mag = magnitude();
 
         x /= mag;
         y /= mag;
