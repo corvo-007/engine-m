@@ -29,6 +29,8 @@ namespace MathEngine {
         virtual Vector2d operator/(const float) const override;
         virtual Vector2d& operator/=(const float) override;
 
+        virtual Vector2d operator-() const override;
+
         virtual float dot(const Vector2d &) const override;
         virtual float operator*(const Vector2d &) const override;
 

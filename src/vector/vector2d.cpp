@@ -63,6 +63,10 @@ namespace MathEngine {
         return *this;
     }
 
+    Vector2d Vector2d::operator-() const {
+        return Vector2d(-x, -y);
+    }
+
     float Vector2d::dot(const Vector2d &v) const {
         return x * v.x + y * v.y;
     }

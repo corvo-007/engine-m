@@ -69,6 +69,10 @@ namespace MathEngine {
         return *this;
     }
 
+    Vector3d Vector3d::operator-() const {
+        return Vector3d(-x, -y, -z);
+    }
+
     float Vector3d::dot(const Vector3d &v) const {
         return x * v.x + y * v.y + z * v.z;
     }

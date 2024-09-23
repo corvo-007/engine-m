@@ -31,6 +31,8 @@ namespace MathEngine {
         virtual Vector3d operator/(const float) const override;
         virtual Vector3d& operator/=(const float) override;
 
+        virtual Vector3d operator-() const override;
+
         virtual float dot(const Vector3d &) const override;
         virtual float operator*(const Vector3d &) const override;
 
