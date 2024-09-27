@@ -1,9 +1,12 @@
 #include "utils.h"
 
+#include <cmath>
+#include "constants.h"
+
 namespace MathEngine {
 
     bool equals(const float a, const float b) {
-        return fabs(a - b) < epsilon;
+        return std::fabs(a - b) < epsilon;
     }
 
     int clamp(const int value, const int min, const int max) {
