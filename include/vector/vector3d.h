@@ -9,49 +9,49 @@ namespace MathEngine {
 
     class MATH_ENGINE_API Vector3d : public Vector<Vector3d> {
     public:
-        float x;
-        float y;
-        float z;
+        float x {};
+        float y {};
+        float z {};
 
-        Vector3d();
+        Vector3d() = default;
         Vector3d(float, float, float);
-        Vector3d(const Vector3d &);
+        Vector3d(const Vector3d &) = default;
 
-        virtual Vector3d &operator=(const Vector3d &) override;
+        Vector3d &operator=(const Vector3d &) = default;
 
-        virtual Vector3d operator+(const Vector3d &) const override;
-        virtual Vector3d& operator+=(const Vector3d &) override;
+        Vector3d operator+(const Vector3d &) const override;
+        Vector3d& operator+=(const Vector3d &) override;
 
-        virtual Vector3d operator-(const Vector3d &) const override;
-        virtual Vector3d& operator-=(const Vector3d &) override;
+        Vector3d operator-(const Vector3d &) const override;
+        Vector3d& operator-=(const Vector3d &) override;
 
-        virtual Vector3d operator*(const float) const override;
-        virtual Vector3d& operator*=(const float) override;
+        Vector3d operator*(float) const override;
+        Vector3d& operator*=(float) override;
 
-        virtual Vector3d operator/(const float) const override;
-        virtual Vector3d& operator/=(const float) override;
+        Vector3d operator/(float) const override;
+        Vector3d& operator/=(float) override;
 
-        virtual Vector3d operator-() const override;
+        Vector3d operator-() const override;
 
-        virtual float dot(const Vector3d &) const override;
-        virtual float operator*(const Vector3d &) const override;
+        [[nodiscard]] float dot(const Vector3d &) const override;
+        float operator*(const Vector3d &) const override;
 
-        virtual Vector3d cross(const Vector3d &) const override;
-        virtual Vector3d operator^(const Vector3d &) const override;
+        [[nodiscard]] Vector3d cross(const Vector3d &) const override;
+        Vector3d operator^(const Vector3d &) const override;
 
         Vector3d& operator^=(const Vector3d &);
 
-        virtual bool operator==(const Vector3d &) const override;
-        virtual bool operator!=(const Vector3d &) const override;
+        bool operator==(const Vector3d &) const override;
+        bool operator!=(const Vector3d &) const override;
 
-        virtual float magnitude() const override;
+        [[nodiscard]] float magnitude() const override;
 
-        virtual void normalise() override;
+        void normalise() override;
 
-        Vector3d rotate(const float, const Vector3d &) const;
-        Vector3d rotateRad(const float, const Vector3d &) const;
-        Vector3d rotate(const Quaternion &) const;
+        [[nodiscard]] Vector3d rotate(float, const Vector3d &) const;
+        [[nodiscard]] Vector3d rotateRad(float, const Vector3d &) const;
+        [[nodiscard]] Vector3d rotate(const Quaternion &) const;
 
-        ~Vector3d() = default;
+        ~Vector3d() override = default;
     };
 }

@@ -9,19 +9,17 @@ namespace MathEngine {
     template <typename T>
     class MATH_ENGINE_API Vector {
     public:
-        virtual T& operator=(const T &) = 0;
-
         virtual T operator+(const T &) const = 0;
         virtual T& operator+=(const T &) = 0;
 
         virtual T operator-(const T &) const = 0;
         virtual T& operator-=(const T &) = 0;
 
-        virtual T operator*(const float) const = 0;
-        virtual T& operator*=(const float) = 0;
+        virtual T operator*(float) const = 0;
+        virtual T& operator*=(float) = 0;
 
-        virtual T operator/(const float) const = 0;
-        virtual T& operator/=(const float) = 0;
+        virtual T operator/(float) const = 0;
+        virtual T& operator/=(float) = 0;
 
         virtual T operator-() const = 0;
 
@@ -34,7 +32,7 @@ namespace MathEngine {
         virtual bool operator==(const T &) const = 0;
         virtual bool operator!=(const T &) const = 0;
 
-        virtual float magnitude() const = 0;
+        [[nodiscard]] virtual float magnitude() const = 0;
 
         virtual void normalise() = 0;
 

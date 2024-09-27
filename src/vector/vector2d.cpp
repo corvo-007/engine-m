@@ -1,30 +1,15 @@
 #include <cmath>
 #include "vector/vector2d.h"
-#include "constants.h"
 #include "utils.h"
 
 namespace MathEngine {
 
-    Vector2d::Vector2d(): x(0), y(0) {
+    Vector2d::Vector2d(const float x, const float y): x(x), y(y) {
 
-    }
-
-    Vector2d::Vector2d(float x, float y): x(x), y(y) {
-
-    }
-
-    Vector2d::Vector2d(const Vector2d &v): x(v.x), y(v.y) {
-
-    }
-
-    Vector2d& Vector2d::operator=(const Vector2d &v) {
-        x = v.x;
-        y = v.y;
-        return *this;
     }
 
     Vector2d Vector2d::operator+(const Vector2d &v) const {
-        return Vector2d(x + v.x, y + v.y);
+        return {x + v.x, y + v.y};
     }
 
     Vector2d& Vector2d::operator+=(const Vector2d &v) {
@@ -34,7 +19,7 @@ namespace MathEngine {
     }
 
     Vector2d Vector2d::operator-(const Vector2d &v) const {
-        return Vector2d(x - v.x, y - v.y);
+        return {x - v.x, y - v.y};
     }
 
     Vector2d& Vector2d::operator-=(const Vector2d &v) {
@@ -44,7 +29,7 @@ namespace MathEngine {
     }
 
     Vector2d Vector2d::operator*(const float k) const {
-        return Vector2d(x * k, y * k);
+        return {x * k, y * k};
     }
 
     Vector2d& Vector2d::operator*=(const float k) {
@@ -54,7 +39,7 @@ namespace MathEngine {
     }
 
     Vector2d Vector2d::operator/(const float k) const {
-        return Vector2d(x / k, y / k);
+        return {x / k, y / k};
     }
 
     Vector2d& Vector2d::operator/=(const float k) {
@@ -64,7 +49,7 @@ namespace MathEngine {
     }
 
     Vector2d Vector2d::operator-() const {
-        return Vector2d(-x, -y);
+        return {-x, -y};
     }
 
     float Vector2d::dot(const Vector2d &v) const {
@@ -76,7 +61,7 @@ namespace MathEngine {
     }
 
     Vector3d Vector2d::cross(const Vector2d &v) const {
-        return Vector3d(0, 0, x * v.y - y * v.x);
+        return {0, 0, x * v.y - y * v.x};
     }
 
     Vector3d Vector2d::operator^(const Vector2d &v) const {
@@ -88,15 +73,15 @@ namespace MathEngine {
     }
 
     bool Vector2d::operator!=(const Vector2d &v) const {
-        return !((*this) == v);
+        return !(*this == v);
     }
 
     float Vector2d::magnitude() const {
-        return sqrt(x * x + y * y);
+        return std::sqrt(x * x + y * y);
     }
 
     void Vector2d::normalise() {
-        float mag = magnitude();
+        const float mag = magnitude();
 
         x /= mag;
         y /= mag;
@@ -107,6 +92,6 @@ namespace MathEngine {
     }
 
     Vector2d Vector2d::rotateRad(const float radians) const {
-        return Vector2d(cosf(radians) * x - sinf(radians) * y, sinf(radians) * x + cosf(radians) * y);
+        return {cosf(radians) * x - sinf(radians) * y, sinf(radians) * x + cosf(radians) * y};
     }
 }
