@@ -4,26 +4,12 @@
 
 namespace MathEngine {
 
-    Quaternion::Quaternion(): a(0) {
-
-    }
-
     Quaternion::Quaternion(const float a, const Vector3d &v): a(a), v(v) {
 
     }
 
-    Quaternion::Quaternion(const Quaternion &q): a(q.a), v(q.v) {
-
-    }
-
-    Quaternion& Quaternion::operator=(const Quaternion &q) {
-        a = q.a;
-        v = q.v;
-        return *this;
-    }
-
     Quaternion Quaternion::operator+(const Quaternion &q) const {
-        return Quaternion(a + q.a, v + q.v);
+        return {a + q.a, v + q.v};
     }
 
     Quaternion& Quaternion::operator+=(const Quaternion &q) {
@@ -33,7 +19,7 @@ namespace MathEngine {
     }
 
     Quaternion Quaternion::operator-(const Quaternion &q) const {
-        return Quaternion(a - q.a, v - q.v);
+        return {a - q.a, v - q.v};
     }
 
     Quaternion& Quaternion::operator-=(const Quaternion &q) {
@@ -43,7 +29,7 @@ namespace MathEngine {
     }
 
     Quaternion Quaternion::operator*(const Quaternion &q) const {
-        return Quaternion(a * q.a - v * q.v, v * q.a + q.v * a + (v ^ q.v));
+        return {a * q.a - v * q.v, v * q.a + q.v * a + (v ^ q.v)};
     }
 
     Quaternion& Quaternion::operator*=(const Quaternion &q) {
@@ -54,7 +40,7 @@ namespace MathEngine {
     }
 
     Quaternion Quaternion::operator*(const float k) const {
-        return Quaternion(a * k, v * k);
+        return {a * k, v * k};
     }
 
     Quaternion& Quaternion::operator*=(const float k) {
@@ -64,7 +50,7 @@ namespace MathEngine {
     }
 
     Quaternion Quaternion::operator/(const float k) const {
-        return Quaternion(a / k, v / k);
+        return {a / k, v / k};
     }
 
     Quaternion& Quaternion::operator/=(const float k) {
@@ -78,15 +64,15 @@ namespace MathEngine {
     }
 
     bool Quaternion::operator!=(const Quaternion &q) const {
-        return !((*this) == q);
+        return !(*this == q);
     }
 
     float Quaternion::norm() const {
-        return sqrt(a * a + v * v);
+        return std::sqrt(a * a + v * v);
     }
 
     void Quaternion::normalise() {
-        float n = norm();
+        const float n = norm();
         if (n == 0) {
             return ;
         }
@@ -95,13 +81,12 @@ namespace MathEngine {
     }
 
     Quaternion Quaternion::conjugate() const {
-        return Quaternion(a, v * -1);
+        return {a, v * -1};
     }
 
     Quaternion Quaternion::inverse() const {
         Quaternion conj = conjugate();
-        float n = norm();
-        conj /= (n * n);
-        return conj;
+        const float n = norm();
+        return conj /= (n * n);
     }
 }
