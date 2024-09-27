@@ -3,11 +3,11 @@
 
 namespace MathEngine {
 
-    Matrix::Matrix(): matrix{0} {
+    Matrix::Matrix(): matrix{} {
 
     }
 
-    Matrix::Matrix(float a, float b, float c, float d, float e, float f, float g, float h, float i): matrix{{a, b, c}, {d, e, f}, {g, h, i}} {
+    Matrix::Matrix(const float a, const float b, const float c, const float d, const float e, const float f, const float g, const float h, const float i): matrix{{a, b, c}, {d, e, f}, {g, h, i}} {
 
     }
 
@@ -132,7 +132,7 @@ namespace MathEngine {
     }
 
     Vector3d Matrix::operator*(const Vector3d &vec) const {
-	    return Vector3d(matrix[0][0] * vec.x + matrix[0][1] * vec.y + matrix[0][2] * vec.z, matrix[1][0] * vec.x + matrix[1][1] * vec.y + matrix[1][2] * vec.z, matrix[2][0] * vec.x + matrix[2][1] * vec.y + matrix[2][2] * vec.z);
+	    return {matrix[0][0] * vec.x + matrix[0][1] * vec.y + matrix[0][2] * vec.z, matrix[1][0] * vec.x + matrix[1][1] * vec.y + matrix[1][2] * vec.z, matrix[2][0] * vec.x + matrix[2][1] * vec.y + matrix[2][2] * vec.z};
     }
 
     bool Matrix::operator==(const Matrix &mat) const {
@@ -196,6 +196,6 @@ namespace MathEngine {
     }
 
     Matrix Matrix::identity() {
-        return Matrix(1, 0, 0, 0, 1, 0, 0, 0, 1);
+        return {1, 0, 0, 0, 1, 0, 0, 0, 1};
     }
 }

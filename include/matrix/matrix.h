@@ -11,7 +11,7 @@ namespace MathEngine {
 
     public:
         Matrix();
-        Matrix(float, float, float, float, float, float, float, float, float);
+        Matrix(const float, const float, const float, const float, const float, const float, const float, const float, const float);
         Matrix(const float [3][3]);
         Matrix(const Matrix &);
 
