@@ -3,10 +3,6 @@
 
 namespace MathEngine {
 
-    Matrix::Matrix(): matrix{} {
-
-    }
-
     Matrix::Matrix(const float a, const float b, const float c, const float d, const float e, const float f, const float g, const float h, const float i): matrix{{a, b, c}, {d, e, f}, {g, h, i}} {
 
     }
@@ -32,6 +28,9 @@ namespace MathEngine {
     }
 
     Matrix& Matrix::operator=(const Matrix &mat) {
+        if (this == &mat) {
+            return *this;
+        }
         copy(mat.matrix);
         return *this;
     }
@@ -95,9 +94,9 @@ namespace MathEngine {
     }
 
     Matrix& Matrix::operator*=(const float k) {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                matrix[i][j] *= k;
+        for (float (&i)[3] : matrix) {
+            for (float &j : i) {
+                j *= k;
             }
         }
         return *this;
@@ -151,13 +150,13 @@ namespace MathEngine {
     }
 
     bool Matrix::getInverse(Matrix &mat) const {
-        float det = determinant();
+        const float det = determinant();
 
         if (det == 0.0) {
             return false;
         }
 
-        float oneOverDet = 1 / det;
+        const float oneOverDet = 1 / det;
 
         mat[0][0] = oneOverDet * (matrix[1][1] * matrix[2][2] - matrix[1][2] * matrix[2][1]);
         mat[0][1] = -oneOverDet *  (matrix[0][1] * matrix[2][2] - matrix[0][2] * matrix[2][1]);
@@ -174,7 +173,7 @@ namespace MathEngine {
 
     bool Matrix::inverse() {
         Matrix mat;
-        bool i = getInverse(mat);
+        const bool i = getInverse(mat);
         (*this) = mat;
         return i;
     }

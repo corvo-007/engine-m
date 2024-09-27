@@ -6,24 +6,23 @@
 namespace MathEngine {
 
     class MATH_ENGINE_API Matrix {
-    private:
-        float matrix[3][3];
+        float matrix[3][3] {};
 
     public:
-        Matrix();
-        Matrix(const float, const float, const float, const float, const float, const float, const float, const float, const float);
-        Matrix(const float [3][3]);
+        Matrix() = default;
+        Matrix(float, float, float, float, float, float, float, float, float);
+        explicit Matrix(const float [3][3]);
         Matrix(const Matrix &);
 
     private:
         void copy(const float [3][3]);
-        float determinant() const;
+        [[nodiscard]] float determinant() const;
 
     public:
         Matrix& operator=(const Matrix &);
 
-        float* operator[](const int);
-        const float* operator[](const int) const;
+        float* operator[](int);
+        const float* operator[](int) const;
 
         Matrix operator+(const Matrix &) const;
         Matrix& operator+=(const Matrix &);
@@ -31,8 +30,8 @@ namespace MathEngine {
         Matrix operator-(const Matrix &) const;
         Matrix& operator-=(const Matrix &);
 
-        Matrix operator*(const float) const;
-        Matrix& operator*=(const float);
+        Matrix operator*(float) const;
+        Matrix& operator*=(float);
 
         Matrix operator/(float) const;
         Matrix& operator/=(float);
@@ -48,7 +47,7 @@ namespace MathEngine {
         bool getInverse(Matrix &) const;
         bool inverse();
 
-        Matrix getTranspose() const;
+        [[nodiscard]] Matrix getTranspose() const;
         Matrix& transpose();
 
         static Matrix identity();
