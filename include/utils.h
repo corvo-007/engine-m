@@ -19,4 +19,8 @@ namespace MathEngine {
     MATH_ENGINE_API float lerp(float, float, float);
     MATH_ENGINE_API Vector2d lerp(const Vector2d &, const Vector2d &, float);
     MATH_ENGINE_API Vector3d lerp(const Vector3d &, const Vector3d &, float);
+
+    MATH_ENGINE_API long long factorial(int);
+
+    MATH_ENGINE_API float binomialCoefficient(int, int);
 }
