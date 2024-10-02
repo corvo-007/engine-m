@@ -36,4 +36,16 @@ namespace MathEngine {
     Vector3d lerp(const Vector3d &p1, const Vector3d &p2, const float t) {
         return p1 * (1 - t) + p2 * t;
     }
+
+    long long factorial(const int n) {
+        int fact = 1;
+        for (int i = 1; i <= n; i++) {
+            fact *= i;
+        }
+        return fact;
+    }
+
+    float binomialCoefficient(const int n, const int k) {
+        return static_cast<float>(factorial(n)) / static_cast<float>(factorial(k) * factorial(n - k));
+    }
 }
