@@ -190,6 +190,9 @@ namespace MathEngine {
     }
 
     void BezierCurve::setPoints(const std::vector<Vector3d> &points) {
+        if (points.size() != degree + 1) {
+            throw std::invalid_argument("Number of control points must be equal to degree + 1");
+        }
         this -> points = points;
     }
 }
