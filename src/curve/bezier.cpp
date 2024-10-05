@@ -49,18 +49,21 @@ namespace MathEngine {
         return { first, second };
     }
 
-    float BezierCurve::length(const Vector3d &p1, const Vector3d &p2, const float t1, const float t2) const {
-        const float tm = (t1 + t2) * 0.5f;
+    float BezierCurve::legendreGaussQuadratureLength() const {
+        constexpr float z = 0.5;
+        constexpr int n = LEGENDRE_GAUSS_QUADRATURE_WEIGHTS_AND_ABSCISSAE.size();
 
-        const Vector3d midPoint = evaluate(tm);
-        const Vector3d lineMid = (p1 + p2) * 0.5;
+        float sum = 0;
 
-        const float l = (midPoint - lineMid).magnitude();
+        for (int i = 0; i < n; i++) {
+            const float weight = LEGENDRE_GAUSS_QUADRATURE_WEIGHTS_AND_ABSCISSAE[i][0];
+            const float abscissa = LEGENDRE_GAUSS_QUADRATURE_WEIGHTS_AND_ABSCISSAE[i][1];
 
-        if (l > distance_tolerance) {
-            return length(p1, midPoint, t1, tm) + length(midPoint, p2, tm, t2);
+            const Vector3d tangent = tangentAt(z * abscissa + z);
+
+            sum += weight * tangent.magnitude();
         }
-        return (p1 - p2).magnitude();
+        return z * sum;
     }
 
     Vector3d BezierCurve::evaluate(float t) const {
@@ -170,7 +173,7 @@ namespace MathEngine {
     }
 
     float BezierCurve::length() const {
-        return length(points[0], points[degree], 0, 1);
+        return legendreGaussQuadratureLength();
     }
 
     Vector3d& BezierCurve::operator[](const int i) {
