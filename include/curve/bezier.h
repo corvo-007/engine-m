@@ -23,7 +23,7 @@ namespace MathEngine {
 
         [[nodiscard]] std::pair<BezierCurve, BezierCurve> deCasteljauSplit(float) const;
 
-        [[nodiscard]] float length(const Vector3d &, const Vector3d &, float, float) const;
+        [[nodiscard]] float legendreGaussQuadratureLength() const;
 
     public:
         BezierCurve& operator=(const BezierCurve &) = default;
