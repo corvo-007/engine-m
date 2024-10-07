@@ -129,11 +129,11 @@ namespace MathEngine {
         Vector3d normal = rotationAxis ^ tangent;
         normal.normalise();
 
-        return {origin, tangent, normal, rotationAxis};
+        return { origin, tangent, normal, rotationAxis };
     }
 
     Frame BezierCurve::getRMF(float t, const int steps) const {
-        t = clamp(t, 0.0, 1.0);
+        t = clamp(t, 0.f, 1.f);
 
         Frame frenetFrame = getFrenetFrame(0);
 
