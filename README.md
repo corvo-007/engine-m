@@ -1,35 +1,55 @@
 # Math Engine
 
-This is a math engine containing classes for vectors (2D and 3D), matrix (3x3) and quaternions.
+This is a math engine containing classes for the following:
+
+* [Vector (2D and 3D)](#vector-2d-and-3d)
+* [Matrix (3x3)](#matrix-3x3)
+* [Quaternion](#quaternion)
+* [Curves](#curves)
 
 ## Vector (2D and 3D)
 
-- addition/subtraction
-- scalar multiplication/division
-- dot product
-- cross product
-- magnitude
-- normalisation
-- rotation
+- Addition/subtraction
+- Scalar multiplication/division
+- Dot product
+- Cross product
+- Magnitude
+- Normalisation
+- Rotation
 
 ## Matrix (3x3)
 
-- addition/subtraction
-- scalar multiplication/division
-- product
-- vector multiplication
-- inverse
-- transpose
+- Addition/subtraction
+- Scalar multiplication/division
+- Product
+- Vector multiplication
+- Inverse
+- Transpose
 
 ## Quaternion
 
-- addition/subtraction
-- scalar multiplication/division
-- product
-- norm
-- normalisation
-- conjugate
-- inverse
+- Addition/subtraction
+- Scalar multiplication/division
+- Product
+- Norm
+- Normalisation
+- Conjugate
+- Inverse
+
+## Curves
+* ### Bezier Curve
+  * Evaluation at parameter t
+  * De Casteljau Algorithm
+  * Tangent, acceleration and normal at parameter t
+  * Curve splitting
+  * Frenet and Rotation Minimising frames
+  * Arc length - Legendre-Gauss Quadrature
+* ### Hermite Curve
+  * Evaluation at parameter t
+  * Tangent, acceleration and normal at parameter t
+  * Curve splitting
+  * Frenet and Rotation Minimising frames
+  * Arc length - Legendre-Gauss Quadrature
 
 ## Build
 
