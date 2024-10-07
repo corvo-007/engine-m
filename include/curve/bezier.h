@@ -3,12 +3,13 @@
 #include <vector>
 
 #include "core.h"
+#include "curve.h"
 #include "vector/vector3d.h"
 #include "frame.h"
 
 namespace MathEngine {
 
-    class MATH_ENGINE_API BezierCurve {
+    class MATH_ENGINE_API BezierCurve : public Curve {
         int degree;
         std::vector<Vector3d> points;
 
@@ -21,26 +22,26 @@ namespace MathEngine {
     private:
         [[nodiscard]] Vector3d deCasteljau(float) const;
 
-        [[nodiscard]] std::pair<BezierCurve, BezierCurve> deCasteljauSplit(float) const;
+        [[nodiscard]] std::pair<std::unique_ptr<BezierCurve>, std::unique_ptr<BezierCurve>> deCasteljauSplit(float) const;
 
         [[nodiscard]] float legendreGaussQuadratureLength() const;
 
     public:
         BezierCurve& operator=(const BezierCurve &) = default;
 
-        [[nodiscard]] Vector3d evaluate(float) const;
-        [[nodiscard]] Vector3d tangentAt(float) const;
-        [[nodiscard]] Vector3d accelerationAt(float) const;
-        [[nodiscard]] Vector3d normalAt(float) const;
+        [[nodiscard]] Vector3d evaluate(float) const override;
+        [[nodiscard]] Vector3d tangentAt(float) const override;
+        [[nodiscard]] Vector3d accelerationAt(float) const override;
+        [[nodiscard]] Vector3d normalAt(float) const override;
 
-        [[nodiscard]] std::pair<BezierCurve, BezierCurve> split(float) const;
+        [[nodiscard]] std::pair<std::unique_ptr<Curve>, std::unique_ptr<Curve>> split(float) const override;
 
-        [[nodiscard]] BezierCurve derivative() const;
+        [[nodiscard]] std::unique_ptr<Curve> derivative() const;
 
-        [[nodiscard]] Frame getFrenetFrame(float) const;
-        [[nodiscard]] Frame getRMF(float, int steps = 100) const;
+        [[nodiscard]] Frame getFrenetFrame(float) const override;
+        [[nodiscard]] Frame getRMF(float, int) const override;
 
-        [[nodiscard]] float length() const;
+        [[nodiscard]] float length() const override;
 
         Vector3d& operator[](int);
         const Vector3d& operator[](int) const;
@@ -50,6 +51,6 @@ namespace MathEngine {
         [[nodiscard]] std::vector<Vector3d> getPoints() const;
         void setPoints(const std::vector<Vector3d> &);
 
-        ~BezierCurve() = default;
+        ~BezierCurve() override = default;
     };
 }

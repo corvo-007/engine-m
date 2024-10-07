@@ -28,7 +28,7 @@ namespace MathEngine {
         return temp[0];
     }
 
-    std::pair<BezierCurve, BezierCurve> BezierCurve::deCasteljauSplit(const float t) const {
+    std::pair<std::unique_ptr<BezierCurve>, std::unique_ptr<BezierCurve>> BezierCurve::deCasteljauSplit(const float t) const {
         std::vector<std::vector<Vector3d>> temp(points.size());
         temp[0] = points;
 
@@ -38,15 +38,16 @@ namespace MathEngine {
             }
         }
 
-        BezierCurve first(degree), second(degree);
+        auto *first = new BezierCurve(degree);
+        auto *second = new BezierCurve(degree);
 
         for (int i = 0; i < temp.size(); i++) {
-            first[i] = temp[i][0];
+            (*first)[i] = temp[i][0];
             const size_t j = temp.size() - i - 1;
-            second[i] = temp[j][temp[j].size() - 1];
+            (*second)[i] = temp[j][temp[j].size() - 1];
         }
 
-        return { first, second };
+        return { std::unique_ptr<BezierCurve>(first), std::unique_ptr<BezierCurve>(second) };
     }
 
     float BezierCurve::legendreGaussQuadratureLength() const {
@@ -91,33 +92,30 @@ namespace MathEngine {
     }
 
     Vector3d BezierCurve::tangentAt(const float t) const {
-        const BezierCurve d = derivative();
-        return d.evaluate(t);
+        return (degree == 1) ? points[1] - points[0] : derivative() -> evaluate(t);
     }
 
     Vector3d BezierCurve::accelerationAt(const float t) const {
-        const BezierCurve d = derivative();
-        const BezierCurve dd = d.derivative();
-        return dd.evaluate(t);
+        return (degree == 1) ? Vector3d(0, 0, 0) : derivative() -> tangentAt(t);
     }
 
     Vector3d BezierCurve::normalAt(const float t) const {
-        const Frame rmf = getRMF(t);
+        const Frame rmf = getRMF(t, 100);
         return rmf.normal;
     }
 
-    std::pair<BezierCurve, BezierCurve> BezierCurve::split(const float t) const {
+    std::pair<std::unique_ptr<Curve>, std::unique_ptr<Curve>> BezierCurve::split(const float t) const {
         return deCasteljauSplit(t);
     }
 
-    BezierCurve BezierCurve::derivative() const {
+    std::unique_ptr<Curve> BezierCurve::derivative() const {
         std::vector<Vector3d> temp(points.size() - 1);
 
         for (int i = 0; i < points.size() - 1; i++) {
             temp[i] = (points[i + 1] - points[i]) * static_cast<float>(degree);
         }
 
-        return {degree - 1, temp};
+        return std::make_unique<BezierCurve>(degree - 1, temp);
     }
 
     Frame BezierCurve::getFrenetFrame(const float t) const {
@@ -131,11 +129,11 @@ namespace MathEngine {
         Vector3d normal = rotationAxis ^ tangent;
         normal.normalise();
 
-        return {origin, tangent, normal, rotationAxis};
+        return { origin, tangent, normal, rotationAxis };
     }
 
     Frame BezierCurve::getRMF(float t, const int steps) const {
-        t = clamp(t, 0.0, 1.0);
+        t = clamp(t, 0.f, 1.f);
 
         Frame frenetFrame = getFrenetFrame(0);
 
