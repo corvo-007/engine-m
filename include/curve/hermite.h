@@ -22,7 +22,7 @@ namespace MathEngine {
         [[nodiscard]] float legendreGaussQuadratureLength() const;
 
     public:
-        HermiteCurve& operator=(const HermiteCurve &spline) = default;
+        HermiteCurve& operator=(const HermiteCurve &) = default;
 
         [[nodiscard]] Vector3d evaluate(float) const override;
         [[nodiscard]] Vector3d tangentAt(float) const override;
