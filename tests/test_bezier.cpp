@@ -1,4 +1,4 @@
-#include <curve/bezier.h>
+#include <curves/bezier.h>
 #include <gtest/gtest.h>
 
 static MathEngine::Vector3d tangentAt(const float t, const MathEngine::Vector3d &p0, const MathEngine::Vector3d &p1, const MathEngine::Vector3d &p2, const MathEngine::Vector3d &p3) {

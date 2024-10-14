@@ -1,4 +1,4 @@
-#include "curve/bezier.h"
+#include "curves/bezier.h"
 
 #include <cmath>
 #include <stdexcept>

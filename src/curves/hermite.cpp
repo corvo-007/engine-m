@@ -1,4 +1,4 @@
-#include "curve/hermite.h"
+#include "curves/hermite.h"
 
 #include <iostream>
 
