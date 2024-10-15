@@ -1,6 +1,6 @@
 #pragma once
 
-#ifdef DYNAMIC_LINK
+#if defined(_WIN32) && defined(DYNAMIC_LINK)
     #ifdef BUILD_DLL
         #define MATH_ENGINE_API __declspec(dllexport)
     #else
