@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 #include "core.h"
 #include "vector/vector3d.h"
 
@@ -21,8 +23,8 @@ namespace MathEngine {
     public:
         Matrix& operator=(const Matrix &);
 
-        float* operator[](int);
-        const float* operator[](int) const;
+        float* operator[](uint32_t);
+        const float* operator[](uint32_t) const;
 
         Matrix operator+(const Matrix &) const;
         Matrix& operator+=(const Matrix &);

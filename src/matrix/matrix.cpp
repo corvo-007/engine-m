@@ -16,8 +16,8 @@ namespace MathEngine {
     }
 
     void Matrix::copy(const float matrix[3][3]) {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (uint32_t i = 0; i < 3; i++) {
+            for (uint32_t j = 0; j < 3; j++) {
                 this -> matrix[i][j] = matrix[i][j];
             }
         }
@@ -35,19 +35,19 @@ namespace MathEngine {
         return *this;
     }
 
-    float* Matrix::operator[](const int i) {
+    float* Matrix::operator[](const uint32_t i) {
         return matrix[i];
     }
 
-    const float* Matrix::operator[](const int i) const {
+    const float* Matrix::operator[](const uint32_t i) const {
         return matrix[i];
     }
 
     Matrix Matrix::operator+(const Matrix &mat) const {
         Matrix m;
 
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (uint32_t i = 0; i < 3; i++) {
+            for (uint32_t j = 0; j < 3; j++) {
                 m[i][j] = matrix[i][j] + mat[i][j];
             }
         }
@@ -55,8 +55,8 @@ namespace MathEngine {
     }
 
     Matrix& Matrix::operator+=(const Matrix &mat) {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (uint32_t i = 0; i < 3; i++) {
+            for (uint32_t j = 0; j < 3; j++) {
                 matrix[i][j] += mat[i][j];
             }
         }
@@ -65,8 +65,8 @@ namespace MathEngine {
 
     Matrix Matrix::operator-(const Matrix &mat) const {
         Matrix m;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (uint32_t i = 0; i < 3; i++) {
+            for (uint32_t j = 0; j < 3; j++) {
                 m[i][j] = matrix[i][j] - mat[i][j]; 
             }
         }
@@ -74,8 +74,8 @@ namespace MathEngine {
     }
 
     Matrix& Matrix::operator-=(const Matrix &mat) {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (uint32_t i = 0; i < 3; i++) {
+            for (uint32_t j = 0; j < 3; j++) {
                 matrix[i][j] -= mat[i][j];
             }
         }
@@ -85,8 +85,8 @@ namespace MathEngine {
     Matrix Matrix::operator*(const float k) const {
         Matrix m;
 
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (uint32_t i = 0; i < 3; i++) {
+            for (uint32_t j = 0; j < 3; j++) {
                 m[i][j] = matrix[i][j] * k;
             }
         }
@@ -115,9 +115,9 @@ namespace MathEngine {
     Matrix Matrix::operator*(const Matrix &mat) const {
         Matrix m;
 
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                for (int k = 0; k < 3; k++) {
+        for (uint32_t i = 0; i < 3; i++) {
+            for (uint32_t j = 0; j < 3; j++) {
+                for (uint32_t k = 0; k < 3; k++) {
                     m[i][j] += matrix[i][k] * mat[k][j];
                 }
             }
@@ -135,8 +135,8 @@ namespace MathEngine {
     }
 
     bool Matrix::operator==(const Matrix &mat) const {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (uint32_t i = 0; i < 3; i++) {
+            for (uint32_t j = 0; j < 3; j++) {
                 if (!equals(matrix[i][j], mat[i][j])) {
                     return false;
                 }
@@ -181,8 +181,8 @@ namespace MathEngine {
     Matrix Matrix::getTranspose() const {
         Matrix m;
 
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (uint32_t i = 0; i < 3; i++) {
+            for (uint32_t j = 0; j < 3; j++) {
                 m[j][i] = matrix[i][j];
             }
         }

@@ -1,6 +1,7 @@
 #include "utils.h"
 
 #include <cmath>
+
 #include "constants.h"
 
 namespace MathEngine {
@@ -37,9 +38,9 @@ namespace MathEngine {
         return p1 * (1 - t) + p2 * t;
     }
 
-    long long factorial(const int n) {
-        int fact = 1;
-        for (int i = 1; i <= n; i++) {
+    uint64_t factorial(const uint64_t n) {
+        uint64_t fact = 1;
+        for (uint64_t i = 1; i <= n; i++) {
             fact *= i;
         }
         return fact;
