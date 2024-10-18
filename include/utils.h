@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 #include "core.h"
 #include "vector/vector2d.h"
 #include "vector/vector3d.h"
@@ -20,7 +22,7 @@ namespace MathEngine {
     MATH_ENGINE_API Vector2d lerp(const Vector2d &, const Vector2d &, float);
     MATH_ENGINE_API Vector3d lerp(const Vector3d &, const Vector3d &, float);
 
-    MATH_ENGINE_API long long factorial(int);
+    MATH_ENGINE_API uint64_t factorial(uint64_t);
 
     MATH_ENGINE_API float binomialCoefficient(int, int);
 }
