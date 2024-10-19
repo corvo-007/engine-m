@@ -1,7 +1,9 @@
 #include "matrix/matrix.h"
 
+#ifdef __x86_64__
 #include <immintrin.h>
-
+#define USE_SIMD
+#endif
 #include "utils.h"
 
 namespace MathEngine {
@@ -118,7 +120,7 @@ namespace MathEngine {
     Matrix Matrix::operator*(const Matrix &mat) const {
         Matrix m;
 
-#if defined(__AVX2__)
+#if defined(USE_SIMD) && defined(__AVX2__)
 
         const __m256 row0_0 = _mm256_set_ps(0.f, matrix[0][2], matrix[0][1], matrix[0][0], 0.f, matrix[0][2], matrix[0][1], matrix[0][0]);
         const __m256 row1_1 = _mm256_set_ps(0.f, matrix[1][2], matrix[1][1], matrix[1][0], 0.f, matrix[1][2], matrix[1][1], matrix[1][0]);
@@ -149,7 +151,7 @@ namespace MathEngine {
         m[2][1] = row2col0xrow2col1[4];
         m[2][2] = row2col2xrow2col2[0];
 
-#elif defined(__SSE2__)
+#elif defined(USE_SIMD) && defined(__SSE2__)
 
         const __m128 row0 = _mm_set_ps(0.f, matrix[0][2], matrix[0][1], matrix[0][0]);
         const __m128 row1 = _mm_set_ps(0.f, matrix[1][2], matrix[1][1], matrix[1][0]);
