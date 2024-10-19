@@ -10,6 +10,8 @@ file(GLOB_RECURSE SOURCES "src/*.cpp")
 
 option(BUILD_SHARED_LIBS "Build shared libraries" ON)
 
+add_compile_options(-mavx2)
+
 add_library(MathEngine ${SOURCES})
 
 if (BUILD_SHARED_LIBS)
