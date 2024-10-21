@@ -26,11 +26,15 @@ namespace MathEngine {
     }
 
     void Matrix::copy(const float matrix[3][3]) {
-        for (uint32_t i = 0; i < 3; i++) {
-            for (uint32_t j = 0; j < 3; j++) {
-                this -> matrix[i][j] = matrix[i][j];
-            }
-        }
+        this -> matrix[0][0] = matrix[0][0];
+        this -> matrix[0][1] = matrix[0][1];
+        this -> matrix[0][2] = matrix[0][2];
+        this -> matrix[1][0] = matrix[1][0];
+        this -> matrix[1][1] = matrix[1][1];
+        this -> matrix[1][2] = matrix[1][2];
+        this -> matrix[2][0] = matrix[2][0];
+        this -> matrix[2][1] = matrix[2][1];
+        this -> matrix[2][2] = matrix[2][2];
     }
 
     float Matrix::determinant() const {
