@@ -1,12 +1,7 @@
 #include "matrix/matrix.h"
 
-#if defined(__x86_64__) && (defined(__AVX2__) || defined(__SSE2__))
+#if defined(USE_AVX2) || defined(USE_SSE2)
 #include <immintrin.h>
-#ifdef __AVX2__
-#define USE_AVX2
-#else
-#define USE_SSE2
-#endif
 #endif
 
 #include "utils.h"
@@ -26,11 +21,15 @@ namespace MathEngine {
     }
 
     void Matrix::copy(const float matrix[3][3]) {
-        for (uint32_t i = 0; i < 3; i++) {
-            for (uint32_t j = 0; j < 3; j++) {
-                this -> matrix[i][j] = matrix[i][j];
-            }
-        }
+        this -> matrix[0][0] = matrix[0][0];
+        this -> matrix[0][1] = matrix[0][1];
+        this -> matrix[0][2] = matrix[0][2];
+        this -> matrix[1][0] = matrix[1][0];
+        this -> matrix[1][1] = matrix[1][1];
+        this -> matrix[1][2] = matrix[1][2];
+        this -> matrix[2][0] = matrix[2][0];
+        this -> matrix[2][1] = matrix[2][1];
+        this -> matrix[2][2] = matrix[2][2];
     }
 
     float Matrix::determinant() const {
@@ -56,70 +55,154 @@ namespace MathEngine {
     Matrix Matrix::operator+(const Matrix &mat) const {
         Matrix m;
 
-        for (uint32_t i = 0; i < 3; i++) {
-            for (uint32_t j = 0; j < 3; j++) {
-                m[i][j] = matrix[i][j] + mat[i][j];
-            }
-        }
+#if defined(USE_AVX2)
+
+        const __m256 first = _mm256_set_ps(matrix[2][1], matrix[2][0], matrix[1][2], matrix[1][1], matrix[1][0], matrix[0][2], matrix[0][1], matrix[0][0]);
+        const __m256 second = _mm256_set_ps(mat[2][1], mat[2][0], mat[1][2], mat[1][1], mat[1][0], mat[0][2], mat[0][1], mat[0][0]);
+        const __m256 sum = _mm256_add_ps(first, second);
+
+        _mm256_store_ps(&m[0][0], sum);
+        m[2][2] = matrix[2][2] + mat[2][2];
+
+#elif defined(USE_SSE2)
+
+        const __m128 first = _mm_set_ps(matrix[1][0], matrix[0][2], matrix[0][1], matrix[0][0]);
+        const __m128 second = _mm_set_ps(matrix[2][1], matrix[2][0], matrix[1][2], matrix[1][1]);
+        const __m128 third = _mm_set_ps(mat[1][0], mat[0][2], mat[0][1], mat[0][0]);
+        const __m128 fourth = _mm_set_ps(mat[2][1], mat[2][0], mat[1][2], mat[1][1]);
+
+        const __m128 sum1 = _mm_add_ps(first, third);
+        const __m128 sum2 = _mm_add_ps(second, fourth);
+
+        _mm_store_ps(&m[0][0], sum1);
+        _mm_store_ps(&m[1][1], sum2);
+        m[2][2] = matrix[2][2] + mat[2][2];
+
+#else
+
+        m[0][0] = matrix[0][0] + mat[0][0];
+        m[0][1] = matrix[0][1] + mat[0][1];
+        m[0][2] = matrix[0][2] + mat[0][2];
+        m[1][0] = matrix[1][0] + mat[1][0];
+        m[1][1] = matrix[1][1] + mat[1][1];
+        m[1][2] = matrix[1][2] + mat[1][2];
+        m[2][0] = matrix[2][0] + mat[2][0];
+        m[2][1] = matrix[2][1] + mat[2][1];
+        m[2][2] = matrix[2][2] + mat[2][2];
+
+#endif
+
         return m;
     }
 
     Matrix& Matrix::operator+=(const Matrix &mat) {
-        for (uint32_t i = 0; i < 3; i++) {
-            for (uint32_t j = 0; j < 3; j++) {
-                matrix[i][j] += mat[i][j];
-            }
-        }
+        *this = *this + mat;
         return *this;
     }
 
     Matrix Matrix::operator-(const Matrix &mat) const {
         Matrix m;
-        for (uint32_t i = 0; i < 3; i++) {
-            for (uint32_t j = 0; j < 3; j++) {
-                m[i][j] = matrix[i][j] - mat[i][j]; 
-            }
-        }
+
+#if defined(USE_AVX2)
+
+        const __m256 first = _mm256_set_ps(matrix[2][1], matrix[2][0], matrix[1][2], matrix[1][1], matrix[1][0], matrix[0][2], matrix[0][1], matrix[0][0]);
+        const __m256 second = _mm256_set_ps(mat[2][1], mat[2][0], mat[1][2], mat[1][1], mat[1][0], mat[0][2], mat[0][1], mat[0][0]);
+        const __m256 sum = _mm256_sub_ps(first, second);
+
+        _mm256_store_ps(&m[0][0], sum);
+        m[2][2] = matrix[2][2] - mat[2][2];
+
+#elif defined(USE_SSE2)
+
+        const __m128 first = _mm_set_ps(matrix[1][0], matrix[0][2], matrix[0][1], matrix[0][0]);
+        const __m128 second = _mm_set_ps(matrix[2][1], matrix[2][0], matrix[1][2], matrix[1][1]);
+        const __m128 third = _mm_set_ps(mat[1][0], mat[0][2], mat[0][1], mat[0][0]);
+        const __m128 fourth = _mm_set_ps(mat[2][1], mat[2][0], mat[1][2], mat[1][1]);
+
+        const __m128 sum1 = _mm_sub_ps(first, third);
+        const __m128 sum2 = _mm_sub_ps(second, fourth);
+
+        _mm_store_ps(&m[0][0], sum1);
+        _mm_store_ps(&m[1][1], sum2);
+        m[2][2] = matrix[2][2] - mat[2][2];
+
+#else
+
+        m[0][0] = matrix[0][0] - mat[0][0];
+        m[0][1] = matrix[0][1] - mat[0][1];
+        m[0][2] = matrix[0][2] - mat[0][2];
+        m[1][0] = matrix[1][0] - mat[1][0];
+        m[1][1] = matrix[1][1] - mat[1][1];
+        m[1][2] = matrix[1][2] - mat[1][2];
+        m[2][0] = matrix[2][0] - mat[2][0];
+        m[2][1] = matrix[2][1] - mat[2][1];
+        m[2][2] = matrix[2][2] - mat[2][2];
+
+#endif
+
         return m;
     }
 
     Matrix& Matrix::operator-=(const Matrix &mat) {
-        for (uint32_t i = 0; i < 3; i++) {
-            for (uint32_t j = 0; j < 3; j++) {
-                matrix[i][j] -= mat[i][j];
-            }
-        }
+        *this = *this - mat;
         return *this;
     }
 
     Matrix Matrix::operator*(const float k) const {
         Matrix m;
 
-        for (uint32_t i = 0; i < 3; i++) {
-            for (uint32_t j = 0; j < 3; j++) {
-                m[i][j] = matrix[i][j] * k;
-            }
-        }
+#if defined(USE_AVX2)
+
+        const __m256 first = _mm256_set_ps(matrix[2][1], matrix[2][0], matrix[1][2], matrix[1][1], matrix[1][0], matrix[0][2], matrix[0][1], matrix[0][0]);
+        const __m256 second = _mm256_set1_ps(k);
+        const __m256 sum = _mm256_mul_ps(first, second);
+
+        _mm256_store_ps(&m[0][0], sum);
+        m[2][2] = matrix[2][2] * k;
+
+#elif defined(USE_SSE2)
+
+        const __m128 first = _mm_set_ps(matrix[1][0], matrix[0][2], matrix[0][1], matrix[0][0]);
+        const __m128 second = _mm_set_ps(matrix[2][1], matrix[2][0], matrix[1][2], matrix[1][1]);
+        const __m128 third = _mm_set1_ps(k);
+
+        const __m128 sum1 = _mm_mul_ps(first, third);
+        const __m128 sum2 = _mm_mul_ps(second, third);
+
+        _mm_store_ps(&m[0][0], sum1);
+        _mm_store_ps(&m[1][1], sum2);
+        m[2][2] = matrix[2][2] * k;
+
+#else
+
+        m[0][0] = matrix[0][0] * k;
+        m[0][1] = matrix[0][1] * k;
+        m[0][2] = matrix[0][2] * k;
+        m[1][0] = matrix[1][0] * k;
+        m[1][1] = matrix[1][1] * k;
+        m[1][2] = matrix[1][2] * k;
+        m[2][0] = matrix[2][0] * k;
+        m[2][1] = matrix[2][1] * k;
+        m[2][2] = matrix[2][2] * k;
+
+#endif
+
         return m;
     }
 
     Matrix& Matrix::operator*=(const float k) {
-        for (float (&i)[3] : matrix) {
-            for (float &j : i) {
-                j *= k;
-            }
-        }
+        *this = *this * k;
         return *this;
     }
 
     Matrix Matrix::operator/(float k) const {
         k = 1 / k;
-        return (*this) * k;
+        return *this * k;
     }
 
     Matrix& Matrix::operator/=(float k) {
         k = 1 / k;
-        return (*this) *= k;
+        return *this *= k;
     }
 
     Matrix Matrix::operator*(const Matrix &mat) const {
@@ -200,7 +283,7 @@ namespace MathEngine {
     }
 
     Matrix& Matrix::operator*=(const Matrix &mat) {
-        (*this) = (*this) * mat;
+        *this = *this * mat;
         return *this;
     }
 
@@ -220,7 +303,7 @@ namespace MathEngine {
     }
 
     bool Matrix::operator!=(const Matrix &mat) const {
-        return !((*this) == mat);
+        return !(*this == mat);
     }
 
     bool Matrix::getInverse(Matrix &mat) const {
@@ -248,7 +331,7 @@ namespace MathEngine {
     bool Matrix::inverse() {
         Matrix mat;
         const bool i = getInverse(mat);
-        (*this) = mat;
+        *this = mat;
         return i;
     }
 
@@ -264,7 +347,7 @@ namespace MathEngine {
     }
 
     Matrix& Matrix::transpose() {
-        (*this) = getTranspose();
+        *this = getTranspose();
         return *this;
     }
 
