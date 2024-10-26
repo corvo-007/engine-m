@@ -1,12 +1,7 @@
 #include "matrix/matrix.h"
 
-#if defined(__x86_64__) && (defined(__AVX2__) || defined(__SSE2__))
+#if defined(USE_AVX2) || defined(USE_SSE2)
 #include <immintrin.h>
-#ifdef __AVX2__
-#define USE_AVX2
-#else
-#define USE_SSE2
-#endif
 #endif
 
 #include "utils.h"

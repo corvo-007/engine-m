@@ -5,10 +5,22 @@
 #include "core.h"
 #include "vector/vector3d.h"
 
+#if defined(__x86_64__) && (defined(__AVX2__) || defined(__SSE2__))
+#ifdef __AVX2__
+#define USE_AVX2
+#define MATRIX_ALIGNMENT 32
+#else
+#define USE_SSE2
+#define MATRIX_ALIGNMENT 16
+#endif
+#else
+#define MATRIX_ALIGNMENT 4
+#endif
+
 namespace MathEngine {
 
     class MATH_ENGINE_API Matrix {
-        float matrix[3][3] {};
+        alignas(MATRIX_ALIGNMENT) float matrix[3][3] {};
 
     public:
         Matrix() = default;
