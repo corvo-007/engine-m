@@ -1,3 +1,5 @@
+include_directories(${CMAKE_SOURCE_DIR}/include)
+
 add_executable(test_vector2d test_vector2d.cpp)
 add_executable(test_vector3d test_vector3d.cpp)
 add_executable(test_matrix test_matrix.cpp)
