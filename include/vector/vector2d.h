@@ -4,9 +4,9 @@
 #include "vector.h"
 #include "vector3d.h"
 
-namespace MathEngine {
+namespace EngineM {
 
-    class MATH_ENGINE_API Vector2d : public Vector<Vector2d> {
+    class ENGINE_M_API Vector2d : public Vector<Vector2d> {
     public:
         float x {};
         float y {};

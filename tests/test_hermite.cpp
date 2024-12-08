@@ -1,19 +1,19 @@
 #include <curves/hermite.h>
 #include <gtest/gtest.h>
 
-static MathEngine::Vector3d tangentAt(const float t, const MathEngine::Vector3d &p1, const MathEngine::Vector3d &p2, const MathEngine::Vector3d &v1, const MathEngine::Vector3d &v2) {
+static EngineM::Vector3d tangentAt(const float t, const EngineM::Vector3d &p1, const EngineM::Vector3d &p2, const EngineM::Vector3d &v1, const EngineM::Vector3d &v2) {
     const float tt = t * t;
     const float temp = 6 * (tt - t);
 
     return p1 * temp + v1 * (3 * tt - 4 * t + 1) - p2 * temp + v2 * (3 * tt - 2 * t);
 }
 
-static MathEngine::Vector3d accelerationAt(const float t, const MathEngine::Vector3d &p1, const MathEngine::Vector3d &p2, const MathEngine::Vector3d &v1, const MathEngine::Vector3d &v2) {
+static EngineM::Vector3d accelerationAt(const float t, const EngineM::Vector3d &p1, const EngineM::Vector3d &p2, const EngineM::Vector3d &v1, const EngineM::Vector3d &v2) {
     return p1 * 6 * (2 * t - 1) + v1 * (6 * t - 4) - p2 * 6 * (2 * t - 1) + v2 * (6 * t - 2);
 }
 
 TEST(HermiteTest, DefaultConstruct) {
-    const MathEngine::HermiteCurve curve;
+    const EngineM::HermiteCurve curve;
 
     auto [ p1, p2 ] = curve.getPoints();
     auto [ v1, v2 ] = curve.getTangents();
@@ -33,7 +33,7 @@ TEST(HermiteTest, DefaultConstruct) {
 }
 
 TEST(HermiteTest, ParamConstruct) {
-    const MathEngine::HermiteCurve curve({1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {10, 11, 12});
+    const EngineM::HermiteCurve curve({1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {10, 11, 12});
 
     auto [p1, p2] = curve.getPoints();
     auto [v1, v2] = curve.getTangents();
@@ -54,13 +54,13 @@ TEST(HermiteTest, ParamConstruct) {
 }
 
 TEST(HermiteTest, CopyConstruct) {
-    const MathEngine::Vector3d p1(1, 2, 3);
-    const MathEngine::Vector3d p2(4, 5, 6);
-    const MathEngine::Vector3d v1(7, 8, 9);
-    const MathEngine::Vector3d v2(10, 11, 12);
-    const MathEngine::HermiteCurve curve1(p1, p2, v1, v2);
+    const EngineM::Vector3d p1(1, 2, 3);
+    const EngineM::Vector3d p2(4, 5, 6);
+    const EngineM::Vector3d v1(7, 8, 9);
+    const EngineM::Vector3d v2(10, 11, 12);
+    const EngineM::HermiteCurve curve1(p1, p2, v1, v2);
 
-    const MathEngine::HermiteCurve curve2(curve1);
+    const EngineM::HermiteCurve curve2(curve1);
 
     auto [ copy_p1, copy_p2 ] = curve2.getPoints();
     auto [ copy_v1, copy_v2 ] = curve2.getTangents();
@@ -80,13 +80,13 @@ TEST(HermiteTest, CopyConstruct) {
 }
 
 TEST(HermiteTest, AssignmentOp) {
-    const MathEngine::Vector3d p1(1, 2, 3);
-    const MathEngine::Vector3d p2(4, 5, 6);
-    const MathEngine::Vector3d v1(7, 8, 9);
-    const MathEngine::Vector3d v2(10, 11, 12);
-    const MathEngine::HermiteCurve curve1(p1, p2, v1, v2);
+    const EngineM::Vector3d p1(1, 2, 3);
+    const EngineM::Vector3d p2(4, 5, 6);
+    const EngineM::Vector3d v1(7, 8, 9);
+    const EngineM::Vector3d v2(10, 11, 12);
+    const EngineM::HermiteCurve curve1(p1, p2, v1, v2);
 
-    MathEngine::HermiteCurve curve2;
+    EngineM::HermiteCurve curve2;
 
     auto [ copy_p1, copy_p2 ] = curve2.getPoints();
     auto [ copy_v1, copy_v2 ] = curve2.getTangents();
@@ -125,13 +125,13 @@ TEST(HermiteTest, AssignmentOp) {
 }
 
 TEST(HermiteTest, Evaluate) {
-    const MathEngine::Vector3d p1;
-    const MathEngine::Vector3d p2(5, 0, 0);
-    const MathEngine::Vector3d v1(0, 5, 0);
-    const MathEngine::Vector3d v2(0, -5, 0);
-    const MathEngine::HermiteCurve curve(p1, p2, v1, v2);
+    const EngineM::Vector3d p1;
+    const EngineM::Vector3d p2(5, 0, 0);
+    const EngineM::Vector3d v1(0, 5, 0);
+    const EngineM::Vector3d v2(0, -5, 0);
+    const EngineM::HermiteCurve curve(p1, p2, v1, v2);
 
-    MathEngine::Vector3d result = curve.evaluate(0);
+    EngineM::Vector3d result = curve.evaluate(0);
 
     EXPECT_FLOAT_EQ(result.x, p1.x);
     EXPECT_FLOAT_EQ(result.y, p1.y);
@@ -151,14 +151,14 @@ TEST(HermiteTest, Evaluate) {
 }
 
 TEST(HermiteTest, Tangent) {
-    const MathEngine::Vector3d p1;
-    const MathEngine::Vector3d p2(5, 0, 0);
-    const MathEngine::Vector3d v1(0, 5, 0);
-    const MathEngine::Vector3d v2(0, -5, 0);
-    const MathEngine::HermiteCurve curve(p1, p2, v1, v2);
+    const EngineM::Vector3d p1;
+    const EngineM::Vector3d p2(5, 0, 0);
+    const EngineM::Vector3d v1(0, 5, 0);
+    const EngineM::Vector3d v2(0, -5, 0);
+    const EngineM::HermiteCurve curve(p1, p2, v1, v2);
 
     float t = 0;
-    MathEngine::Vector3d result = curve.tangentAt(t);
+    EngineM::Vector3d result = curve.tangentAt(t);
 
     EXPECT_FLOAT_EQ(result.x, v1.x);
     EXPECT_FLOAT_EQ(result.y, v1.y);
@@ -166,7 +166,7 @@ TEST(HermiteTest, Tangent) {
 
     t = 0.5;
     result = curve.tangentAt(t);
-    const MathEngine::Vector3d tangent = tangentAt(t, p1, p2, v1, v2);
+    const EngineM::Vector3d tangent = tangentAt(t, p1, p2, v1, v2);
 
     EXPECT_FLOAT_EQ(result.x, tangent.x);
     EXPECT_FLOAT_EQ(result.y, tangent.y);
@@ -181,16 +181,16 @@ TEST(HermiteTest, Tangent) {
 }
 
 TEST(HermiteTest, Acceleration) {
-    const MathEngine::Vector3d p1;
-    const MathEngine::Vector3d p2(5, 0, 0);
-    const MathEngine::Vector3d v1(0, 5, 0);
-    const MathEngine::Vector3d v2(0, -5, 0);
-    const MathEngine::HermiteCurve curve(p1, p2, v1, v2);
+    const EngineM::Vector3d p1;
+    const EngineM::Vector3d p2(5, 0, 0);
+    const EngineM::Vector3d v1(0, 5, 0);
+    const EngineM::Vector3d v2(0, -5, 0);
+    const EngineM::HermiteCurve curve(p1, p2, v1, v2);
 
     float t = 0;
 
-    MathEngine::Vector3d result = curve.accelerationAt(t);
-    MathEngine::Vector3d acceleration = accelerationAt(t, p1, p2, v1, v2);
+    EngineM::Vector3d result = curve.accelerationAt(t);
+    EngineM::Vector3d acceleration = accelerationAt(t, p1, p2, v1, v2);
 
     EXPECT_FLOAT_EQ(result.x, acceleration.x);
     EXPECT_FLOAT_EQ(result.y, acceleration.y);

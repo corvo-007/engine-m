@@ -4,7 +4,7 @@
 
 #include "constants.h"
 
-namespace MathEngine {
+namespace EngineM {
 
     bool equals(const float a, const float b) {
         return std::fabs(a - b) < epsilon;

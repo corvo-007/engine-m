@@ -6,7 +6,7 @@
 #include "constants.h"
 #include "utils.h"
 
-namespace MathEngine {
+namespace EngineM {
 
     BezierCurve::BezierCurve(const int degree): degree(degree), points(degree + 1) {
 

@@ -6,7 +6,7 @@
 
 #include "utils.h"
 
-namespace MathEngine {
+namespace EngineM {
 
     Matrix::Matrix(const float a, const float b, const float c, const float d, const float e, const float f, const float g, const float h, const float i): matrix{{a, b, c}, {d, e, f}, {g, h, i}} {
 

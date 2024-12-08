@@ -2,7 +2,7 @@
 #include "vector/vector2d.h"
 #include "utils.h"
 
-namespace MathEngine {
+namespace EngineM {
 
     Vector2d::Vector2d(const float x, const float y): x(x), y(y) {
 
