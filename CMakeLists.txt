@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 
 option(BUILD_SHARED_LIBS "Build shared libraries" ON)
-option(ENABLE_TESTING "Build test files" ON)
+option(EngineM_build_tests "Build test files" ON)
 
 add_compile_options(-mavx2)
 
@@ -17,10 +17,9 @@ if (BUILD_SHARED_LIBS)
     target_compile_definitions(EngineM PRIVATE DYNAMIC_LINK BUILD_DLL)
 endif()
 
-target_include_directories(EngineM PRIVATE ${CMAKE_SOURCE_DIR}/include)
+target_include_directories(EngineM PRIVATE ${EngineM_SOURCE_DIR}/include)
 
-
-if (ENABLE_TESTING)
+if (EngineM_build_tests)
     include(FetchContent)
     FetchContent_Declare(
         googletest URL https://github.com/google/googletest/archive/refs/tags/v1.15.2.zip
