@@ -4,11 +4,10 @@ project(EngineM)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-include_directories(include)
-
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 
 option(BUILD_SHARED_LIBS "Build shared libraries" ON)
+option(ENABLE_TESTING "Build test files" ON)
 
 add_compile_options(-mavx2)
 
@@ -20,16 +19,19 @@ endif()
 
 target_include_directories(EngineM PRIVATE ${CMAKE_SOURCE_DIR}/include)
 
-include(FetchContent)
-FetchContent_Declare(
-    googletest URL https://github.com/google/googletest/archive/refs/tags/v1.15.2.zip
-)
-set(BUILD_GMOCK OFF CACHE BOOL "" FORCE)
-set(BUILD_GTEST OFF CACHE BOOL "" FORCE)
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-set(BUILD_SHARED_LIBS OFF)
-FetchContent_MakeAvailable(googletest)
 
-enable_testing()
+if (ENABLE_TESTING)
+    include(FetchContent)
+    FetchContent_Declare(
+        googletest URL https://github.com/google/googletest/archive/refs/tags/v1.15.2.zip
+    )
+    set(BUILD_GMOCK OFF CACHE BOOL "" FORCE)
+    set(BUILD_GTEST OFF CACHE BOOL "" FORCE)
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+    set(BUILD_SHARED_LIBS OFF)
+    FetchContent_MakeAvailable(googletest)
 
-add_subdirectory(tests)
+    enable_testing()
+
+    add_subdirectory(tests)
+endif()
