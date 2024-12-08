@@ -3,7 +3,7 @@
 #include "quaternion/quaternion.h"
 #include "utils.h"
 
-namespace MathEngine {
+namespace EngineM {
 
     Vector3d::Vector3d(const float x, const float y, const float z): x(x), y(y), z(z) {
 

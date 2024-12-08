@@ -2,7 +2,7 @@
 #include "quaternion/quaternion.h"
 #include "utils.h"
 
-namespace MathEngine {
+namespace EngineM {
 
     Quaternion::Quaternion(const float a, const Vector3d &v): a(a), v(v) {
 

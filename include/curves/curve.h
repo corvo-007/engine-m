@@ -6,9 +6,9 @@
 #include "vector/vector3d.h"
 #include "frame.h"
 
-namespace MathEngine {
+namespace EngineM {
 
-    class MATH_ENGINE_API Curve {
+    class ENGINE_M_API Curve {
     public:
         [[nodiscard]] virtual Vector3d evaluate(float) const = 0;
         [[nodiscard]] virtual Vector3d tangentAt(float) const = 0;

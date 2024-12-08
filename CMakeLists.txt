@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.25)
-project(MathEngine)
+project(EngineM)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
@@ -12,13 +12,13 @@ option(BUILD_SHARED_LIBS "Build shared libraries" ON)
 
 add_compile_options(-mavx2)
 
-add_library(MathEngine ${SOURCES})
+add_library(EngineM ${SOURCES})
 
 if (BUILD_SHARED_LIBS)
-    target_compile_definitions(MathEngine PRIVATE DYNAMIC_LINK BUILD_DLL)
+    target_compile_definitions(EngineM PRIVATE DYNAMIC_LINK BUILD_DLL)
 endif()
 
-target_include_directories(MathEngine PRIVATE ${CMAKE_SOURCE_DIR}/include)
+target_include_directories(EngineM PRIVATE ${CMAKE_SOURCE_DIR}/include)
 
 include(FetchContent)
 FetchContent_Declare(

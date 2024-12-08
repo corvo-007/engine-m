@@ -1,4 +1,4 @@
-# Math Engine
+# EngineM
 
 This is a math engine containing classes for the following:
 

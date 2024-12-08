@@ -2,12 +2,12 @@
 
 #include "core.h"
 
-namespace MathEngine {
+namespace EngineM {
 
     class Vector3d;
 
     template <typename T>
-    class MATH_ENGINE_API Vector {
+    class ENGINE_M_API Vector {
     public:
         virtual T operator+(const T &) const = 0;
         virtual T& operator+=(const T &) = 0;

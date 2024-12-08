@@ -7,9 +7,9 @@
 #include "vector/vector3d.h"
 #include "frame.h"
 
-namespace MathEngine {
+namespace EngineM {
 
-    class MATH_ENGINE_API BezierCurve : public Curve {
+    class ENGINE_M_API BezierCurve : public Curve {
         int degree;
         std::vector<Vector3d> points;
 

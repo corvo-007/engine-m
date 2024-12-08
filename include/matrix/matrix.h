@@ -17,9 +17,9 @@
 #define MATRIX_ALIGNMENT 4
 #endif
 
-namespace MathEngine {
+namespace EngineM {
 
-    class MATH_ENGINE_API Matrix {
+    class ENGINE_M_API Matrix {
         alignas(MATRIX_ALIGNMENT) float matrix[3][3] {};
 
     public:

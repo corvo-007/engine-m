@@ -5,7 +5,7 @@
 #include "constants.h"
 #include "utils.h"
 
-namespace MathEngine {
+namespace EngineM {
 
     HermiteCurve::HermiteCurve(const Vector3d &p1, const Vector3d &p2, const Vector3d &v1, const Vector3d &v2): p1(p1), p2(p2), v1(v1), v2(v2) {
 

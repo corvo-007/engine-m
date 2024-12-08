@@ -5,9 +5,9 @@
 #include <vector>
 #include "vector/vector3d.h"
 
-namespace MathEngine {
+namespace EngineM {
 
-    class MATH_ENGINE_API HermiteCurve : public Curve {
+    class ENGINE_M_API HermiteCurve : public Curve {
         Vector3d p1;
         Vector3d p2;
         Vector3d v1;
