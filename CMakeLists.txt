@@ -4,20 +4,20 @@ project(EngineM)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-file(GLOB_RECURSE SOURCES "src/*.cpp")
-
-option(BUILD_SHARED_LIBS "Build shared libraries" ON)
+option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 option(EngineM_build_tests "Build test files" ON)
 
-add_compile_options(-mavx2)
+file(GLOB_RECURSE SOURCES "src/*.cpp")
 
 add_library(EngineM ${SOURCES})
+
+add_compile_options(-mavx2)
 
 if (BUILD_SHARED_LIBS)
     target_compile_definitions(EngineM PRIVATE DYNAMIC_LINK BUILD_DLL)
 endif()
 
-target_include_directories(EngineM PRIVATE ${EngineM_SOURCE_DIR}/include)
+target_include_directories(EngineM PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 if (EngineM_build_tests)
     include(FetchContent)
