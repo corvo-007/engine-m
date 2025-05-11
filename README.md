@@ -53,10 +53,10 @@ This is a math engine containing classes for the following:
 
 ## Build
 
-To generate Makefile, run
+To build project, run
 
-> cmake -B build -S .
-
-To build the project, run
-
-> cmake --build build
+```bash
+mkdir build && cd build
+cmake ..
+make
+```
