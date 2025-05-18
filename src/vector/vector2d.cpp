@@ -1,8 +1,8 @@
 #include <cmath>
-#include "vector/vector2d.h"
-#include "utils.h"
+#include "engine-m/vector/vector2d.h"
+#include "engine-m/utils.h"
 
-namespace MathEngine {
+namespace EngineM {
 
     Vector2d::Vector2d(const float x, const float y): x(x), y(y) {
 

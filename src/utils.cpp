@@ -1,10 +1,10 @@
-#include "utils.h"
+#include "engine-m/utils.h"
 
 #include <cmath>
 
-#include "constants.h"
+#include "engine-m/constants.h"
 
-namespace MathEngine {
+namespace EngineM {
 
     bool equals(const float a, const float b) {
         return std::fabs(a - b) < epsilon;

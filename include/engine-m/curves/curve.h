@@ -2,13 +2,13 @@
 
 #include <memory>
 
-#include "core.h"
-#include "vector/vector3d.h"
-#include "frame.h"
+#include "engine-m/core.h"
+#include "engine-m/vector/vector3d.h"
+#include "engine-m/frame.h"
 
-namespace MathEngine {
+namespace EngineM {
 
-    class MATH_ENGINE_API Curve {
+    class ENGINE_M_API Curve {
     public:
         [[nodiscard]] virtual Vector3d evaluate(float) const = 0;
         [[nodiscard]] virtual Vector3d tangentAt(float) const = 0;

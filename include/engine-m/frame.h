@@ -2,9 +2,9 @@
 
 #include "vector/vector3d.h"
 
-namespace MathEngine {
+namespace EngineM {
 
-    class MATH_ENGINE_API Frame {
+    class ENGINE_M_API Frame {
     public:
         Vector3d origin;
         Vector3d tangent;

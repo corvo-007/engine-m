@@ -1,13 +1,13 @@
 #pragma once
 
-#include "core.h"
+#include "engine-m/core.h"
 #include "curve.h"
 #include <vector>
-#include "vector/vector3d.h"
+#include "engine-m/vector/vector3d.h"
 
-namespace MathEngine {
+namespace EngineM {
 
-    class MATH_ENGINE_API HermiteCurve : public Curve {
+    class ENGINE_M_API HermiteCurve : public Curve {
         Vector3d p1;
         Vector3d p2;
         Vector3d v1;

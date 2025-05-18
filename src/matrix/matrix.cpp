@@ -1,12 +1,12 @@
-#include "matrix/matrix.h"
+#include "engine-m/matrix/matrix.h"
 
 #if defined(USE_AVX2) || defined(USE_SSE2)
 #include <immintrin.h>
 #endif
 
-#include "utils.h"
+#include "engine-m/utils.h"
 
-namespace MathEngine {
+namespace EngineM {
 
     Matrix::Matrix(const float a, const float b, const float c, const float d, const float e, const float f, const float g, const float h, const float i): matrix{{a, b, c}, {d, e, f}, {g, h, i}} {
 

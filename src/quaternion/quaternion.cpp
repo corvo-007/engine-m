@@ -1,8 +1,8 @@
 #include <cmath>
-#include "quaternion/quaternion.h"
-#include "utils.h"
+#include "engine-m/quaternion/quaternion.h"
+#include "engine-m/utils.h"
 
-namespace MathEngine {
+namespace EngineM {
 
     Quaternion::Quaternion(const float a, const Vector3d &v): a(a), v(v) {
 

@@ -2,8 +2,8 @@
 
 #include <cstdint>
 
-#include "core.h"
-#include "vector/vector3d.h"
+#include "engine-m/core.h"
+#include "engine-m/vector/vector3d.h"
 
 #if defined(__x86_64__) && (defined(__AVX2__) || defined(__SSE2__))
 #ifdef __AVX2__
@@ -17,9 +17,9 @@
 #define MATRIX_ALIGNMENT 4
 #endif
 
-namespace MathEngine {
+namespace EngineM {
 
-    class MATH_ENGINE_API Matrix {
+    class ENGINE_M_API Matrix {
         alignas(MATRIX_ALIGNMENT) float matrix[3][3] {};
 
     public:

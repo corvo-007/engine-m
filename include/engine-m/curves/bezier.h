@@ -2,14 +2,14 @@
 
 #include <vector>
 
-#include "core.h"
+#include "engine-m/core.h"
 #include "curve.h"
-#include "vector/vector3d.h"
-#include "frame.h"
+#include "engine-m/vector/vector3d.h"
+#include "engine-m/frame.h"
 
-namespace MathEngine {
+namespace EngineM {
 
-    class MATH_ENGINE_API BezierCurve : public Curve {
+    class ENGINE_M_API BezierCurve : public Curve {
         int degree;
         std::vector<Vector3d> points;
 

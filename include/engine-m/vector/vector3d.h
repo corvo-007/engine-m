@@ -1,13 +1,13 @@
 #pragma once
 
-#include "core.h"
+#include "engine-m/core.h"
 #include "vector.h"
 
-namespace MathEngine {
+namespace EngineM {
 
     class Quaternion;
 
-    class MATH_ENGINE_API Vector3d : public Vector<Vector3d> {
+    class ENGINE_M_API Vector3d : public Vector<Vector3d> {
     public:
         float x {};
         float y {};
