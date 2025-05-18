@@ -1,9 +1,9 @@
-#include "splines/spline.h"
+#include "engine-m/splines/spline.h"
 
-#include "constants.h"
-#include "utils.h"
+#include "engine-m/constants.h"
+#include "engine-m/utils.h"
 
-namespace MathEngine {
+namespace EngineM {
     Spline::Spline(const std::vector<Vector3d> &points): points(points) {
 
     }

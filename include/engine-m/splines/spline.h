@@ -3,12 +3,12 @@
 #include <memory>
 #include <vector>
 
-#include "core.h"
-#include "vector/vector3d.h"
-#include "frame.h"
+#include "engine-m/core.h"
+#include "engine-m/vector/vector3d.h"
+#include "engine-m/frame.h"
 
-namespace MathEngine {
-    class MATH_ENGINE_API Spline {
+namespace EngineM {
+    class ENGINE_M_API Spline {
     protected:
         std::vector<Vector3d> points;
 
