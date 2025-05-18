@@ -1,9 +1,9 @@
-#include "curves/hermite.h"
+#include "engine-m/curves/hermite.h"
 
 #include <iostream>
 
-#include "constants.h"
-#include "utils.h"
+#include "engine-m/constants.h"
+#include "engine-m/utils.h"
 
 namespace EngineM {
 

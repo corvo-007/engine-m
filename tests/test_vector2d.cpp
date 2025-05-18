@@ -1,8 +1,8 @@
 #include <cmath>
 #include <gtest/gtest.h>
 
-#include "vector/vector2d.h"
-#include "constants.h"
+#include "engine-m/vector/vector2d.h"
+#include "engine-m/constants.h"
 
 TEST(Vector2dTest, DefaultConstruct) {
     const EngineM::Vector2d v;

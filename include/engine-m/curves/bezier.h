@@ -2,10 +2,10 @@
 
 #include <vector>
 
-#include "core.h"
+#include "engine-m/core.h"
 #include "curve.h"
-#include "vector/vector3d.h"
-#include "frame.h"
+#include "engine-m/vector/vector3d.h"
+#include "engine-m/frame.h"
 
 namespace EngineM {
 

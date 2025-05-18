@@ -1,7 +1,7 @@
 #include <cstdint>
 #include <gtest/gtest.h>
 
-#include "matrix/matrix.h"
+#include "engine-m/matrix/matrix.h"
 
 TEST(MatrixTest, DefaultConstruct) {
     const EngineM::Matrix matrix;

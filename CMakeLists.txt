@@ -17,7 +17,7 @@ if (BUILD_SHARED_LIBS)
     target_compile_definitions(EngineM PRIVATE DYNAMIC_LINK BUILD_DLL)
 endif()
 
-target_include_directories(EngineM PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(EngineM PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 if (EngineM_build_tests)
     include(FetchContent)

@@ -1,7 +1,7 @@
 #include <cmath>
 #include <gtest/gtest.h>
 
-#include "quaternion/quaternion.h"
+#include "engine-m/quaternion/quaternion.h"
 
 TEST(QuaternionTest, DefaultConstruct) {
     const EngineM::Quaternion q;

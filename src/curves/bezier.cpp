@@ -1,10 +1,10 @@
-#include "curves/bezier.h"
+#include "engine-m/curves/bezier.h"
 
 #include <cmath>
 #include <stdexcept>
 
-#include "constants.h"
-#include "utils.h"
+#include "engine-m/constants.h"
+#include "engine-m/utils.h"
 
 namespace EngineM {
 

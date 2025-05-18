@@ -1,6 +1,6 @@
 #include <cmath>
-#include "vector/vector2d.h"
-#include "utils.h"
+#include "engine-m/vector/vector2d.h"
+#include "engine-m/utils.h"
 
 namespace EngineM {
 

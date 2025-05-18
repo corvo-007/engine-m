@@ -1,5 +1,5 @@
-#include <curves/hermite.h>
 #include <gtest/gtest.h>
+#include "engine-m/curves/hermite.h"
 
 static EngineM::Vector3d tangentAt(const float t, const EngineM::Vector3d &p1, const EngineM::Vector3d &p2, const EngineM::Vector3d &v1, const EngineM::Vector3d &v2) {
     const float tt = t * t;

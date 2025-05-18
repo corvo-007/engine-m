@@ -2,8 +2,8 @@
 
 #include <cstdint>
 
-#include "core.h"
-#include "vector/vector3d.h"
+#include "engine-m/core.h"
+#include "engine-m/vector/vector3d.h"
 
 #if defined(__x86_64__) && (defined(__AVX2__) || defined(__SSE2__))
 #ifdef __AVX2__

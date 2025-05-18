@@ -1,7 +1,7 @@
 #include <cmath>
-#include "vector/vector3d.h"
-#include "quaternion/quaternion.h"
-#include "utils.h"
+#include "engine-m/vector/vector3d.h"
+#include "engine-m/quaternion/quaternion.h"
+#include "engine-m/utils.h"
 
 namespace EngineM {
 

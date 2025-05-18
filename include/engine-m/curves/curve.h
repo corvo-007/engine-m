@@ -2,9 +2,9 @@
 
 #include <memory>
 
-#include "core.h"
-#include "vector/vector3d.h"
-#include "frame.h"
+#include "engine-m/core.h"
+#include "engine-m/vector/vector3d.h"
+#include "engine-m/frame.h"
 
 namespace EngineM {
 

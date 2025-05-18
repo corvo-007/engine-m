@@ -1,9 +1,9 @@
 #pragma once
 
-#include "core.h"
+#include "engine-m/core.h"
 #include "curve.h"
 #include <vector>
-#include "vector/vector3d.h"
+#include "engine-m/vector/vector3d.h"
 
 namespace EngineM {
 

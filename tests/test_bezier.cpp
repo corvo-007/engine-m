@@ -1,5 +1,5 @@
-#include <curves/bezier.h>
 #include <gtest/gtest.h>
+#include "engine-m/curves/bezier.h"
 
 static EngineM::Vector3d tangentAt(const float t, const EngineM::Vector3d &p0, const EngineM::Vector3d &p1, const EngineM::Vector3d &p2, const EngineM::Vector3d &p3) {
     const float one_t = 1 - t;

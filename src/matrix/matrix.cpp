@@ -1,10 +1,10 @@
-#include "matrix/matrix.h"
+#include "engine-m/matrix/matrix.h"
 
 #if defined(USE_AVX2) || defined(USE_SSE2)
 #include <immintrin.h>
 #endif
 
-#include "utils.h"
+#include "engine-m/utils.h"
 
 namespace EngineM {
 

@@ -1,6 +1,6 @@
 #include <cmath>
-#include "quaternion/quaternion.h"
-#include "utils.h"
+#include "engine-m/quaternion/quaternion.h"
+#include "engine-m/utils.h"
 
 namespace EngineM {
 
