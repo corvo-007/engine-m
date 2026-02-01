@@ -26,9 +26,6 @@ namespace EngineM {
         virtual float dot(const T &) const = 0;
         virtual float operator*(const T &) const = 0;
 
-        virtual Vector3d cross(const T &) const = 0;
-        virtual Vector3d operator^(const T &) const = 0;
-
         virtual bool operator==(const T &) const = 0;
         virtual bool operator!=(const T &) const = 0;
 
