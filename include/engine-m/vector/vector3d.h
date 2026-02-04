@@ -54,4 +54,6 @@ namespace EngineM {
 
         ~Vector3d() override = default;
     };
+
+    using vec3 = Vector3d;
 }

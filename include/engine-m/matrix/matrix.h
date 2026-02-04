@@ -70,4 +70,6 @@ namespace EngineM {
 
         ~Matrix() = default;
     };
+
+    using mat3 = Matrix;
 }

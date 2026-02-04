@@ -49,4 +49,6 @@ namespace EngineM {
 
         ~Vector2d() override = default;
     };
+
+    using vec2 = Vector2d;
 }
