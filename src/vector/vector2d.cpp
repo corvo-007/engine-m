@@ -60,11 +60,11 @@ namespace EngineM {
         return dot(v);
     }
 
-    Vector3d Vector2d::cross(const Vector2d &v) const {
-        return {0, 0, x * v.y - y * v.x};
+    float Vector2d::cross(const Vector2d &v) const {
+        return x * v.y - y * v.x;
     }
 
-    Vector3d Vector2d::operator^(const Vector2d &v) const {
+    float Vector2d::operator^(const Vector2d &v) const {
         return cross(v);
     }
 

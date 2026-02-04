@@ -34,8 +34,8 @@ namespace EngineM {
         [[nodiscard]] float dot(const Vector2d &) const override;
         float operator*(const Vector2d &) const override;
 
-        [[nodiscard]] Vector3d cross(const Vector2d &) const override;
-        Vector3d operator^(const Vector2d &) const override;
+        [[nodiscard]] float cross(const Vector2d &) const;
+        [[nodiscard]] float operator^(const Vector2d &) const;
 
         bool operator==(const Vector2d &) const override;
         bool operator!=(const Vector2d &) const override;

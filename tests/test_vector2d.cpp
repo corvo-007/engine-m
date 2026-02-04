@@ -160,22 +160,18 @@ TEST(Vector2dTest, CrossProduct) {
     const EngineM::Vector2d v1(5, 5);
     const EngineM::Vector2d v2(3, 4);
 
-    const EngineM::Vector3d result = v1.cross(v2);
+    const float result = v1.cross(v2);
 
-    EXPECT_FLOAT_EQ(result.x, 0);
-    EXPECT_FLOAT_EQ(result.y, 0);
-    EXPECT_FLOAT_EQ(result.z, v1.x * v2.y - v2.x * v1.y);
+    EXPECT_FLOAT_EQ(result, v1.x * v2.y - v2.x * v1.y);
 }
 
 TEST(Vector2dTest, CrossProductOperator) {
     const EngineM::Vector2d v1(5, 5);
     const EngineM::Vector2d v2(3, 4);
 
-    const EngineM::Vector3d result = v1 ^ v2;
+    const float result = v1 ^ v2;
 
-    EXPECT_FLOAT_EQ(result.x, 0);
-    EXPECT_FLOAT_EQ(result.y, 0);
-    EXPECT_FLOAT_EQ(result.z, v1.x * v2.y - v2.x * v1.y);
+    EXPECT_FLOAT_EQ(result, v1.x * v2.y - v2.x * v1.y);
 }
 
 TEST(Vector2dTest, Equal) {
