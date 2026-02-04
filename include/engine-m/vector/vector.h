@@ -4,8 +4,6 @@
 
 namespace EngineM {
 
-    class Vector3d;
-
     template <typename T>
     class ENGINE_M_API Vector {
     public:
