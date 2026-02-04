@@ -2,7 +2,6 @@
 
 #include "engine-m/core.h"
 #include "vector.h"
-#include "vector3d.h"
 
 namespace EngineM {
 
@@ -49,4 +48,6 @@ namespace EngineM {
 
         ~Vector2d() override = default;
     };
+
+    using vec2 = Vector2d;
 }
