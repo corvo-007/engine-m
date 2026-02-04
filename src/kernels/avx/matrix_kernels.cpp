@@ -1,7 +1,6 @@
 #include <immintrin.h>
 
 namespace EngineM::kernels::avx {
-    __attribute__((target("avx")))
     void matrix_add(const float (&a)[3][3], const float (&b)[3][3], float (&out)[3][3]) {
         const __m256 first = _mm256_set_ps(a[2][1], a[2][0], a[1][2], a[1][1], a[1][0], a[0][2], a[0][1], a[0][0]);
         const __m256 second = _mm256_set_ps(b[2][1], b[2][0], b[1][2], b[1][1], b[1][0], b[0][2], b[0][1], b[0][0]);
@@ -11,7 +10,6 @@ namespace EngineM::kernels::avx {
         out[2][2] = a[2][2] + b[2][2];
     }
 
-    __attribute__((target("avx")))
     void matrix_sub(const float (&a)[3][3], const float (&b)[3][3], float (&out)[3][3]) {
         const __m256 first = _mm256_set_ps(a[2][1], a[2][0], a[1][2], a[1][1], a[1][0], a[0][2], a[0][1], a[0][0]);
         const __m256 second = _mm256_set_ps(b[2][1], b[2][0], b[1][2], b[1][1], b[1][0], b[0][2], b[0][1], b[0][0]);
@@ -21,7 +19,6 @@ namespace EngineM::kernels::avx {
         out[2][2] = a[2][2] - b[2][2];
     }
 
-    __attribute__((target("avx")))
     void matrix_mul_by_k(const float (&a)[3][3], float k, float (&out)[3][3]) {
         const __m256 first = _mm256_set_ps(a[2][1], a[2][0], a[1][2], a[1][1], a[1][0], a[0][2], a[0][1], a[0][0]);
         const __m256 second = _mm256_set1_ps(k);
@@ -31,7 +28,6 @@ namespace EngineM::kernels::avx {
         out[2][2] = a[2][2] * k;
     }
 
-    __attribute__((target("avx")))
     void matrix_mul(const float (&a)[3][3], const float (&b)[3][3], float (&out)[3][3]) {
         const __m256 row0_0 = _mm256_set_ps(0.f, a[0][2], a[0][1], a[0][0], 0.f, a[0][2], a[0][1], a[0][0]);
         const __m256 row1_1 = _mm256_set_ps(0.f, a[1][2], a[1][1], a[1][0], 0.f, a[1][2], a[1][1], a[1][0]);
