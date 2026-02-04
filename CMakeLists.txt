@@ -11,13 +11,19 @@ file(GLOB_RECURSE SOURCES "src/*.cpp")
 
 add_library(EngineM ${SOURCES})
 
-add_compile_options(-mavx2)
+if (MSVC)
+    set_source_files_properties(src/kernels/avx/matrix_kernels.cpp PROPERTIES COMPILE_FLAGS "/arch:AVX")
+    set_source_files_properties(src/kernels/avx2/matrix_kernels.cpp PROPERTIES COMPILE_FLAGS "/arch:AVX2")
+else()
+    set_source_files_properties(src/kernels/avx/matrix_kernels.cpp PROPERTIES COMPILE_FLAGS "-mavx")
+    set_source_files_properties(src/kernels/avx2/matrix_kernels.cpp PROPERTIES COMPILE_FLAGS "-mavx2")
+endif()
 
 if (BUILD_SHARED_LIBS)
     target_compile_definitions(EngineM PRIVATE DYNAMIC_LINK BUILD_DLL)
 endif()
 
-target_include_directories(EngineM PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(EngineM PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 if (EngineM_build_tests)
     include(FetchContent)

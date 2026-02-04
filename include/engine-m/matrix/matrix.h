@@ -5,22 +5,10 @@
 #include "engine-m/core.h"
 #include "engine-m/vector/vector3d.h"
 
-#if defined(__x86_64__) && (defined(__AVX2__) || defined(__SSE2__))
-#ifdef __AVX2__
-#define USE_AVX2
-#define MATRIX_ALIGNMENT 32
-#else
-#define USE_SSE2
-#define MATRIX_ALIGNMENT 16
-#endif
-#else
-#define MATRIX_ALIGNMENT 4
-#endif
-
 namespace EngineM {
 
     class ENGINE_M_API Matrix {
-        alignas(MATRIX_ALIGNMENT) float matrix[3][3] {};
+        alignas(32) float matrix[3][3] {};
 
     public:
         Matrix() = default;
@@ -29,6 +17,20 @@ namespace EngineM {
         Matrix(const Matrix &);
 
     private:
+        using MatOp = void (*)(const float (&a)[3][3], const float (&b)[3][3], float (&out)[3][3]);
+        using MulKOp = void (*)(const float (&a)[3][3], float k, float (&out)[3][3]);
+
+        static MatOp matrix_add_ptr;
+        static MatOp matrix_sub_ptr;
+        static MulKOp matrix_mul_by_k_ptr;
+        static MatOp matrix_mul_ptr;
+
+        static void detection_and_dispatch();
+        static void add_dispatch(const float (&a)[3][3], const float (&b)[3][3], float (&out)[3][3]);
+        static void sub_dispatch(const float (&a)[3][3], const float (&b)[3][3], float (&out)[3][3]);
+        static void mul_by_k_dispatch(const float (&a)[3][3], float k, float (&out)[3][3]);
+        static void mul_dispatch(const float (&a)[3][3], const float (&b)[3][3], float (&out)[3][3]);
+
         void copy(const float [3][3]);
         [[nodiscard]] float determinant() const;
 
