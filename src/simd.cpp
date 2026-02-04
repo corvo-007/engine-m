@@ -8,7 +8,10 @@
 #endif
 
 namespace EngineM::SIMD {
-    __attribute__((target("xsave"))) Level get_simd_level() {
+#if defined(__GNUC__) || defined(__clang__)
+    __attribute__((target("xsave")))
+#endif
+    Level get_simd_level() {
 #if !defined(__i386__) && !defined(__x86_64__) && !defined(_M_IX86) && !defined(_M_X64)
         return Level::Scalar;
 #else
