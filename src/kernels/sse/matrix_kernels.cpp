@@ -60,14 +60,26 @@ namespace EngineM::kernels::sse {
         const __m128 m21 = _mm_mul_ps(row2, col1);
         const __m128 m22 = _mm_mul_ps(row2, col2);
 
-        out[0][0] = m00[0] + m00[1] + m00[2];
-        out[0][1] = m01[0] + m01[1] + m01[2];
-        out[0][2] = m02[0] + m02[1] + m02[2];
-        out[1][0] = m10[0] + m10[1] + m10[2];
-        out[1][1] = m11[0] + m11[1] + m11[2];
-        out[1][2] = m12[0] + m12[1] + m12[2];
-        out[2][0] = m20[0] + m20[1] + m20[2];
-        out[2][1] = m21[0] + m21[1] + m21[2];
-        out[2][2] = m22[0] + m22[1] + m22[2];
+        float arr1[4], arr2[4], arr3[4], arr4[4], arr5[4], arr6[4], arr7[4], arr8[4], arr9[4];
+
+        _mm_store_ps(arr1, m00);
+        _mm_store_ps(arr2, m01);
+        _mm_store_ps(arr3, m02);
+        _mm_store_ps(arr4, m10);
+        _mm_store_ps(arr5, m11);
+        _mm_store_ps(arr6, m12);
+        _mm_store_ps(arr7, m20);
+        _mm_store_ps(arr8, m21);
+        _mm_store_ps(arr9, m22);
+
+        out[0][0] = arr1[0] + arr1[1] + arr1[2];
+        out[0][1] = arr2[0] + arr2[1] + arr2[2];
+        out[0][2] = arr3[0] + arr3[1] + arr3[2];
+        out[1][0] = arr4[0] + arr4[1] + arr4[2];
+        out[1][1] = arr5[0] + arr5[1] + arr5[2];
+        out[1][2] = arr6[0] + arr6[1] + arr6[2];
+        out[2][0] = arr7[0] + arr7[1] + arr7[2];
+        out[2][1] = arr8[0] + arr8[1] + arr8[2];
+        out[2][2] = arr9[0] + arr9[1] + arr9[2];
     }
 }
