@@ -4,7 +4,7 @@
 
 namespace EngineM {
 
-    Quaternion::Quaternion(const float a, const Vector3d &v): a(a), v(v) {
+    Quaternion::Quaternion(const float a, const vec3f &v): a(a), v(v) {
 
     }
 

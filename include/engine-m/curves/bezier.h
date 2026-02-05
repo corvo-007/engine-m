@@ -11,16 +11,16 @@ namespace EngineM {
 
     class ENGINE_M_API BezierCurve : public Curve {
         int degree;
-        std::vector<Vector3d> points;
+        std::vector<vec3f> points;
 
     public:
         BezierCurve() = delete;
         explicit BezierCurve(int);
-        BezierCurve(int, const std::vector<Vector3d> &);
+        BezierCurve(int, const std::vector<vec3f> &);
         BezierCurve(const BezierCurve &) = default;
 
     private:
-        [[nodiscard]] Vector3d deCasteljau(float) const;
+        [[nodiscard]] vec3f deCasteljau(float) const;
 
         [[nodiscard]] std::pair<std::unique_ptr<BezierCurve>, std::unique_ptr<BezierCurve>> deCasteljauSplit(float) const;
 
@@ -29,10 +29,10 @@ namespace EngineM {
     public:
         BezierCurve& operator=(const BezierCurve &) = default;
 
-        [[nodiscard]] Vector3d evaluate(float) const override;
-        [[nodiscard]] Vector3d tangentAt(float) const override;
-        [[nodiscard]] Vector3d accelerationAt(float) const override;
-        [[nodiscard]] Vector3d normalAt(float) const override;
+        [[nodiscard]] vec3f evaluate(float) const override;
+        [[nodiscard]] vec3f tangentAt(float) const override;
+        [[nodiscard]] vec3f accelerationAt(float) const override;
+        [[nodiscard]] vec3f normalAt(float) const override;
 
         [[nodiscard]] std::pair<std::unique_ptr<Curve>, std::unique_ptr<Curve>> split(float) const override;
 
@@ -43,13 +43,13 @@ namespace EngineM {
 
         [[nodiscard]] float length() const override;
 
-        Vector3d& operator[](int);
-        const Vector3d& operator[](int) const;
+        vec3f& operator[](int);
+        const vec3f& operator[](int) const;
 
         [[nodiscard]] int getDegree() const;
 
-        [[nodiscard]] std::vector<Vector3d> getPoints() const;
-        void setPoints(const std::vector<Vector3d> &);
+        [[nodiscard]] std::vector<vec3f> getPoints() const;
+        void setPoints(const std::vector<vec3f> &);
 
         ~BezierCurve() override = default;
     };

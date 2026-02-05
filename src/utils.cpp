@@ -30,11 +30,11 @@ namespace EngineM {
         return (1 - t) * p1 + t * p2;
     }
 
-    Vector2d lerp(const Vector2d &p1, const Vector2d &p2, const float t) {
+    vec2f lerp(const vec2f &p1, const vec2f &p2, const float t) {
         return p1 * (1 - t) + p2 * t;
     }
 
-    Vector3d lerp(const Vector3d &p1, const Vector3d &p2, const float t) {
+    vec3f lerp(const vec3f &p1, const vec3f &p2, const float t) {
         return p1 * (1 - t) + p2 * t;
     }
 

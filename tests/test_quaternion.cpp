@@ -13,7 +13,7 @@ TEST(QuaternionTest, DefaultConstruct) {
 }
 
 TEST(QuaternionTest, ParamConstruct) {
-    const EngineM::Quaternion q(1, EngineM::Vector3d(2, 3, 4));
+    const EngineM::Quaternion q(1, EngineM::vec3f(2, 3, 4));
 
     EXPECT_FLOAT_EQ(q.a, 1);
     EXPECT_FLOAT_EQ(q.v.x, 2);
@@ -22,7 +22,7 @@ TEST(QuaternionTest, ParamConstruct) {
 }
 
 TEST(QuaternionTest, CopyConstruct) {
-    const EngineM::Quaternion q1(1, EngineM::Vector3d(2, 3, 4));
+    const EngineM::Quaternion q1(1, EngineM::vec3f(2, 3, 4));
     const EngineM::Quaternion q2(q1);
 
     EXPECT_FLOAT_EQ(q1.a, q2.a);
@@ -33,7 +33,7 @@ TEST(QuaternionTest, CopyConstruct) {
 
 TEST(QuaternionTest, AssignmentOp) {
     EngineM::Quaternion q1;
-    const EngineM::Quaternion q2(1, EngineM::Vector3d(2, 3, 4));
+    const EngineM::Quaternion q2(1, EngineM::vec3f(2, 3, 4));
 
     EXPECT_FLOAT_EQ(q1.a, 0);
     EXPECT_FLOAT_EQ(q1.v.x, 0);
@@ -49,8 +49,8 @@ TEST(QuaternionTest, AssignmentOp) {
 }
 
 TEST(QuaternionTest, Add) {
-    const EngineM::Quaternion q1(4.2, EngineM::Vector3d(2.1, 6.3, 4.2));
-    const EngineM::Quaternion q2(15.3, EngineM::Vector3d(2.0, 3.2, 4.0));
+    const EngineM::Quaternion q1(4.2, EngineM::vec3f(2.1, 6.3, 4.2));
+    const EngineM::Quaternion q2(15.3, EngineM::vec3f(2.0, 3.2, 4.0));
     const EngineM::Quaternion q3 = q1 + q2;
 
     EXPECT_FLOAT_EQ(q3.a, q1.a + q2.a);
@@ -60,8 +60,8 @@ TEST(QuaternionTest, Add) {
 }
 
 TEST(QuaternionTest, AddEqual) {
-    EngineM::Quaternion q1(4.2, EngineM::Vector3d(2.1, 6.3, 4.2));
-    const EngineM::Quaternion q2(15.3, EngineM::Vector3d(2.0, 3.2, 4.0));
+    EngineM::Quaternion q1(4.2, EngineM::vec3f(2.1, 6.3, 4.2));
+    const EngineM::Quaternion q2(15.3, EngineM::vec3f(2.0, 3.2, 4.0));
     const EngineM::Quaternion q3 = q1;
 
     q1 += q2;
@@ -73,8 +73,8 @@ TEST(QuaternionTest, AddEqual) {
 }
 
 TEST(QuaternionTest, Sub) {
-    const EngineM::Quaternion q1(4.2, EngineM::Vector3d(2.1, 6.3, 4.2));
-    const EngineM::Quaternion q2(15.3, EngineM::Vector3d(2.0, 3.2, 4.0));
+    const EngineM::Quaternion q1(4.2, EngineM::vec3f(2.1, 6.3, 4.2));
+    const EngineM::Quaternion q2(15.3, EngineM::vec3f(2.0, 3.2, 4.0));
     const EngineM::Quaternion q3 = q1 - q2;
 
     EXPECT_FLOAT_EQ(q3.a, q1.a - q2.a);
@@ -84,8 +84,8 @@ TEST(QuaternionTest, Sub) {
 }
 
 TEST(QuaternionTest, SubEqual) {
-    EngineM::Quaternion q1(4.2, EngineM::Vector3d(2.1, 6.3, 4.2));
-    const EngineM::Quaternion q2(15.3, EngineM::Vector3d(2.0, 3.2, 4.0));
+    EngineM::Quaternion q1(4.2, EngineM::vec3f(2.1, 6.3, 4.2));
+    const EngineM::Quaternion q2(15.3, EngineM::vec3f(2.0, 3.2, 4.0));
     const EngineM::Quaternion q3 = q1;
 
     q1 -= q2;
@@ -97,8 +97,8 @@ TEST(QuaternionTest, SubEqual) {
 }
 
 TEST(QuaternionTest, QuaternionMul) {
-    const EngineM::Quaternion q1(4.2, EngineM::Vector3d(2.1, 6.3, 4.2));
-    const EngineM::Quaternion q2(15.3, EngineM::Vector3d(2.0, 3.2, 4.0));
+    const EngineM::Quaternion q1(4.2, EngineM::vec3f(2.1, 6.3, 4.2));
+    const EngineM::Quaternion q2(15.3, EngineM::vec3f(2.0, 3.2, 4.0));
 
     const EngineM::Quaternion result = q1 * q2;
 
@@ -109,8 +109,8 @@ TEST(QuaternionTest, QuaternionMul) {
 }
 
 TEST(QuaternionTest, QuaternionMulEqual) {
-    EngineM::Quaternion q1(4.2, EngineM::Vector3d(2.1, 6.3, 4.2));
-    const EngineM::Quaternion q2(15.3, EngineM::Vector3d(2.0, 3.2, 4.0));
+    EngineM::Quaternion q1(4.2, EngineM::vec3f(2.1, 6.3, 4.2));
+    const EngineM::Quaternion q2(15.3, EngineM::vec3f(2.0, 3.2, 4.0));
     const EngineM::Quaternion q3 = q1;
 
     q1 *= q2;
@@ -122,7 +122,7 @@ TEST(QuaternionTest, QuaternionMulEqual) {
 }
 
 TEST(QuaternionTest, ScalarMul) {
-    const EngineM::Quaternion q1(4.2, EngineM::Vector3d(2.1, 6.3, 4.2));
+    const EngineM::Quaternion q1(4.2, EngineM::vec3f(2.1, 6.3, 4.2));
     constexpr float k = 3.2;
 
     const EngineM::Quaternion result = q1 * k;
@@ -134,7 +134,7 @@ TEST(QuaternionTest, ScalarMul) {
 }
 
 TEST(QuaternionTest, ScalarMulEqual) {
-    EngineM::Quaternion q1(4.2, EngineM::Vector3d(2.1, 6.3, 4.2));
+    EngineM::Quaternion q1(4.2, EngineM::vec3f(2.1, 6.3, 4.2));
     const EngineM::Quaternion q2 = q1;
     constexpr float k = 3.2;
 
@@ -147,7 +147,7 @@ TEST(QuaternionTest, ScalarMulEqual) {
 }
 
 TEST(QuaternionTest, ScalarDiv) {
-    const EngineM::Quaternion q1(4.2, EngineM::Vector3d(2.1, 6.3, 4.2));
+    const EngineM::Quaternion q1(4.2, EngineM::vec3f(2.1, 6.3, 4.2));
     constexpr float k = 3.2;
 
     const EngineM::Quaternion result = q1 / k;
@@ -159,7 +159,7 @@ TEST(QuaternionTest, ScalarDiv) {
 }
 
 TEST(QuaternionTest, ScalarDivEqual) {
-    EngineM::Quaternion q1(4.2, EngineM::Vector3d(2.1, 6.3, 4.2));
+    EngineM::Quaternion q1(4.2, EngineM::vec3f(2.1, 6.3, 4.2));
     const EngineM::Quaternion q2 = q1;
     constexpr float k = 3.2;
 
@@ -172,32 +172,32 @@ TEST(QuaternionTest, ScalarDivEqual) {
 }
 
 TEST(QuaternionTest, Equal) {
-    const EngineM::Quaternion q1(4.2, EngineM::Vector3d(2.1, 6.3, 4.2));
-    const EngineM::Quaternion q2(4.2, EngineM::Vector3d(2.1, 6.3, 4.2));
-    const EngineM::Quaternion q3(2.4, EngineM::Vector3d(1.2, 3.6, 2.4));
+    const EngineM::Quaternion q1(4.2, EngineM::vec3f(2.1, 6.3, 4.2));
+    const EngineM::Quaternion q2(4.2, EngineM::vec3f(2.1, 6.3, 4.2));
+    const EngineM::Quaternion q3(2.4, EngineM::vec3f(1.2, 3.6, 2.4));
 
     EXPECT_TRUE(q1 == q2);
     EXPECT_FALSE(q1 == q3);
 }
 
 TEST(QuaternionTest, NotEqual) {
-    const EngineM::Quaternion q1(4.2, EngineM::Vector3d(2.1, 6.3, 4.2));
-    const EngineM::Quaternion q2(4.2, EngineM::Vector3d(2.1, 6.3, 4.2));
-    const EngineM::Quaternion q3(2.4, EngineM::Vector3d(1.2, 3.6, 2.4));
+    const EngineM::Quaternion q1(4.2, EngineM::vec3f(2.1, 6.3, 4.2));
+    const EngineM::Quaternion q2(4.2, EngineM::vec3f(2.1, 6.3, 4.2));
+    const EngineM::Quaternion q3(2.4, EngineM::vec3f(1.2, 3.6, 2.4));
 
     EXPECT_FALSE(q1 != q2);
     EXPECT_TRUE(q1 != q3);
 }
 
 TEST(QuaternionTest, Norm) {
-    const EngineM::Quaternion q(4.2, EngineM::Vector3d(2.1, 6.3, 4.2));
+    const EngineM::Quaternion q(4.2, EngineM::vec3f(2.1, 6.3, 4.2));
     const float result = q.norm();
 
     EXPECT_FLOAT_EQ(result, std::sqrt(q.a * q.a + q.v.x * q.v.x + q.v.y * q.v.y + q.v.z * q.v.z));
 }
 
 TEST(QuaternionTest, Normalise) {
-    EngineM::Quaternion q1(4.2, EngineM::Vector3d(2.1, 6.3, 4.2));
+    EngineM::Quaternion q1(4.2, EngineM::vec3f(2.1, 6.3, 4.2));
     const EngineM::Quaternion q2 = q1;
 
     q1.normalise();
@@ -210,7 +210,7 @@ TEST(QuaternionTest, Normalise) {
 }
 
 TEST(QuaternionTest, Conjugate) {
-    const EngineM::Quaternion q(4.2, EngineM::Vector3d(2.1, 6.3, 4.2));
+    const EngineM::Quaternion q(4.2, EngineM::vec3f(2.1, 6.3, 4.2));
     const EngineM::Quaternion result = q.conjugate();
 
     EXPECT_FLOAT_EQ(result.a, q.a);
@@ -220,7 +220,7 @@ TEST(QuaternionTest, Conjugate) {
 }
 
 TEST(QuaternionTest, Inverse) {
-    const EngineM::Quaternion q(4.2, EngineM::Vector3d(2.1, 6.3, 4.2));
+    const EngineM::Quaternion q(4.2, EngineM::vec3f(2.1, 6.3, 4.2));
     const EngineM::Quaternion result = q.inverse();
 
     float n = q.norm();

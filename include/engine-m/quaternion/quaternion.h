@@ -8,10 +8,10 @@ namespace EngineM {
     class ENGINE_M_API Quaternion {
     public:
         float a {};
-        Vector3d v;
+        vec3f v;
 
         Quaternion() = default;
-        Quaternion(float, const Vector3d &);
+        Quaternion(float, const vec3f &);
         Quaternion(const Quaternion &) = default;
 
         Quaternion& operator=(const Quaternion &) = default;

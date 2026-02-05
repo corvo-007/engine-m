@@ -19,8 +19,8 @@ namespace EngineM {
     ENGINE_M_API float radiansToDegrees(float);
 
     ENGINE_M_API float lerp(float, float, float);
-    ENGINE_M_API Vector2d lerp(const Vector2d &, const Vector2d &, float);
-    ENGINE_M_API Vector3d lerp(const Vector3d &, const Vector3d &, float);
+    ENGINE_M_API vec2f lerp(const vec2f &, const vec2f &, float);
+    ENGINE_M_API vec3f lerp(const vec3f &, const vec3f &, float);
 
     ENGINE_M_API uint64_t factorial(uint64_t);
 
