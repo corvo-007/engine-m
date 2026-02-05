@@ -1,14 +1,14 @@
 #include <gtest/gtest.h>
 #include "engine-m/curves/bezier.h"
 
-static EngineM::Vector3d tangentAt(const float t, const EngineM::Vector3d &p0, const EngineM::Vector3d &p1, const EngineM::Vector3d &p2, const EngineM::Vector3d &p3) {
+static EngineM::vec3f tangentAt(const float t, const EngineM::vec3f &p0, const EngineM::vec3f &p1, const EngineM::vec3f &p2, const EngineM::vec3f &p3) {
     const float one_t = 1 - t;
     const float one_t_sq = one_t * one_t;
 
     return (p1 - p0) * (3 * one_t_sq) + (p2 - p1) * (6 * one_t * t) + (p3 - p2) * (3 * t * t);
 }
 
-static EngineM::Vector3d accelerationAt(const float t, const EngineM::Vector3d &p0, const EngineM::Vector3d &p1, const EngineM::Vector3d &p2, const EngineM::Vector3d &p3) {
+static EngineM::vec3f accelerationAt(const float t, const EngineM::vec3f &p0, const EngineM::vec3f &p1, const EngineM::vec3f &p2, const EngineM::vec3f &p3) {
     return (p2 - p1 * 2 + p0) * (6 * (1 - t)) + (p3 - p2 * 2 + p1) * (6 * t);
 }
 
@@ -20,7 +20,7 @@ TEST(BezierTest, ParamConstruct1) {
 }
 
 TEST(BezierTest, ParamConstruct2) {
-    const std::vector<EngineM::Vector3d> points(3);
+    const std::vector<EngineM::vec3f> points(3);
     const EngineM::BezierCurve curve(2, points);
 
     EXPECT_EQ(curve.getDegree(), 2);
@@ -28,7 +28,7 @@ TEST(BezierTest, ParamConstruct2) {
 }
 
 TEST(BezierTest, CopyConstruct) {
-    std::vector<EngineM::Vector3d> points;
+    std::vector<EngineM::vec3f> points;
     points.emplace_back(0, 0, 0);
     points.emplace_back(1, 0, 0);
     points.emplace_back(1, 0, 0);
@@ -36,7 +36,7 @@ TEST(BezierTest, CopyConstruct) {
 
     const EngineM::BezierCurve curve2(curve1);
 
-    const std::vector<EngineM::Vector3d> copyPoints = curve2.getPoints();
+    const std::vector<EngineM::vec3f> copyPoints = curve2.getPoints();
     EXPECT_EQ(curve2.getDegree(), 2);
     EXPECT_EQ(copyPoints.size(), 3);
 
@@ -48,7 +48,7 @@ TEST(BezierTest, CopyConstruct) {
 }
 
 TEST(BezierTest, AssignmentOp) {
-    std::vector<EngineM::Vector3d> points;
+    std::vector<EngineM::vec3f> points;
     points.emplace_back(0, 0, 0);
     points.emplace_back(1, 0, 0);
     points.emplace_back(1, 0, 0);
@@ -59,7 +59,7 @@ TEST(BezierTest, AssignmentOp) {
     EXPECT_EQ(curve2.getPoints().size(), 4);
 
     curve2 = curve1;
-    const std::vector<EngineM::Vector3d> copyPoints = curve2.getPoints();
+    const std::vector<EngineM::vec3f> copyPoints = curve2.getPoints();
     EXPECT_EQ(curve2.getDegree(), 2);
     EXPECT_EQ(copyPoints.size(), 3);
 
@@ -73,7 +73,7 @@ TEST(BezierTest, AssignmentOp) {
 TEST(BezierTest, Evaluate) {
     const EngineM::BezierCurve curve(3, {{0, 0, 0}, {0, 1, 0}, {1, 0, 1}, {0, 0, 1}});
 
-    EngineM::Vector3d result = curve.evaluate(0);
+    EngineM::vec3f result = curve.evaluate(0);
 
     EXPECT_FLOAT_EQ(result.x, 0);
     EXPECT_FLOAT_EQ(result.y, 0);
@@ -93,12 +93,12 @@ TEST(BezierTest, Evaluate) {
 }
 
 TEST(BezierTest, Tangent) {
-    const std::vector<EngineM::Vector3d> points = {{0, 0, 0}, {0, 1, 0}, {1, 0, 1}, {0, 0, 1}};
+    const std::vector<EngineM::vec3f> points = {{0, 0, 0}, {0, 1, 0}, {1, 0, 1}, {0, 0, 1}};
     const EngineM::BezierCurve curve(3, points);
 
     float t = 0;
-    EngineM::Vector3d result = curve.tangentAt(t);
-    EngineM::Vector3d tangent = tangentAt(t, points[0], points[1], points[2], points[3]);
+    EngineM::vec3f result = curve.tangentAt(t);
+    EngineM::vec3f tangent = tangentAt(t, points[0], points[1], points[2], points[3]);
 
     EXPECT_FLOAT_EQ(result.x, tangent.x);
     EXPECT_FLOAT_EQ(result.y, tangent.y);
@@ -122,13 +122,13 @@ TEST(BezierTest, Tangent) {
 }
 
 TEST(BezierTest, Acceleration) {
-    const std::vector<EngineM::Vector3d> points = {{0, 0, 0}, {0, 1, 0}, {1, 0, 1}, {0, 0, 1}};
+    const std::vector<EngineM::vec3f> points = {{0, 0, 0}, {0, 1, 0}, {1, 0, 1}, {0, 0, 1}};
     const EngineM::BezierCurve curve(3, points);
 
     float t = 0;
 
-    EngineM::Vector3d result = curve.accelerationAt(t);
-    EngineM::Vector3d acceleration = accelerationAt(t, points[0], points[1], points[2], points[3]);
+    EngineM::vec3f result = curve.accelerationAt(t);
+    EngineM::vec3f acceleration = accelerationAt(t, points[0], points[1], points[2], points[3]);
 
     EXPECT_FLOAT_EQ(result.x, acceleration.x);
     EXPECT_FLOAT_EQ(result.y, acceleration.y);

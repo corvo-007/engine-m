@@ -12,14 +12,14 @@ namespace EngineM {
 
     }
 
-    BezierCurve::BezierCurve(const int degree, const std::vector<Vector3d> &points): degree(degree), points(points) {
+    BezierCurve::BezierCurve(const int degree, const std::vector<vec3f> &points): degree(degree), points(points) {
         if (points.size() != degree + 1) {
             throw std::invalid_argument("Number of control points must be equal to degree + 1");
         }
     }
 
-    Vector3d BezierCurve::deCasteljau(const float t) const {
-        std::vector<Vector3d> temp = points;
+    vec3f BezierCurve::deCasteljau(const float t) const {
+        std::vector<vec3f> temp = points;
         for (int i = 1; i < points.size(); i++) {
             for (int j = 0; j < points.size() - i; j++) {
                 temp[j] = lerp(temp[j], temp[j + 1], t);
@@ -29,7 +29,7 @@ namespace EngineM {
     }
 
     std::pair<std::unique_ptr<BezierCurve>, std::unique_ptr<BezierCurve>> BezierCurve::deCasteljauSplit(const float t) const {
-        std::vector<std::vector<Vector3d>> temp(points.size());
+        std::vector<std::vector<vec3f>> temp(points.size());
         temp[0] = points;
 
         for (int i = 0; i < temp.size() - 1; i++) {
@@ -60,14 +60,14 @@ namespace EngineM {
             const float weight = LEGENDRE_GAUSS_QUADRATURE_WEIGHTS_AND_ABSCISSAE[i][0];
             const float abscissa = LEGENDRE_GAUSS_QUADRATURE_WEIGHTS_AND_ABSCISSAE[i][1];
 
-            const Vector3d tangent = tangentAt(z * abscissa + z);
+            const vec3f tangent = tangentAt(z * abscissa + z);
 
             sum += weight * tangent.magnitude();
         }
         return z * sum;
     }
 
-    Vector3d BezierCurve::evaluate(float t) const {
+    vec3f BezierCurve::evaluate(float t) const {
         t = clamp(t, 0.f, 1.f);
         if (t == 0) {
             return points[0];
@@ -76,7 +76,7 @@ namespace EngineM {
             return points[points.size() - 1];
         }
 
-        Vector3d result;
+        vec3f result;
 
         float pow_t = 1;
         float pow_1_minus_t = std::pow(1 - t, static_cast<float>(degree));
@@ -91,15 +91,15 @@ namespace EngineM {
         return result;
     }
 
-    Vector3d BezierCurve::tangentAt(const float t) const {
+    vec3f BezierCurve::tangentAt(const float t) const {
         return (degree == 1) ? points[1] - points[0] : derivative() -> evaluate(t);
     }
 
-    Vector3d BezierCurve::accelerationAt(const float t) const {
-        return (degree == 1) ? Vector3d(0, 0, 0) : derivative() -> tangentAt(t);
+    vec3f BezierCurve::accelerationAt(const float t) const {
+        return (degree == 1) ? vec3f(0, 0, 0) : derivative() -> tangentAt(t);
     }
 
-    Vector3d BezierCurve::normalAt(const float t) const {
+    vec3f BezierCurve::normalAt(const float t) const {
         const Frame rmf = getRMF(t, 100);
         return rmf.normal;
     }
@@ -109,7 +109,7 @@ namespace EngineM {
     }
 
     std::unique_ptr<Curve> BezierCurve::derivative() const {
-        std::vector<Vector3d> temp(points.size() - 1);
+        std::vector<vec3f> temp(points.size() - 1);
 
         for (int i = 0; i < points.size() - 1; i++) {
             temp[i] = (points[i + 1] - points[i]) * static_cast<float>(degree);
@@ -119,14 +119,14 @@ namespace EngineM {
     }
 
     Frame BezierCurve::getFrenetFrame(const float t) const {
-        const Vector3d origin = evaluate(t);
-        Vector3d tangent = tangentAt(t);
+        const vec3f origin = evaluate(t);
+        vec3f tangent = tangentAt(t);
         tangent.normalise();
-        const Vector3d acceleration = accelerationAt(t);
-        const Vector3d temp = tangent + acceleration;
-        Vector3d rotationAxis = temp ^ tangent;
+        const vec3f acceleration = accelerationAt(t);
+        const vec3f temp = tangent + acceleration;
+        vec3f rotationAxis = temp ^ tangent;
         rotationAxis.normalise();
-        Vector3d normal = rotationAxis ^ tangent;
+        vec3f normal = rotationAxis ^ tangent;
         normal.normalise();
 
         return { origin, tangent, normal, rotationAxis };
@@ -152,10 +152,10 @@ namespace EngineM {
             currentFrame.tangent = tangentAt(curr_t);
             currentFrame.tangent.normalise();
 
-            Vector3d posDiff = currentFrame.origin - lastFrame.origin;
+            vec3f posDiff = currentFrame.origin - lastFrame.origin;
             float magSquare = posDiff * posDiff;
-            const Vector3d rotationAxisRef = lastFrame.rotationAxis - posDiff * 2 / magSquare * (posDiff * lastFrame.rotationAxis);
-            const Vector3d tangentRef = lastFrame.tangent - posDiff * 2 / magSquare * (posDiff * lastFrame.tangent);
+            const vec3f rotationAxisRef = lastFrame.rotationAxis - posDiff * 2 / magSquare * (posDiff * lastFrame.rotationAxis);
+            const vec3f tangentRef = lastFrame.tangent - posDiff * 2 / magSquare * (posDiff * lastFrame.tangent);
 
             posDiff = currentFrame.tangent - tangentRef;
             magSquare = posDiff * posDiff;
@@ -174,11 +174,11 @@ namespace EngineM {
         return legendreGaussQuadratureLength();
     }
 
-    Vector3d& BezierCurve::operator[](const int i) {
+    vec3f& BezierCurve::operator[](const int i) {
         return points[i];
     }
 
-    const Vector3d& BezierCurve::operator[](const int i) const {
+    const vec3f& BezierCurve::operator[](const int i) const {
         return points[i];
     }
 
@@ -186,11 +186,11 @@ namespace EngineM {
         return degree;
     }
 
-    std::vector<Vector3d> BezierCurve::getPoints() const {
+    std::vector<vec3f> BezierCurve::getPoints() const {
         return points;
     }
 
-    void BezierCurve::setPoints(const std::vector<Vector3d> &points) {
+    void BezierCurve::setPoints(const std::vector<vec3f> &points) {
         if (points.size() != degree + 1) {
             throw std::invalid_argument("Number of control points must be equal to degree + 1");
         }

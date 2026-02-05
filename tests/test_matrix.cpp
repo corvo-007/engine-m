@@ -212,9 +212,9 @@ TEST(MatrixTest, MulEqual) {
 
 TEST(MatrixTest, VectorMul) {
     const EngineM::Matrix m(3, 2, 1, 6, 5, 4, 9, 8, 7);
-    const EngineM::Vector3d v(4, 3, 2);
+    const EngineM::vec3f v(4, 3, 2);
 
-    const EngineM::Vector3d result = m * v;
+    const EngineM::vec3f result = m * v;
 
     EXPECT_FLOAT_EQ(result.x, m[0][0] * v.x + m[0][1] * v.y + m[0][2] * v.z);
     EXPECT_FLOAT_EQ(result.y, m[1][0] * v.x + m[1][1] * v.y + m[1][2] * v.z);

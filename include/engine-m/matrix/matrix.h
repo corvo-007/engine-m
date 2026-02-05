@@ -55,7 +55,7 @@ namespace EngineM {
         Matrix operator*(const Matrix &) const;
         Matrix& operator*=(const Matrix &);
 
-        Vector3d operator*(const Vector3d &) const;
+        vec3f operator*(const vec3f &) const;
 
         bool operator==(const Matrix &) const;
         bool operator!=(const Matrix &) const;

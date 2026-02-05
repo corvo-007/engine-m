@@ -1,18 +1,19 @@
 #pragma once
 
-#include "vector/vector3d.h"
+#include "engine-m/core.h"
+#include "engine-m/vector/vector3d.h"
 
 namespace EngineM {
 
     class ENGINE_M_API Frame {
     public:
-        Vector3d origin;
-        Vector3d tangent;
-        Vector3d normal;
-        Vector3d rotationAxis;
+        vec3f origin;
+        vec3f tangent;
+        vec3f normal;
+        vec3f rotationAxis;
 
         Frame() = default;
-        Frame(const Vector3d &, const Vector3d &, const Vector3d &, const Vector3d &);
+        Frame(const vec3f &, const vec3f &, const vec3f &, const vec3f &);
         Frame(const Frame &) = default;
 
         Frame& operator=(const Frame &) = default;

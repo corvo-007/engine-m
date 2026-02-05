@@ -5,75 +5,90 @@
 
 namespace EngineM {
 
-    Vector3d::Vector3d(const float x, const float y, const float z): x(x), y(y), z(z) {
+    template <typename T>
+    Vector3d<T>::Vector3d(const T x, const T y, const T z): x(x), y(y), z(z) {
 
     }
 
-    Vector3d Vector3d::operator+(const Vector3d &v) const {
+    template <typename T>
+    Vector3d<T> Vector3d<T>::operator+(const Vector3d &v) const {
         return {x + v.x, y + v.y, z + v.z};
     }
 
-    Vector3d& Vector3d::operator+=(const Vector3d &v) {
+    template <typename T>
+    Vector3d<T>& Vector3d<T>::operator+=(const Vector3d &v) {
         x += v.x;
         y += v.y;
         z += v.z;
         return *this;
     }
 
-    Vector3d Vector3d::operator-(const Vector3d &v) const {
+    template <typename T>
+    Vector3d<T> Vector3d<T>::operator-(const Vector3d &v) const {
         return {x - v.x, y - v.y, z - v.z};
     }
 
-    Vector3d& Vector3d::operator-=(const Vector3d &v) {
+    template <typename T>
+    Vector3d<T>& Vector3d<T>::operator-=(const Vector3d &v) {
         x -= v.x;
         y -= v.y;
         z -= v.z;
         return *this;
     }
 
-    Vector3d Vector3d::operator*(const float k) const {
+    template <typename T>
+    Vector3d<T> Vector3d<T>::operator*(const T k) const {
         return {x * k, y * k, z * k};
     }
 
-    Vector3d& Vector3d::operator*=(const float k) {
+    template <typename T>
+    Vector3d<T>& Vector3d<T>::operator*=(const T k) {
         x *= k;
         y *= k;
         z *= k;
         return *this;
     }
 
-    Vector3d Vector3d::operator/(const float k) const {
+    template <typename T>
+    Vector3d<T> Vector3d<T>::operator/(const T k) const {
         return {x / k, y / k, z / k};
     }
 
-    Vector3d& Vector3d::operator/=(const float k) {
+    template <typename T>
+    Vector3d<T>& Vector3d<T>::operator/=(const T k) {
         x /= k;
         y /= k;
         z /= k;
         return *this;
     }
 
-    Vector3d Vector3d::operator-() const {
+    template <typename T>
+    Vector3d<T> Vector3d<T>::operator-() const {
         return {-x, -y, -z};
     }
 
-    float Vector3d::dot(const Vector3d &v) const {
+    template <typename T>
+    T Vector3d<T>::dot(const Vector3d &v) const {
         return x * v.x + y * v.y + z * v.z;
     }
 
-    float Vector3d::operator*(const Vector3d &v) const {
+    template <typename T>
+    T Vector3d<T>::operator*(const Vector3d &v) const {
         return dot(v);
     }
 
-    Vector3d Vector3d::cross(const Vector3d &v) const {
+    template <typename T>
+    Vector3d<T> Vector3d<T>::cross(const Vector3d &v) const {
         return {y * v.z - v.y * z, z * v.x - v.z * x, x * v.y - v.x * y};
     }
 
-    Vector3d Vector3d::operator^(const Vector3d &v) const {
+    template <typename T>
+    Vector3d<T> Vector3d<T>::operator^(const Vector3d &v) const {
         return cross(v);
     }
 
-    Vector3d& Vector3d::operator^=(const Vector3d &v) {
+    template <typename T>
+    Vector3d<T>& Vector3d<T>::operator^=(const Vector3d &v) {
         const float x = this -> y * v.z - v.y * this -> z;
         const float y = this -> z * v.x - v.z * this -> x;
         z = this -> x * v.y - v.x * this -> y;
@@ -83,32 +98,42 @@ namespace EngineM {
         return *this;
     }
 
-    bool Vector3d::operator==(const Vector3d &v) const {
+    template <typename T>
+    bool Vector3d<T>::operator==(const Vector3d &v) const {
         return equals(x, v.x) && equals(y, v.y) && equals(z, v.z);
     }
 
-    bool Vector3d::operator!=(const Vector3d &v) const {
+    template <typename T>
+    bool Vector3d<T>::operator!=(const Vector3d &v) const {
         return !((*this) == v);
     }
 
-    float Vector3d::magnitude() const {
+    template <typename T>
+    float Vector3d<T>::magnitude() const {
         return std::sqrt(x * x + y * y + z * z);
     }
 
-    void Vector3d::normalise() {
+    template <typename T>
+    void Vector3d<T>::normalise() {
         const float mag = magnitude();
+
+        if (mag == T{}) {
+            return;
+        }
 
         x /= mag;
         y /= mag;
         z /= mag;
     }
 
-    Vector3d Vector3d::rotate(const float angle, const Vector3d &axis) const {
+    template <typename T>
+    Vector3d<float> Vector3d<T>::rotate(const float angle, const Vector3d &axis) const {
         return rotateRad(degreesToRadians(angle), axis);
     }
 
-    Vector3d Vector3d::rotateRad(float radians, const Vector3d &axis) const {
-        Vector3d n_axis = axis;
+    template <typename T>
+    Vector3d<float> Vector3d<T>::rotateRad(float radians, const Vector3d &axis) const {
+        vec3f n_axis = {static_cast<float>(axis.x), static_cast<float>(axis.y), static_cast<float>(axis.z)};
         n_axis.normalise();
 
         radians /= 2;
@@ -117,12 +142,17 @@ namespace EngineM {
         return rotate(q);
     }
 
-    Vector3d Vector3d::rotate(const Quaternion &q) const {
-        const Quaternion p(0, *this);
+    template <typename T>
+    Vector3d<float> Vector3d<T>::rotate(const Quaternion &q) const {
+        vec3f v = {static_cast<float>(x), static_cast<float>(y), static_cast<float>(z)};
+        const Quaternion p(0, v);
         const Quaternion q_inv = q.inverse();
 
         const Quaternion rotation = q * p * q_inv;
 
         return rotation.v;
     }
+
+    template class ENGINE_M_API Vector3d<int>;
+    template class ENGINE_M_API Vector3d<float>;
 }

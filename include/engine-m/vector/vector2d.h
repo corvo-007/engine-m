@@ -1,53 +1,54 @@
 #pragma once
 
 #include "engine-m/core.h"
-#include "vector.h"
 
 namespace EngineM {
 
-    class ENGINE_M_API Vector2d : public Vector<Vector2d> {
+    template <typename T>
+    class ENGINE_M_API Vector2d {
     public:
-        float x {};
-        float y {};
+        T x {};
+        T y {};
 
         Vector2d() = default;
-        Vector2d(float, float);
+        Vector2d(T, T);
         Vector2d(const Vector2d &) = default;
 
         Vector2d& operator=(const Vector2d &) = default;
 
-        Vector2d operator+(const Vector2d &) const override;
-        Vector2d& operator+=(const Vector2d &) override;
+        Vector2d operator+(const Vector2d &) const;
+        Vector2d& operator+=(const Vector2d &);
 
-        Vector2d operator-(const Vector2d &) const override;
-        Vector2d& operator-=(const Vector2d &) override;
+        Vector2d operator-(const Vector2d &) const;
+        Vector2d& operator-=(const Vector2d &);
 
-        Vector2d operator*(float) const override;
-        Vector2d& operator*=(float) override;
+        Vector2d operator*(T) const;
+        Vector2d& operator*=(T);
 
-        Vector2d operator/(float) const override;
-        Vector2d& operator/=(float) override;
+        Vector2d operator/(T) const;
+        Vector2d& operator/=(T);
 
-        Vector2d operator-() const override;
+        Vector2d operator-() const;
 
-        [[nodiscard]] float dot(const Vector2d &) const override;
-        float operator*(const Vector2d &) const override;
+        [[nodiscard]] T dot(const Vector2d &) const;
+        T operator*(const Vector2d &) const;
 
-        [[nodiscard]] float cross(const Vector2d &) const;
-        [[nodiscard]] float operator^(const Vector2d &) const;
+        [[nodiscard]] T cross(const Vector2d &) const;
+        [[nodiscard]] T operator^(const Vector2d &) const;
 
-        bool operator==(const Vector2d &) const override;
-        bool operator!=(const Vector2d &) const override;
+        bool operator==(const Vector2d &) const;
+        bool operator!=(const Vector2d &) const;
 
-        [[nodiscard]] float magnitude() const override;
+        [[nodiscard]] float magnitude() const;
 
-        void normalise() override;
+        void normalise();
 
-        [[nodiscard]] Vector2d rotate(float) const;
-        [[nodiscard]] Vector2d rotateRad(float) const;
+        [[nodiscard]] Vector2d<float> rotate(float) const;
+        [[nodiscard]] Vector2d<float> rotateRad(float) const;
 
-        ~Vector2d() override = default;
+        ~Vector2d() = default;
     };
 
-    using vec2 = Vector2d;
+    using vec2 = Vector2d<int>;
+    using vec2f = Vector2d<float>;
 }

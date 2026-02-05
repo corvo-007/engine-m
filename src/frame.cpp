@@ -2,7 +2,7 @@
 
 namespace EngineM {
 
-    Frame::Frame(const Vector3d &origin, const Vector3d &tangent, const Vector3d &normal, const Vector3d &rotationAxis): origin(origin), tangent(tangent), normal(normal), rotationAxis(rotationAxis) {
+    Frame::Frame(const vec3f &origin, const vec3f &tangent, const vec3f &normal, const vec3f &rotationAxis): origin(origin), tangent(tangent), normal(normal), rotationAxis(rotationAxis) {
 
     }
 
