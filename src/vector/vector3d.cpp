@@ -1,13 +1,33 @@
 #include <cmath>
 #include "engine-m/vector/vector3d.h"
+
+#include <cassert>
+
 #include "engine-m/quaternion/quaternion.h"
 #include "engine-m/utils.h"
 
 namespace EngineM {
 
     template <typename T>
+    Vector3d<T>::Vector3d(): data{} {
+
+    }
+
+    template <typename T>
     Vector3d<T>::Vector3d(const T x, const T y, const T z): x(x), y(y), z(z) {
 
+    }
+
+    template <typename T>
+    T& Vector3d<T>::operator[](const int i) {
+        assert(i >= 0 && i < 3);
+        return data[i];
+    }
+
+    template <typename T>
+    const T& Vector3d<T>::operator[](const int i) const {
+        assert(i >= 0 && i < 3);
+        return data[i];
     }
 
     template <typename T>

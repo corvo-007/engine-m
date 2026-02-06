@@ -7,14 +7,21 @@ namespace EngineM {
     template <typename T>
     class ENGINE_M_API Vector2d {
     public:
-        T x {};
-        T y {};
+        union {
+            T data[2];
+            struct {
+                T x, y;
+            };
+        };
 
-        Vector2d() = default;
+        Vector2d();
         Vector2d(T, T);
         Vector2d(const Vector2d &) = default;
 
         Vector2d& operator=(const Vector2d &) = default;
+
+        T& operator[](int i);
+        const T& operator[](int i) const;
 
         Vector2d operator+(const Vector2d &) const;
         Vector2d& operator+=(const Vector2d &);
