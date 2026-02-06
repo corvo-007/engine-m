@@ -1,12 +1,32 @@
 #include <cmath>
 #include "engine-m/vector/vector2d.h"
+
+#include <cassert>
+
 #include "engine-m/utils.h"
 
 namespace EngineM {
 
     template <typename T>
+    Vector2d<T>::Vector2d(): data{} {
+
+    }
+
+    template <typename T>
     Vector2d<T>::Vector2d(const T x, const T y): x(x), y(y) {
 
+    }
+
+    template <typename T>
+    T& Vector2d<T>::operator[](const int i) {
+        assert(i >= 0 && i < 2);
+        return data[i];
+    }
+
+    template <typename T>
+    const T& Vector2d<T>::operator[](const int i) const {
+        assert(i >= 0 && i < 2);
+        return data[i];
     }
 
     template <typename T>

@@ -9,15 +9,21 @@ namespace EngineM {
     template <typename T>
     class ENGINE_M_API Vector3d {
     public:
-        T x {};
-        T y {};
-        T z {};
+        union {
+            T data[3];
+            struct {
+                T x, y, z;
+            };
+        };
 
-        Vector3d() = default;
+        Vector3d();
         Vector3d(T, T, T);
         Vector3d(const Vector3d &) = default;
 
-        Vector3d &operator=(const Vector3d &) = default;
+        Vector3d& operator=(const Vector3d &) = default;
+
+        T& operator[](int i);
+        const T& operator[](int i) const;
 
         Vector3d operator+(const Vector3d &) const;
         Vector3d& operator+=(const Vector3d &);

@@ -39,6 +39,32 @@ TEST(Vector2dTest, AssignmentOp) {
     EXPECT_FLOAT_EQ(v1.y, v2.y);
 }
 
+TEST(Vector2dTest, SquareOperator) {
+    EngineM::vec2f v(1.234, 6.348);
+
+    EXPECT_FLOAT_EQ(v[0], 1.234);
+    EXPECT_FLOAT_EQ(v.x, 1.234);
+    EXPECT_FLOAT_EQ(v[1], 6.348);
+    EXPECT_FLOAT_EQ(v.y, 6.348);
+
+    v[0] = 1.3;
+    v[1] = 2.5;
+
+    EXPECT_FLOAT_EQ(v[0], 1.3);
+    EXPECT_FLOAT_EQ(v.x, 1.3);
+    EXPECT_FLOAT_EQ(v[1], 2.5);
+    EXPECT_FLOAT_EQ(v.y, 2.5);
+}
+
+TEST(Vector2dTest, ConstSquareOperator) {
+    const EngineM::vec2f v(1.234, 6.348);
+
+    EXPECT_FLOAT_EQ(v[0], 1.234);
+    EXPECT_FLOAT_EQ(v.x, 1.234);
+    EXPECT_FLOAT_EQ(v[1], 6.348);
+    EXPECT_FLOAT_EQ(v.y, 6.348);
+}
+
 TEST(Vector2dTest, Add) {
     const EngineM::vec2f v1(1.5, 2.5);
     const EngineM::vec2f v2(8.2, 5.2);
