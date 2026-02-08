@@ -18,7 +18,7 @@ namespace EngineM {
         return std::max(min, std::min(value, max));
     }
 
-    float degreesToRadians(const float degrees) {
+    double degreesToRadians(const double degrees) {
         return degrees * PI / 180;
     }
 

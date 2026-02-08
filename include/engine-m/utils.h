@@ -3,8 +3,7 @@
 #include <cstdint>
 
 #include "core.h"
-#include "vector/vector2d.h"
-#include "vector/vector3d.h"
+#include "vector/vector.h"
 
 namespace EngineM {
 
@@ -14,7 +13,7 @@ namespace EngineM {
 
     ENGINE_M_API float clamp(float, float, float);
 
-    ENGINE_M_API float degreesToRadians(float);
+    ENGINE_M_API double degreesToRadians(double);
 
     ENGINE_M_API float radiansToDegrees(float);
 
