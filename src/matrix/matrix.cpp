@@ -129,11 +129,10 @@ namespace EngineM {
     }
 
     template <typename T, unsigned int rows, unsigned int cols>
-    template <unsigned int ncols>
-    Matrix<T, rows, ncols> Matrix<T, rows, cols>::operator*(const Matrix<T, cols, ncols> &mat) const {
-        Matrix<T, rows, ncols> out;
+    Matrix<T, rows, cols> Matrix<T, rows, cols>::operator*(const Matrix &mat) const requires (rows == cols) {
+        Matrix out;
         for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < ncols; j++) {
+            for (int j = 0; j < cols; j++) {
                 out[i][j] = 0.0f;
                 for (int k = 0; k < cols; k++) {
                     out[i][j] += matrix[i][k] * mat[k][j];

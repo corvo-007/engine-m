@@ -41,8 +41,7 @@ namespace EngineM {
         Matrix operator/(T) const;
         Matrix& operator/=(T);
 
-        template <unsigned int ncols>
-        Matrix<T, rows, ncols> operator*(const Matrix<T, cols, ncols> &) const;
+        Matrix operator*(const Matrix &) const requires (rows == cols);
         Matrix& operator*=(const Matrix &) requires (rows == cols);
 
         Vector<T, rows> operator*(const Vector<T, cols> &) const;
