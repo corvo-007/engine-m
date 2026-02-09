@@ -1,93 +1,45 @@
 #include "engine-m/matrix/matrix.h"
 
+#include <cassert>
+
 #include "engine-m/utils.h"
-#include "engine-m/simd.h"
-#include "kernels/kernel_declarations.h"
 
 namespace EngineM {
 
-    Matrix::Matrix(const float a, const float b, const float c, const float d, const float e, const float f, const float g, const float h, const float i): matrix{{a, b, c}, {d, e, f}, {g, h, i}} {
+    template <typename T, unsigned int rows, unsigned int cols>
+    Matrix<T, rows, cols>::Matrix(std::initializer_list<T> list) {
+        assert(list.size() == rows * cols);
 
-    }
+        auto it = list.begin();
 
-    Matrix::Matrix(const float matrix[3][3]) {
-        copy(matrix);
-    }
-
-    Matrix::Matrix(const Matrix &mat) {
-        copy(mat.matrix);
-    }
-
-    Matrix::MatOp Matrix::matrix_add_ptr = add_dispatch;
-    Matrix::MatOp Matrix::matrix_sub_ptr = sub_dispatch;
-    Matrix::MulKOp Matrix::matrix_mul_by_k_ptr = mul_by_k_dispatch;
-    Matrix::MatOp Matrix::matrix_mul_ptr = mul_dispatch;
-
-    void Matrix::detection_and_dispatch() {
-        switch (SIMD::get_simd_level()) {
-            case SIMD::Level::AVX2:
-                matrix_add_ptr = kernels::avx2::matrix_add;
-                matrix_sub_ptr = kernels::avx2::matrix_sub;
-                matrix_mul_by_k_ptr = kernels::avx2::matrix_mul_by_k;
-                matrix_mul_ptr = kernels::avx2::matrix_mul;
-                break;
-            case SIMD::Level::AVX:
-                matrix_add_ptr = kernels::avx::matrix_add;
-                matrix_sub_ptr = kernels::avx::matrix_sub;
-                matrix_mul_by_k_ptr = kernels::avx::matrix_mul_by_k;
-                matrix_mul_ptr = kernels::avx::matrix_mul;
-                break;
-            case SIMD::Level::SSE2:
-                matrix_add_ptr = kernels::sse::matrix_add;
-                matrix_sub_ptr = kernels::sse::matrix_sub;
-                matrix_mul_by_k_ptr = kernels::sse::matrix_mul_by_k;
-                matrix_mul_ptr = kernels::sse::matrix_mul;
-                break;
-            case SIMD::Level::Scalar:
-                matrix_add_ptr = kernels::scalar::matrix_add;
-                matrix_sub_ptr = kernels::scalar::matrix_sub;
-                matrix_mul_by_k_ptr = kernels::scalar::matrix_mul_by_k;
-                matrix_mul_ptr = kernels::scalar::matrix_mul;
+        int i = 0;
+        while (it != list.end()) {
+            matrix[i / cols][i % cols] = *it++;
+            i++;
         }
     }
 
-    void Matrix::add_dispatch(const float (&a)[3][3], const float (&b)[3][3], float (&out)[3][3]) {
-        detection_and_dispatch();
-        matrix_add_ptr(a, b, out);
+    template <typename T, unsigned int rows, unsigned int cols>
+    Matrix<T, rows, cols>::Matrix(const T matrix[rows][cols]) {
+        copy(matrix);
     }
 
-    void Matrix::sub_dispatch(const float (&a)[3][3], const float (&b)[3][3], float (&out)[3][3]) {
-        detection_and_dispatch();
-        matrix_sub_ptr(a, b, out);
+    template <typename T, unsigned int rows, unsigned int cols>
+    Matrix<T, rows, cols>::Matrix(const Matrix &mat) {
+        copy(mat.matrix);
     }
 
-    void Matrix::mul_by_k_dispatch(const float (&a)[3][3], float k, float (&out)[3][3]) {
-        detection_and_dispatch();
-        matrix_mul_by_k_ptr(a, k, out);
+    template <typename T, unsigned int rows, unsigned int cols>
+    void Matrix<T, rows, cols>::copy(const T matrix[rows][cols]) {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                this -> matrix[i][j] = matrix[i][j];
+            }
+        }
     }
 
-    void Matrix::mul_dispatch(const float (&a)[3][3], const float (&b)[3][3], float (&out)[3][3]) {
-        detection_and_dispatch();
-        matrix_mul_ptr(a, b, out);
-    }
-
-    void Matrix::copy(const float matrix[3][3]) {
-        this -> matrix[0][0] = matrix[0][0];
-        this -> matrix[0][1] = matrix[0][1];
-        this -> matrix[0][2] = matrix[0][2];
-        this -> matrix[1][0] = matrix[1][0];
-        this -> matrix[1][1] = matrix[1][1];
-        this -> matrix[1][2] = matrix[1][2];
-        this -> matrix[2][0] = matrix[2][0];
-        this -> matrix[2][1] = matrix[2][1];
-        this -> matrix[2][2] = matrix[2][2];
-    }
-
-    float Matrix::determinant() const {
-        return matrix[0][0] * (matrix[1][1] * matrix[2][2] - matrix[1][2] * matrix[2][1]) - matrix[0][1] * (matrix[1][0] * matrix[2][2] - matrix[1][2] * matrix[2][0]) + matrix[0][2] * (matrix[1][0] * matrix[2][1] - matrix[1][1] * matrix[2][0]);
-    }
-
-    Matrix& Matrix::operator=(const Matrix &mat) {
+    template <typename T, unsigned int rows, unsigned int cols>
+    Matrix<T, rows, cols>& Matrix<T, rows, cols>::operator=(const Matrix &mat) {
         if (this == &mat) {
             return *this;
         }
@@ -95,75 +47,123 @@ namespace EngineM {
         return *this;
     }
 
-    float* Matrix::operator[](const uint32_t i) {
+    template <typename T, unsigned int rows, unsigned int cols>
+    T* Matrix<T, rows, cols>::operator[](const uint32_t i) {
         return matrix[i];
     }
 
-    const float* Matrix::operator[](const uint32_t i) const {
+    template <typename T, unsigned int rows, unsigned int cols>
+    const T* Matrix<T, rows, cols>::operator[](const uint32_t i) const {
         return matrix[i];
     }
 
-    Matrix Matrix::operator+(const Matrix &mat) const {
+    template <typename T, unsigned int rows, unsigned int cols>
+    Matrix<T, rows, cols> Matrix<T, rows, cols>::operator+(const Matrix &mat) const {
         Matrix out;
-        matrix_add_ptr(matrix, mat.matrix, out.matrix);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                out[i][j] = matrix[i][j] + mat[i][j];
+            }
+        }
         return out;
     }
 
-    Matrix& Matrix::operator+=(const Matrix &mat) {
+    template <typename T, unsigned int rows, unsigned int cols>
+    Matrix<T, rows, cols>& Matrix<T, rows, cols>::operator+=(const Matrix &mat) {
         *this = *this + mat;
         return *this;
     }
 
-    Matrix Matrix::operator-(const Matrix &mat) const {
+    template <typename T, unsigned int rows, unsigned int cols>
+    Matrix<T, rows, cols> Matrix<T, rows, cols>::operator-(const Matrix &mat) const {
         Matrix out;
-        matrix_sub_ptr(matrix, mat.matrix, out.matrix);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                out[i][j] = matrix[i][j] - mat[i][j];
+            }
+        }
         return out;
     }
 
-    Matrix& Matrix::operator-=(const Matrix &mat) {
+    template <typename T, unsigned int rows, unsigned int cols>
+    Matrix<T, rows, cols>& Matrix<T, rows, cols>::operator-=(const Matrix &mat) {
         *this = *this - mat;
         return *this;
     }
 
-    Matrix Matrix::operator*(const float k) const {
+    template <typename T, unsigned int rows, unsigned int cols>
+    Matrix<T, rows, cols> Matrix<T, rows, cols>::operator*(const T k) const {
         Matrix out;
-        matrix_mul_by_k_ptr(matrix, k, out.matrix);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                out[i][j] = matrix[i][j] * k;
+            }
+        }
         return out;
     }
 
-    Matrix& Matrix::operator*=(const float k) {
+    template <typename T, unsigned int rows, unsigned int cols>
+    Matrix<T, rows, cols>& Matrix<T, rows, cols>::operator*=(const T k) {
         *this = *this * k;
         return *this;
     }
 
-    Matrix Matrix::operator/(float k) const {
-        k = 1 / k;
-        return *this * k;
-    }
-
-    Matrix& Matrix::operator/=(float k) {
-        k = 1 / k;
-        return *this *= k;
-    }
-
-    Matrix Matrix::operator*(const Matrix &mat) const {
+    template <typename T, unsigned int rows, unsigned int cols>
+    Matrix<T, rows, cols> Matrix<T, rows, cols>::operator/(T k) const {
+        if (k == 0) {
+            return Matrix();
+        }
         Matrix out;
-        matrix_mul_ptr(matrix, mat.matrix, out.matrix);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                out[i][j] = matrix[i][j] / k;
+            }
+        }
         return out;
     }
 
-    Matrix& Matrix::operator*=(const Matrix &mat) {
+    template <typename T, unsigned int rows, unsigned int cols>
+    Matrix<T, rows, cols>& Matrix<T, rows, cols>::operator/=(T k) {
+        *this = *this / k;
+        return *this;
+    }
+
+    template <typename T, unsigned int rows, unsigned int cols>
+    Matrix<T, rows, cols> Matrix<T, rows, cols>::operator*(const Matrix &mat) const requires (rows == cols) {
+        Matrix out;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                out[i][j] = 0.0f;
+                for (int k = 0; k < cols; k++) {
+                    out[i][j] += matrix[i][k] * mat[k][j];
+                }
+            }
+        }
+        return out;
+    }
+
+    template <typename T, unsigned int rows, unsigned int cols>
+    Matrix<T, rows, cols>& Matrix<T, rows, cols>::operator*=(const Matrix &mat) requires (rows == cols) {
         *this = *this * mat;
         return *this;
     }
 
-    vec3f Matrix::operator*(const vec3f &vec) const {
-	    return {matrix[0][0] * vec.x + matrix[0][1] * vec.y + matrix[0][2] * vec.z, matrix[1][0] * vec.x + matrix[1][1] * vec.y + matrix[1][2] * vec.z, matrix[2][0] * vec.x + matrix[2][1] * vec.y + matrix[2][2] * vec.z};
+    template <typename T, unsigned int rows, unsigned int cols>
+    Vector<T, rows> Matrix<T, rows, cols>::operator*(const Vector<T, cols> &vec) const {
+        Vector<T, cols> out;
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                out[i] += matrix[i][j] * vec[j];
+            }
+        }
+        return out;
     }
 
-    bool Matrix::operator==(const Matrix &mat) const {
-        for (uint32_t i = 0; i < 3; i++) {
-            for (uint32_t j = 0; j < 3; j++) {
+    template <typename T, unsigned int rows, unsigned int cols>
+    bool Matrix<T, rows, cols>::operator==(const Matrix &mat) const {
+        for (uint32_t i = 0; i < rows; i++) {
+            for (uint32_t j = 0; j < cols; j++) {
                 if (!equals(matrix[i][j], mat[i][j])) {
                     return false;
                 }
@@ -172,56 +172,133 @@ namespace EngineM {
         return true;
     }
 
-    bool Matrix::operator!=(const Matrix &mat) const {
+    template <typename T, unsigned int rows, unsigned int cols>
+    bool Matrix<T, rows, cols>::operator!=(const Matrix &mat) const {
         return !(*this == mat);
     }
 
-    bool Matrix::getInverse(Matrix &mat) const {
-        const float det = determinant();
+    template <typename T, unsigned int rows, unsigned int cols>
+    T Matrix<T, rows, cols>::determinant() const requires (rows == cols && rows == 1) {
+        return matrix[0][0];
+    }
 
-        if (det == 0.0) {
+    template <typename T, unsigned int rows, unsigned int cols>
+    T Matrix<T, rows, cols>::determinant() const requires (rows == cols && rows == 2) {
+        return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+    }
+
+
+    template <typename T, unsigned int rows, unsigned int cols>
+    T Matrix<T, rows, cols>::determinant() const requires (rows == cols && rows > 2) {
+        T det = 0;
+        int sign = 1;
+
+        for (unsigned int f = 0; f < cols; f++) {
+            Matrix<T, rows - 1, cols - 1> minor;
+
+            for (unsigned int i = 1; i < rows; i++) {
+                unsigned int minor_col = 0;
+                for (unsigned int j = 0; j < cols; j++) {
+                    if (j == f) continue;
+                    minor[i - 1][minor_col] = matrix[i][j];
+                    minor_col++;
+                }
+            }
+
+            det += sign * matrix[0][f] * minor.determinant();
+            sign = -sign;
+        }
+        return det;
+    }
+
+    template <typename T, unsigned int rows, unsigned int cols>
+    bool Matrix<T, rows, cols>::getInverse(Matrix &mat) const {
+        static_assert(rows == cols, "Only square matrices can be inverted.");
+
+        T det = determinant();
+        if (det == 0) {
             return false;
         }
 
-        const float oneOverDet = 1 / det;
+        if constexpr (rows == 1) {
+            mat[0][0] = 1 / det;
+            return true;
+        } else {
+            T invDet = static_cast<T>(1) / det;
 
-        mat[0][0] = oneOverDet * (matrix[1][1] * matrix[2][2] - matrix[1][2] * matrix[2][1]);
-        mat[0][1] = -oneOverDet *  (matrix[0][1] * matrix[2][2] - matrix[0][2] * matrix[2][1]);
-        mat[0][2] = oneOverDet * (matrix[0][1] * matrix[1][2] - matrix[0][2] * matrix[1][1]);
-        mat[1][0] = -oneOverDet *  (matrix[1][0] * matrix[2][2] - matrix[1][2] * matrix[2][0]);
-        mat[1][1] = oneOverDet * (matrix[0][0] * matrix[2][2] - matrix[0][2] * matrix[2][0]);
-        mat[1][2] = -oneOverDet *  (matrix[0][0] * matrix[1][2] - matrix[0][2] * matrix[1][0]);
-        mat[2][0] = oneOverDet * (matrix[1][0] * matrix[2][1] - matrix[1][1] * matrix[2][0]);
-        mat[2][1] = -oneOverDet *  (matrix[0][0] * matrix[2][1] - matrix[0][1] * matrix[2][0]);
-        mat[2][2] = oneOverDet * (matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]);
-
-        return true;
+            for (unsigned int i = 0; i < rows; i++) {
+                for (unsigned int j = 0; j < cols; j++) {
+                    // Get the cofactor of matrix[i][j]
+                    // Note the swap of indices (j, i) to perform the Transpose (Adjugate)
+                    mat[j][i] = cofactor(i, j) * invDet;
+                }
+            }
+            return true;
+        }
     }
 
-    bool Matrix::inverse() {
+    template <typename T, unsigned int rows, unsigned int cols>
+    T Matrix<T, rows, cols>::cofactor(int p, int q) const {
+        Matrix<T, rows - 1, cols - 1> minor;
+        unsigned int rowIdx = 0;
+        unsigned int colIdx = 0;
+
+        for (unsigned int i = 0; i < rows; i++) {
+            if (i == p) continue;
+            colIdx = 0;
+            for (unsigned int j = 0; j < cols; j++) {
+                if (j == q) continue;
+                minor[rowIdx][colIdx] = matrix[i][j];
+                colIdx++;
+            }
+            rowIdx++;
+        }
+
+        T sign = ((p + q) % 2 == 0) ? 1 : -1;
+        return sign * minor.determinant();
+    }
+
+    template <typename T, unsigned int rows, unsigned int cols>
+    bool Matrix<T, rows, cols>::inverse() {
         Matrix mat;
         const bool i = getInverse(mat);
         *this = mat;
         return i;
     }
 
-    Matrix Matrix::getTranspose() const {
+    template <typename T, unsigned int rows, unsigned int cols>
+    Matrix<T, rows, cols> Matrix<T, rows, cols>::getTranspose() const {
         Matrix m;
 
-        for (uint32_t i = 0; i < 3; i++) {
-            for (uint32_t j = 0; j < 3; j++) {
+        for (uint32_t i = 0; i < rows; i++) {
+            for (uint32_t j = 0; j < cols; j++) {
                 m[j][i] = matrix[i][j];
             }
         }
         return m;
     }
 
-    Matrix& Matrix::transpose() {
+    template <typename T, unsigned int rows, unsigned int cols>
+    Matrix<T, rows, cols>& Matrix<T, rows, cols>::transpose() {
         *this = getTranspose();
         return *this;
     }
 
-    Matrix Matrix::identity() {
-        return {1, 0, 0, 0, 1, 0, 0, 0, 1};
+    template <typename T, unsigned int rows, unsigned int cols>
+    Matrix<T, rows, cols> Matrix<T, rows, cols>::identity() requires (rows == cols) {
+        Matrix out;
+        for (int i = 0; i < rows; i++) {
+            out[i][i] = 1;
+        }
+        return out;
     }
+
+    template class Matrix<int, 3, 3>;
+    template class Matrix<int, 4, 4>;
+
+    template class Matrix<float, 3, 3>;
+    template class Matrix<float, 4, 4>;
+
+    template class Matrix<double, 3, 3>;
+    template class Matrix<double, 4, 4>;
 }

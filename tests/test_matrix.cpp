@@ -4,7 +4,7 @@
 #include "engine-m/matrix/matrix.h"
 
 TEST(MatrixTest, DefaultConstruct) {
-    const EngineM::Matrix matrix;
+    const EngineM::mat3f matrix;
 
     for (uint32_t i = 0; i < 3; i++) {
         for (uint32_t j = 0; j < 3; j++) {
@@ -14,7 +14,7 @@ TEST(MatrixTest, DefaultConstruct) {
 }
 
 TEST(MatrixTest, ParamConstruct1) {
-    EngineM::Matrix matrix(10, 9, 8, 7, 6, 5, 4, 3, 2);
+    EngineM::mat3f matrix{10, 9, 8, 7, 6, 5, 4, 3, 2};
 
     int k = 10;
     for (uint32_t i = 0; i < 3; i++) {
@@ -26,7 +26,7 @@ TEST(MatrixTest, ParamConstruct1) {
 
 TEST(MatrixTest, ParamConstruct2) {
     constexpr float matrix[3][3] = {{10, 9, 8}, {7, 6, 5}, {4, 3, 2}};
-    EngineM::Matrix m(matrix);
+    EngineM::mat3f m(matrix);
 
     int k = 10;
     for (uint32_t i = 0; i < 3; i++) {
@@ -37,8 +37,8 @@ TEST(MatrixTest, ParamConstruct2) {
 }
 
 TEST(MatrixTest, CopyConstruct) {
-    const EngineM::Matrix m1(3, 2, 1, 6, 5, 4, 9, 8, 7);
-    const EngineM::Matrix m2(m1);
+    const EngineM::mat3f m1{3, 2, 1, 6, 5, 4, 9, 8, 7};
+    const EngineM::mat3f m2(m1);
 
     for (uint32_t i = 0; i < 3; i++) {
         for (uint32_t j = 0; j < 3; j++) {
@@ -48,8 +48,8 @@ TEST(MatrixTest, CopyConstruct) {
 }
 
 TEST(MatrixTest, AssignmentOp) {
-    const EngineM::Matrix m1(3, 2, 1, 6, 5, 4, 9, 8, 7);
-    EngineM::Matrix m2;
+    const EngineM::mat3f m1{3, 2, 1, 6, 5, 4, 9, 8, 7};
+    EngineM::mat3f m2;
 
     for (uint32_t i = 0; i < 3; i++) {
         for (uint32_t j = 0; j < 3; j++) {
@@ -67,10 +67,10 @@ TEST(MatrixTest, AssignmentOp) {
 }
 
 TEST(MatrixTest, Add) {
-    const EngineM::Matrix m1(3, 2, 1, 6, 5, 4, 9, 8, 7);
-    const EngineM::Matrix m2(3, 4, 2, 5, 1, 9, 9, 2, 1);
+    const EngineM::mat3f m1{3, 2, 1, 6, 5, 4, 9, 8, 7};
+    const EngineM::mat3f m2{3, 4, 2, 5, 1, 9, 9, 2, 1};
 
-    const EngineM::Matrix result = m1 + m2;
+    const EngineM::mat3f result = m1 + m2;
 
     for (uint32_t i = 0; i < 3; i++) {
         for (uint32_t j = 0; j < 3; j++) {
@@ -80,10 +80,10 @@ TEST(MatrixTest, Add) {
 }
 
 TEST(MatrixTest, AddEqual) {
-    const EngineM::Matrix m1(3, 2, 1, 6, 5, 4, 9, 8, 7);
-    const EngineM::Matrix m2(3, 4, 2, 5, 1, 9, 9, 2, 1);
+    const EngineM::mat3f m1{3, 2, 1, 6, 5, 4, 9, 8, 7};
+    const EngineM::mat3f m2{3, 4, 2, 5, 1, 9, 9, 2, 1};
 
-    EngineM::Matrix result = m1;
+    EngineM::mat3f result = m1;
 
     result += m2;
 
@@ -95,10 +95,10 @@ TEST(MatrixTest, AddEqual) {
 }
 
 TEST(MatrixTest, Sub) {
-    const EngineM::Matrix m1(3, 2, 1, 6, 5, 4, 9, 8, 7);
-    const EngineM::Matrix m2(3, 4, 2, 5, 1, 9, 9, 2, 1);
+    const EngineM::mat3f m1{3, 2, 1, 6, 5, 4, 9, 8, 7};
+    const EngineM::mat3f m2{3, 4, 2, 5, 1, 9, 9, 2, 1};
 
-    const EngineM::Matrix result = m1 - m2;
+    const EngineM::mat3f result = m1 - m2;
 
     for (uint32_t i = 0; i < 3; i++) {
         for (uint32_t j = 0; j < 3; j++) {
@@ -108,10 +108,10 @@ TEST(MatrixTest, Sub) {
 }
 
 TEST(MatrixTest, SubEqual) {
-    const EngineM::Matrix m1(3, 2, 1, 6, 5, 4, 9, 8, 7);
-    const EngineM::Matrix m2(3, 4, 2, 5, 1, 9, 9, 2, 1);
+    const EngineM::mat3f m1{3, 2, 1, 6, 5, 4, 9, 8, 7};
+    const EngineM::mat3f m2{3, 4, 2, 5, 1, 9, 9, 2, 1};
 
-    EngineM::Matrix result = m1;
+    EngineM::mat3f result = m1;
 
     result -= m2;
 
@@ -123,9 +123,9 @@ TEST(MatrixTest, SubEqual) {
 }
 
 TEST(MatrixTest, ScalarMul) {
-    const EngineM::Matrix m1(3, 2, 1, 6, 5, 4, 9, 8, 7);
+    const EngineM::mat3f m1{3, 2, 1, 6, 5, 4, 9, 8, 7};
 
-    EngineM::Matrix result = m1 * 3.2;
+    EngineM::mat3f result = m1 * 3.2;
 
     for (uint32_t i = 0; i < 3; i++) {
         for (uint32_t j = 0; j < 3; j++) {
@@ -135,9 +135,9 @@ TEST(MatrixTest, ScalarMul) {
 }
 
 TEST(MatrixTest, ScalarMulEqual) {
-    const EngineM::Matrix m1(3, 2, 1, 6, 5, 4, 9, 8, 7);
+    const EngineM::mat3f m1{3, 2, 1, 6, 5, 4, 9, 8, 7};
 
-    EngineM::Matrix result = m1;
+    EngineM::mat3f result = m1;
 
     result *= 3.2;
 
@@ -149,9 +149,9 @@ TEST(MatrixTest, ScalarMulEqual) {
 }
 
 TEST(MatrixTest, ScalarDiv) {
-    const EngineM::Matrix m1(3, 2, 1, 6, 5, 4, 9, 8, 7);
+    const EngineM::mat3f m1{3, 2, 1, 6, 5, 4, 9, 8, 7};
 
-    EngineM::Matrix result = m1 / 3.2;
+    EngineM::mat3f result = m1 / 3.2;
 
     for (uint32_t i = 0; i < 3; i++) {
         for (uint32_t j = 0; j < 3; j++) {
@@ -161,9 +161,9 @@ TEST(MatrixTest, ScalarDiv) {
 }
 
 TEST(MatrixTest, ScalarDivEqual) {
-    const EngineM::Matrix m1(3, 2, 1, 6, 5, 4, 9, 8, 7);
+    const EngineM::mat3f m1{3, 2, 1, 6, 5, 4, 9, 8, 7};
 
-    EngineM::Matrix result = m1;
+    EngineM::mat3f result = m1;
 
     result /= 3.2;
 
@@ -175,10 +175,10 @@ TEST(MatrixTest, ScalarDivEqual) {
 }
 
 TEST(MatrixTest, Mul) {
-    const EngineM::Matrix m1(3, 2, 1, 6, 5, 4, 9, 8, 7);
-    const EngineM::Matrix m2(3, 4, 2, 5, 1, 9, 9, 2, 1);
+    const EngineM::mat3f m1{3, 2, 1, 6, 5, 4, 9, 8, 7};
+    const EngineM::mat3f m2{3, 4, 2, 5, 1, 9, 9, 2, 1};
 
-    const EngineM::Matrix result = m1 * m2;
+    const EngineM::mat3f result = m1 * m2;
 
     for (uint32_t i = 0; i < 3; i++) {
         for (uint32_t j = 0; j < 3; j++) {
@@ -192,10 +192,10 @@ TEST(MatrixTest, Mul) {
 }
 
 TEST(MatrixTest, MulEqual) {
-    const EngineM::Matrix m1(3, 2, 1, 6, 5, 4, 9, 8, 7);
-    const EngineM::Matrix m2(3, 4, 2, 5, 1, 9, 9, 2, 1);
+    const EngineM::mat3f m1{3, 2, 1, 6, 5, 4, 9, 8, 7};
+    const EngineM::mat3f m2{3, 4, 2, 5, 1, 9, 9, 2, 1};
 
-    EngineM::Matrix result = m1;
+    EngineM::mat3f result = m1;
 
     result *= m2;
 
@@ -211,7 +211,7 @@ TEST(MatrixTest, MulEqual) {
 }
 
 TEST(MatrixTest, VectorMul) {
-    const EngineM::Matrix m(3, 2, 1, 6, 5, 4, 9, 8, 7);
+    const EngineM::mat3f m{3, 2, 1, 6, 5, 4, 9, 8, 7};
     const EngineM::vec3f v(4, 3, 2);
 
     const EngineM::vec3f result = m * v;
@@ -222,28 +222,28 @@ TEST(MatrixTest, VectorMul) {
 }
 
 TEST(MatrixTest, Equal) {
-    const EngineM::Matrix m1(3, 2, 1, 6, 5, 4, 9, 8, 7);
-    const EngineM::Matrix m2(3, 4, 2, 5, 1, 9, 9, 2, 1);
-    const EngineM::Matrix m3(3, 2, 1, 6, 5, 4, 9, 8, 7);
+    const EngineM::mat3f m1{3, 2, 1, 6, 5, 4, 9, 8, 7};
+    const EngineM::mat3f m2{3, 4, 2, 5, 1, 9, 9, 2, 1};
+    const EngineM::mat3f m3{3, 2, 1, 6, 5, 4, 9, 8, 7};
 
     EXPECT_FALSE(m1 == m2);
     EXPECT_TRUE(m1 == m3);
 }
 
 TEST(MatrixTest, NotEqual) {
-    const EngineM::Matrix m1(3, 2, 1, 6, 5, 4, 9, 8, 7);
-    const EngineM::Matrix m2(3, 4, 2, 5, 1, 9, 9, 2, 1);
-    const EngineM::Matrix m3(3, 2, 1, 6, 5, 4, 9, 8, 7);
+    const EngineM::mat3f m1{3, 2, 1, 6, 5, 4, 9, 8, 7};
+    const EngineM::mat3f m2{3, 4, 2, 5, 1, 9, 9, 2, 1};
+    const EngineM::mat3f m3{3, 2, 1, 6, 5, 4, 9, 8, 7};
 
     EXPECT_TRUE(m1 != m2);
     EXPECT_FALSE(m1 != m3);
 }
 
 TEST(MatrixTest, GetInverse) {
-    const EngineM::Matrix m1(1, 2, 3, 4, 5, 6, 7, 8, 9);
-    const EngineM::Matrix m2(3, 4, 2, 5, 1, 9, 9, 2, 1);
+    const EngineM::mat3f m1{1, 2, 3, 4, 5, 6, 7, 8, 9};
+    const EngineM::mat3f m2{3, 4, 2, 5, 1, 9, 9, 2, 1};
 
-    EngineM::Matrix result;
+    EngineM::mat3f result;
     bool hasInverse = m1.getInverse(result);
 
     EXPECT_FALSE(hasInverse);
@@ -261,8 +261,8 @@ TEST(MatrixTest, GetInverse) {
 }
 
 TEST(MatrixTest, Inverse) {
-    EngineM::Matrix m1(1, 2, 3, 4, 5, 6, 7, 8, 9);
-    EngineM::Matrix m2(3, 4, 2, 5, 1, 9, 9, 2, 1);
+    EngineM::mat3f m1{1, 2, 3, 4, 5, 6, 7, 8, 9};
+    EngineM::mat3f m2{3, 4, 2, 5, 1, 9, 9, 2, 1};
 
     bool hasInverse = m1.inverse();
     EXPECT_FALSE(hasInverse);
@@ -280,8 +280,8 @@ TEST(MatrixTest, Inverse) {
 }
 
 TEST(MatrixTest, GetTranspose) {
-    const EngineM::Matrix m1(1, 2, 3, 4, 5, 6, 7, 8, 9);
-    const EngineM::Matrix result = m1.getTranspose();
+    const EngineM::mat3f m1{1, 2, 3, 4, 5, 6, 7, 8, 9};
+    const EngineM::mat3f result = m1.getTranspose();
 
     for (uint32_t i = 0; i < 3; i++) {
         for (uint32_t j = 0; j < 3; j++) {
@@ -291,8 +291,8 @@ TEST(MatrixTest, GetTranspose) {
 }
 
 TEST(MatrixTest, Transpose) {
-    EngineM::Matrix m1(1, 2, 3, 4, 5, 6, 7, 8, 9);
-    const EngineM::Matrix m2 = m1;
+    EngineM::mat3f m1{1, 2, 3, 4, 5, 6, 7, 8, 9};
+    const EngineM::mat3f m2 = m1;
 
     m1.transpose();
 
@@ -304,7 +304,7 @@ TEST(MatrixTest, Transpose) {
 }
 
 TEST(MatrixTest, Identity) {
-    EngineM::Matrix identity = EngineM::Matrix::identity();
+    EngineM::mat3f identity = EngineM::mat3f::identity();
 
     for (uint32_t i = 0; i < 3; i++) {
         for (uint32_t j = 0; j < 3; j++) {
