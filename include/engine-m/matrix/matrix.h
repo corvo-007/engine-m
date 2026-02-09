@@ -1,44 +1,33 @@
 #pragma once
 
 #include <cstdint>
+#include <initializer_list>
 
 #include "engine-m/core.h"
 #include "engine-m/vector/vector.h"
 
 namespace EngineM {
 
+    template <typename T, unsigned int rows, unsigned int cols>
     class ENGINE_M_API Matrix {
-        alignas(32) float matrix[3][3] {};
+        T matrix[rows][cols] {};
 
     public:
         Matrix() = default;
-        Matrix(float, float, float, float, float, float, float, float, float);
-        explicit Matrix(const float [3][3]);
+
+        explicit Matrix(std::initializer_list<T> list);
+
+        explicit Matrix(const T [rows][cols]);
         Matrix(const Matrix &);
 
     private:
-        using MatOp = void (*)(const float (&a)[3][3], const float (&b)[3][3], float (&out)[3][3]);
-        using MulKOp = void (*)(const float (&a)[3][3], float k, float (&out)[3][3]);
-
-        static MatOp matrix_add_ptr;
-        static MatOp matrix_sub_ptr;
-        static MulKOp matrix_mul_by_k_ptr;
-        static MatOp matrix_mul_ptr;
-
-        static void detection_and_dispatch();
-        static void add_dispatch(const float (&a)[3][3], const float (&b)[3][3], float (&out)[3][3]);
-        static void sub_dispatch(const float (&a)[3][3], const float (&b)[3][3], float (&out)[3][3]);
-        static void mul_by_k_dispatch(const float (&a)[3][3], float k, float (&out)[3][3]);
-        static void mul_dispatch(const float (&a)[3][3], const float (&b)[3][3], float (&out)[3][3]);
-
-        void copy(const float [3][3]);
-        [[nodiscard]] float determinant() const;
+        void copy(const T [rows][cols]);
 
     public:
         Matrix& operator=(const Matrix &);
 
-        float* operator[](uint32_t);
-        const float* operator[](uint32_t) const;
+        T* operator[](uint32_t);
+        const T* operator[](uint32_t) const;
 
         Matrix operator+(const Matrix &) const;
         Matrix& operator+=(const Matrix &);
@@ -46,19 +35,26 @@ namespace EngineM {
         Matrix operator-(const Matrix &) const;
         Matrix& operator-=(const Matrix &);
 
-        Matrix operator*(float) const;
-        Matrix& operator*=(float);
+        Matrix operator*(T) const;
+        Matrix& operator*=(T);
 
-        Matrix operator/(float) const;
-        Matrix& operator/=(float);
+        Matrix operator/(T) const;
+        Matrix& operator/=(T);
 
-        Matrix operator*(const Matrix &) const;
-        Matrix& operator*=(const Matrix &);
+        template <unsigned int ncols>
+        Matrix<T, rows, ncols> operator*(const Matrix<T, cols, ncols> &) const;
+        Matrix& operator*=(const Matrix &) requires (rows == cols);
 
-        vec3f operator*(const vec3f &) const;
+        Vector<T, rows> operator*(const Vector<T, cols> &) const;
 
         bool operator==(const Matrix &) const;
         bool operator!=(const Matrix &) const;
+
+        [[nodiscard]] T determinant() const requires (rows == cols && rows == 1);
+        [[nodiscard]] T determinant() const requires (rows == cols && rows == 2);
+        [[nodiscard]] T determinant() const requires (rows == cols && rows > 2);
+
+        [[nodiscard]] T cofactor(int p, int q) const;
 
         bool getInverse(Matrix &) const;
         bool inverse();
@@ -66,10 +62,17 @@ namespace EngineM {
         [[nodiscard]] Matrix getTranspose() const;
         Matrix& transpose();
 
-        static Matrix identity();
+        static Matrix identity() requires (rows == cols);
 
         ~Matrix() = default;
     };
 
-    using mat3 = Matrix;
+    using mat3 = Matrix<int, 3, 3>;
+    using mat4 = Matrix<int, 4, 4>;
+
+    using mat3f = Matrix<float, 3, 3>;
+    using mat4f = Matrix<float, 4, 4>;
+
+    using mat3d = Matrix<double, 3, 3>;
+    using mat4d = Matrix<double, 4, 4>;
 }
