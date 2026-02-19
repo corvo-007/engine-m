@@ -28,6 +28,14 @@ namespace EngineM {
     }
 
     template <typename T, unsigned int N>
+    Vector<T, N>::Vector(const Vector<T, N - 1> &v, T a) requires (N > 2) {
+        for (int i = 0; i < N - 1; i++) {
+            this -> data[i] = v.data[i];
+        }
+        this -> data[N - 1] = a;
+    }
+
+    template <typename T, unsigned int N>
     Vector<T, N>::Vector(const Vector &v) {
         for (int i = 0; i < N; i++) {
             this -> data[i] = v.data[i];
@@ -250,6 +258,28 @@ namespace EngineM {
 
         return {static_cast<T>(rotation.v.x), static_cast<T>(rotation.v.y), static_cast<T>(rotation.v.z)};
     }
+
+    template <typename T, unsigned int N>
+    Vector<T, 2> Vector<T, N>::xy() const requires (N == 3 || N == 4) {
+        return { this -> x, this -> y };
+    }
+
+    template <typename T, unsigned int N>
+    Vector<T, 2> Vector<T, N>::yz() const requires (N == 3 || N == 4) {
+        return { this -> y, this -> z };
+    }
+
+    template <typename T, unsigned int N>
+    Vector<T, 2> Vector<T, N>::xz() const requires (N == 3 || N == 4) {
+        return { this -> x, this -> z };
+    }
+
+    template <typename T, unsigned int N>
+    Vector<T, 3> Vector<T, N>::xyz() const requires (N == 4) {
+        return { this -> x, this -> y, this -> z };
+    }
+
+
 
     template class Vector<int, 2>;
     template class Vector<int, 3>;

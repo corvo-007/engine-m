@@ -75,6 +75,8 @@ namespace EngineM {
         Vector(T x, T y, T z) requires (N == 3);
         Vector(T x, T y, T z, T w) requires (N == 4);
 
+        Vector(const Vector<T, N - 1> &v, T a) requires (N > 2);
+
         Vector(const Vector &v);
 
         Vector& operator=(const Vector &v);
@@ -119,6 +121,12 @@ namespace EngineM {
         [[nodiscard]] Vector rotate(double angle, const Vector &axis) const requires (N == 3);
         [[nodiscard]] Vector rotateRad(double radians, const Vector &axis) const requires (N == 3);
         [[nodiscard]] Vector rotate(const Quaternion &q) const requires (N == 3);
+
+        [[nodiscard]] Vector<T, 2> xy() const requires (N == 3 || N == 4);
+        [[nodiscard]] Vector<T, 2> yz() const requires (N == 3 || N == 4);
+        [[nodiscard]] Vector<T, 2> xz() const requires (N == 3 || N == 4);
+
+        [[nodiscard]] Vector<T, 3> xyz() const requires (N == 4);
 
         ~Vector() = default;
     };
