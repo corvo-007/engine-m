@@ -1,8 +1,7 @@
 include_directories(${EngineM_SOURCE_DIR}/include)
 
 set(TESTS
-    test_vector2d.cpp
-    test_vector3d.cpp
+    test_vector.cpp
     test_matrix.cpp
     test_quaternion.cpp
     test_bezier.cpp
