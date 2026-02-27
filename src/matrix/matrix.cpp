@@ -150,7 +150,7 @@ namespace EngineM {
 
     template <typename T, unsigned int rows, unsigned int cols>
     Vector<T, rows> Matrix<T, rows, cols>::operator*(const Vector<T, cols> &vec) const {
-        Vector<T, cols> out;
+        Vector<T, rows> out;
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
@@ -212,9 +212,28 @@ namespace EngineM {
     }
 
     template <typename T, unsigned int rows, unsigned int cols>
-    bool Matrix<T, rows, cols>::getInverse(Matrix &mat) const {
-        static_assert(rows == cols, "Only square matrices can be inverted.");
+    T Matrix<T, rows, cols>::cofactor(int p, int q) const requires (rows == cols) {
+        Matrix<T, rows - 1, cols - 1> minor;
+        unsigned int rowIdx = 0;
+        unsigned int colIdx = 0;
 
+        for (unsigned int i = 0; i < rows; i++) {
+            if (i == p) continue;
+            colIdx = 0;
+            for (unsigned int j = 0; j < cols; j++) {
+                if (j == q) continue;
+                minor[rowIdx][colIdx] = matrix[i][j];
+                colIdx++;
+            }
+            rowIdx++;
+        }
+
+        T sign = ((p + q) % 2 == 0) ? 1 : -1;
+        return sign * minor.determinant();
+    }
+
+    template <typename T, unsigned int rows, unsigned int cols>
+    bool Matrix<T, rows, cols>::getInverse(Matrix &mat) const requires (rows == cols) {
         T det = determinant();
         if (det == 0) {
             return false;
@@ -238,28 +257,7 @@ namespace EngineM {
     }
 
     template <typename T, unsigned int rows, unsigned int cols>
-    T Matrix<T, rows, cols>::cofactor(int p, int q) const {
-        Matrix<T, rows - 1, cols - 1> minor;
-        unsigned int rowIdx = 0;
-        unsigned int colIdx = 0;
-
-        for (unsigned int i = 0; i < rows; i++) {
-            if (i == p) continue;
-            colIdx = 0;
-            for (unsigned int j = 0; j < cols; j++) {
-                if (j == q) continue;
-                minor[rowIdx][colIdx] = matrix[i][j];
-                colIdx++;
-            }
-            rowIdx++;
-        }
-
-        T sign = ((p + q) % 2 == 0) ? 1 : -1;
-        return sign * minor.determinant();
-    }
-
-    template <typename T, unsigned int rows, unsigned int cols>
-    bool Matrix<T, rows, cols>::inverse() {
+    bool Matrix<T, rows, cols>::inverse() requires (rows == cols) {
         Matrix mat;
         const bool i = getInverse(mat);
         *this = mat;
@@ -293,12 +291,39 @@ namespace EngineM {
         return out;
     }
 
+    template class Matrix<int, 2, 2>;
+    template class Matrix<int, 2, 3>;
+    template class Matrix<int, 2, 4>;
+
+    template class Matrix<int, 3, 2>;
     template class Matrix<int, 3, 3>;
+    template class Matrix<int, 3, 4>;
+
+    template class Matrix<int, 4, 2>;
+    template class Matrix<int, 4, 3>;
     template class Matrix<int, 4, 4>;
 
+    template class Matrix<float, 2, 2>;
+    template class Matrix<float, 2, 3>;
+    template class Matrix<float, 2, 4>;
+
+    template class Matrix<float, 3, 2>;
     template class Matrix<float, 3, 3>;
+    template class Matrix<float, 3, 4>;
+
+    template class Matrix<float, 4, 2>;
+    template class Matrix<float, 4, 3>;
     template class Matrix<float, 4, 4>;
 
+    template class Matrix<double, 2, 2>;
+    template class Matrix<double, 2, 3>;
+    template class Matrix<double, 2, 4>;
+
+    template class Matrix<double, 3, 2>;
     template class Matrix<double, 3, 3>;
+    template class Matrix<double, 3, 4>;
+
+    template class Matrix<double, 4, 2>;
+    template class Matrix<double, 4, 3>;
     template class Matrix<double, 4, 4>;
 }
