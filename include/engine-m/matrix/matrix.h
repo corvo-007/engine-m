@@ -53,10 +53,10 @@ namespace EngineM {
         [[nodiscard]] T determinant() const requires (rows == cols && rows == 2);
         [[nodiscard]] T determinant() const requires (rows == cols && rows > 2);
 
-        [[nodiscard]] T cofactor(int p, int q) const;
+        [[nodiscard]] T cofactor(int p, int q) const requires (rows == cols);
 
-        bool getInverse(Matrix &) const;
-        bool inverse();
+        bool getInverse(Matrix &) const requires (rows == cols);
+        bool inverse() requires (rows == cols);
 
         [[nodiscard]] Matrix getTranspose() const;
         Matrix& transpose();
@@ -66,12 +66,40 @@ namespace EngineM {
         ~Matrix() = default;
     };
 
+    using mat2 = Matrix<int, 2, 2>;
+    using mat2x3 = Matrix<int, 2, 3>;
+    using mat2x4 = Matrix<int, 2, 4>;
+
+    using mat3x2 = Matrix<int, 3, 2>;
     using mat3 = Matrix<int, 3, 3>;
+    using mat3x4 = Matrix<int, 3, 4>;
+
+    using mat4x2 = Matrix<int, 4, 2>;
+    using mat4x3 = Matrix<int, 4, 3>;
     using mat4 = Matrix<int, 4, 4>;
 
+    using mat2f = Matrix<float, 2, 2>;
+    using mat2x3f = Matrix<float, 2, 3>;
+    using mat2x4f = Matrix<float, 2, 4>;
+
+    using mat3x2f = Matrix<float, 3, 2>;
     using mat3f = Matrix<float, 3, 3>;
+    using mat3x4f = Matrix<float, 3, 4>;
+
+    using mat4x2f = Matrix<float, 4, 2>;
+    using mat4x3f = Matrix<float, 4, 3>;
     using mat4f = Matrix<float, 4, 4>;
 
+    using mat2d = Matrix<double, 2, 2>;
+    using mat2x3d = Matrix<double, 2, 3>;
+    using mat2x4d = Matrix<double, 2, 4>;
+
+    using mat3x2d = Matrix<double, 3, 2>;
     using mat3d = Matrix<double, 3, 3>;
+    using mat3x4d = Matrix<double, 3, 4>;
+
+    using mat4x2d = Matrix<double, 4, 2>;
+    using mat4x3d = Matrix<double, 4, 3>;
     using mat4d = Matrix<double, 4, 4>;
+
 }
