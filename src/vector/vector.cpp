@@ -223,43 +223,6 @@ namespace EngineM {
     }
 
     template <typename T, unsigned int N>
-    Vector<T, N> Vector<T, N>::rotate(double angle) const requires (N == 2) {
-        return rotateRad(degreesToRadians(angle));
-    }
-
-    template <typename T, unsigned int N>
-    Vector<T, N> Vector<T, N>::rotateRad(double radians) const requires (N == 2) {
-        return {static_cast<T>(cosf(radians) * this -> x - sinf(radians) * this -> y), static_cast<T>(sinf(radians) * this -> x + cosf(radians) * this -> y)};
-    }
-
-    template <typename T, unsigned int N>
-    Vector<T, N> Vector<T, N>::rotate(double angle, const Vector &axis) const requires (N == 3) {
-        return rotateRad(degreesToRadians(angle), axis);
-    }
-
-    template <typename T, unsigned int N>
-    Vector<T, N> Vector<T, N>::rotateRad(double radians, const Vector &axis) const requires (N == 3) {
-        vec3f n_axis = {static_cast<float>(axis.x), static_cast<float>(axis.y), static_cast<float>(axis.z)};
-        n_axis.normalise();
-
-        radians /= 2;
-
-        const Quaternion q(cosf(radians), n_axis * sinf(radians));
-        return rotate(q);
-    }
-
-    template <typename T, unsigned int N>
-    Vector<T, N> Vector<T, N>::rotate(const Quaternion &q) const requires (N == 3) {
-        vec3f v = {static_cast<float>(this -> x), static_cast<float>(this -> y), static_cast<float>(this -> z)};
-        const Quaternion p(0, v);
-        const Quaternion q_inv = q.inverse();
-
-        const Quaternion rotation = q * p * q_inv;
-
-        return {static_cast<T>(rotation.v.x), static_cast<T>(rotation.v.y), static_cast<T>(rotation.v.z)};
-    }
-
-    template <typename T, unsigned int N>
     Vector<T, 2> Vector<T, N>::xy() const requires (N == 3 || N == 4) {
         return { this -> x, this -> y };
     }
