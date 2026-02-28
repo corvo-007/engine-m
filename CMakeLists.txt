@@ -1,15 +1,15 @@
 cmake_minimum_required(VERSION 3.25)
-project(EngineM)
+project(engine-m)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
-option(EngineM_build_tests "Build test files" ON)
+option(BUILD_SHARED_LIBS "Build shared libraries" ON)
+option(enginem_build_tests "Build test files" ON)
 
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 
-add_library(EngineM ${SOURCES})
+add_library(enginem ${SOURCES})
 
 if (MSVC)
     set_source_files_properties(src/kernels/avx/matrix_kernels.cpp PROPERTIES COMPILE_FLAGS "/arch:AVX")
@@ -20,16 +20,14 @@ else()
 endif()
 
 if (BUILD_SHARED_LIBS)
-    target_compile_definitions(EngineM PRIVATE DYNAMIC_LINK BUILD_DLL)
+    target_compile_definitions(enginem PRIVATE DYNAMIC_LINK BUILD_DLL)
 endif()
 
-target_include_directories(EngineM PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_include_directories(enginem PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-if (EngineM_build_tests)
+if (enginem_build_tests)
     include(FetchContent)
-    FetchContent_Declare(
-        googletest URL https://github.com/google/googletest/archive/refs/tags/v1.15.2.zip
-    )
+    FetchContent_Declare(googletest URL https://github.com/google/googletest/archive/refs/tags/v1.15.2.zip)
     set(BUILD_GMOCK OFF CACHE BOOL "" FORCE)
     set(BUILD_GTEST OFF CACHE BOOL "" FORCE)
     set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
