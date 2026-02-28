@@ -125,10 +125,11 @@ namespace EngineM {
             return *this;
         }
 
-        Matrix operator*(const Matrix &mat) const requires (rows == cols) {
-            Matrix out;
+        template <unsigned int ncols>
+        Matrix<T, rows, ncols> operator*(const Matrix<T, cols, ncols> &mat) const {
+            Matrix<T, rows, ncols> out;
             for (int i = 0; i < rows; i++) {
-                for (int j = 0; j < cols; j++) {
+                for (int j = 0; j < ncols; j++) {
                     out[i][j] = 0.0f;
                     for (int k = 0; k < cols; k++) {
                         out[i][j] += matrix[i][k] * mat[k][j];
@@ -138,7 +139,7 @@ namespace EngineM {
             return out;
         }
 
-        Matrix& operator*=(const Matrix &mat) requires (rows == cols) {
+        Matrix& operator*=(const Matrix<T, cols, cols> &mat) {
             *this = *this * mat;
             return *this;
         }
