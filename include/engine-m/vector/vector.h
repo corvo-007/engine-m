@@ -246,14 +246,15 @@ namespace EngineM {
             return std::sqrt(out);
         }
 
-        void normalise() {
+        Vector& normalise() {
             double mag = magnitude();
             if (mag == 0) {
-                return ;
+                return *this;
             }
             for (int i = 0; i < N; i++) {
                 this -> data[i] /= mag;
             }
+            return *this;
         }
 
         [[nodiscard]] Vector<T, 2> xy() const requires (N == 3 || N == 4) {
