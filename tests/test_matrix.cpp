@@ -312,3 +312,38 @@ TEST(MatrixTest, Identity) {
         }
     }
 }
+
+TEST(MatrixTest, DifferentDimensionsMul) {
+    EngineM::mat2x3 m1{1, 2, 3, 4, 5, 6};
+    EngineM::mat3x4 m2{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+
+    EngineM::mat2x4 m = m1 * m2;
+
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 4; j++) {
+            int result = 0;
+            for (int k = 0; k < 3; k++) {
+                result += m1[i][k] * m2[k][j];
+            }
+            EXPECT_FLOAT_EQ(m[i][j], result);
+        }
+    }
+}
+
+TEST(MatrixTest, DifferentDimensionsMulEqual) {
+    EngineM::mat2x3 m1{1, 2, 3, 4, 5, 6};
+    EngineM::mat2x3 m2 = m1;
+    EngineM::mat3 m3{1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+    m1 *= m3;
+
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 3; j++) {
+            int result = 0;
+            for (int k = 0; k < 3; k++) {
+                result += m2[i][k] * m3[k][j];
+            }
+            EXPECT_FLOAT_EQ(m1[i][j], result);
+        }
+    }
+}
