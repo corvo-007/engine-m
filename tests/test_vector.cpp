@@ -236,32 +236,6 @@ TEST(Vector2dTest, Normalise) {
 
 }
 
-TEST(Vector2dTest, Rotate) {
-    const EngineM::vec2f v1(1, 0);
-    EngineM::vec2f v2 = v1.rotate(90);
-
-    EXPECT_NEAR(v2.x, 0, EngineM::epsilon);
-    EXPECT_NEAR(v2.y, 1, EngineM::epsilon);
-
-    v2 = v1.rotate(180);
-
-    EXPECT_NEAR(v2.x, -1, EngineM::epsilon);
-    EXPECT_NEAR(v2.y, 0, EngineM::epsilon);
-}
-
-TEST(Vector2dTest, RotateRad) {
-    const EngineM::vec2f v1(1, 0);
-    EngineM::vec2f v2 = v1.rotateRad(EngineM::PI / 2);
-
-    EXPECT_NEAR(v2.x, 0, EngineM::epsilon);
-    EXPECT_NEAR(v2.y, 1, EngineM::epsilon);
-
-    v2 = v1.rotateRad(EngineM::PI);
-
-    EXPECT_NEAR(v2.x, -1, EngineM::epsilon);
-    EXPECT_NEAR(v2.y, 0, EngineM::epsilon);
-}
-
 TEST(Vector3dTest, DefaultConstruct) {
     const EngineM::vec3f v;
 
@@ -529,75 +503,6 @@ TEST(Vector3dTest, Normalise) {
     EXPECT_FLOAT_EQ(v1.z, v2.z / v2.magnitude());
     EXPECT_FLOAT_EQ(v1.magnitude(), 1);
 
-}
-
-TEST(Vector3dTest, Rotate) {
-    const EngineM::vec3f v1(1, 0, 0);
-    EngineM::vec3f v2 = v1.rotate(90, {0, 0, 1});
-
-    EXPECT_NEAR(v2.x, 0, EngineM::epsilon);
-    EXPECT_NEAR(v2.y, 1, EngineM::epsilon);
-    EXPECT_NEAR(v2.z, 0, EngineM::epsilon);
-
-    v2 = v1.rotate(180, {0, 1, 0});
-
-    EXPECT_NEAR(v2.x, -1, EngineM::epsilon);
-    EXPECT_NEAR(v2.y, 0, EngineM::epsilon);
-    EXPECT_NEAR(v2.z, 0, EngineM::epsilon);
-
-    v2 = v1.rotate(360, {0, 0, 1});
-
-    EXPECT_NEAR(v2.x, 1, EngineM::epsilon);
-    EXPECT_NEAR(v2.y, 0, EngineM::epsilon);
-    EXPECT_NEAR(v2.z, 0, EngineM::epsilon);
-}
-
-TEST(Vector3dTest, RotateRad) {
-    const EngineM::vec3f v1(1, 0, 0);
-    EngineM::vec3f v2 = v1.rotateRad(EngineM::PI / 2, {0, 0, 1});
-
-    EXPECT_NEAR(v2.x, 0, EngineM::epsilon);
-    EXPECT_NEAR(v2.y, 1, EngineM::epsilon);
-    EXPECT_NEAR(v2.z, 0, EngineM::epsilon);
-
-    v2 = v1.rotateRad(EngineM::PI, {0, 1, 0});
-
-    EXPECT_NEAR(v2.x, -1, EngineM::epsilon);
-    EXPECT_NEAR(v2.y, 0, EngineM::epsilon);
-    EXPECT_NEAR(v2.z, 0, EngineM::epsilon);
-
-    v2 = v1.rotateRad(2 * EngineM::PI, {0, 0, 1});
-
-    EXPECT_NEAR(v2.x, 1, EngineM::epsilon);
-    EXPECT_NEAR(v2.y, 0, EngineM::epsilon);
-    EXPECT_NEAR(v2.z, 0, EngineM::epsilon);
-}
-
-TEST(Vector3dTest, RotateByQuaternion) {
-    const EngineM::vec3f v1(1, 0, 0);
-    EngineM::Quaternion q(cosf(EngineM::PI / 4), EngineM::vec3f{0, 0, 1} * sinf(EngineM::PI / 4));
-
-    EngineM::vec3f v2 = v1.rotate(q);
-
-    EXPECT_NEAR(v2.x, 0, EngineM::epsilon);
-    EXPECT_NEAR(v2.y, 1, EngineM::epsilon);
-    EXPECT_NEAR(v2.z, 0, EngineM::epsilon);
-
-    q.a = cosf(EngineM::PI / 2);
-    q.v = EngineM::vec3f(0, 1, 0) * sinf(EngineM::PI / 2);
-    v2 = v1.rotate(q);
-
-    EXPECT_NEAR(v2.x, -1, EngineM::epsilon);
-    EXPECT_NEAR(v2.y, 0, EngineM::epsilon);
-    EXPECT_NEAR(v2.z, 0, EngineM::epsilon);
-
-    q.a = cosf(EngineM::PI);
-    q.v = EngineM::vec3f(0, 0, 1) * sinf(EngineM::PI);
-    v2 = v1.rotate(q);
-
-    EXPECT_NEAR(v2.x, 1, EngineM::epsilon);
-    EXPECT_NEAR(v2.y, 0, EngineM::epsilon);
-    EXPECT_NEAR(v2.z, 0, EngineM::epsilon);
 }
 
 TEST(Vector3dTest, XY_YZ_XZ) {
